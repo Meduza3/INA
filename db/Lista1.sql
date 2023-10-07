@@ -19,7 +19,41 @@ SELECT DISTINCT actor.first_name, actor.last_name FROM actor JOIN film_actor ON 
 --10
 SELECT customer.first_name, customer.last_name FROM customer JOIN rental ON customer.customer_id = rental.customer_id JOIN payment payment1 ON rental.rental_id = payment1.rental_id JOIN staff staff1 ON staff1.staff_id = payment1.staff_id JOIN payment payment2 ON rental.rental_id = payment2.rental_id JOIN staff staff2 ON payment2.staff_id = staff2.staff_id WHERE staff1.staff_id <> staff2.staff_id;
 --11
-
+SELECT 
+    CONCAT(first_name, ' ', last_name) AS klient
+FROM 
+    customer
+WHERE 
+    customer_id <> (
+        SELECT 
+            customer_id
+        FROM 
+            customer
+        WHERE 
+            email = 'MARY.SMITH@sakilacustomer.org'
+    )
+    AND (
+        SELECT 
+            COUNT(rental_id) 
+        FROM 
+            rental
+        WHERE 
+            rental.customer_id = customer.customer_id
+    ) > (
+        SELECT 
+            COUNT(rental_id) 
+        FROM 
+            rental
+        WHERE 
+            rental.customer_id = (
+                SELECT 
+                    customer_id
+                FROM 
+                    customer
+                WHERE 
+                    email = 'MARY.SMITH@sakilacustomer.org'
+            )
+    );
 --12
 SELECT DISTINCT 
     CONCAT(a1.first_name, ' ', a1.last_name) AS actor1,
