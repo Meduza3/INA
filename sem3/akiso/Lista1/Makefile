@@ -23,6 +23,12 @@ $(OUT): $(OBJS)
 %.o: %.cpp $(HEADER)
 	$(CC) $(FLAGS) -o $@ $<
 
+#test rule
+
+test: all
+	./$(OUT)
+
+	
 # Clean rule
 clean:
 	rm -f $(OBJS) $(OUT)

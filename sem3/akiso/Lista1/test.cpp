@@ -1,4 +1,5 @@
 #include "test.h"
+#include "gcd.h"
 
 void test() {
     assert(GCD(50, 160) == 10);
