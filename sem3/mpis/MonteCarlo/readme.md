@@ -5,7 +5,7 @@
 Depends on `gnuplot` and the `g++` compiler
 
 On Arch Linux with yay:
-`yay -S gnuplot`
+`$ yay -S gnuplot`
 
 ### Running the program
 
