@@ -2,7 +2,7 @@
 
 ### Installation
 
-Depends on `gnuplot`
+Depends on `gnuplot` and the `g++` compiler
 
 On Arch Linux with yay:
 `yay -S gnuplot`
@@ -10,4 +10,4 @@ On Arch Linux with yay:
 ### Running the program
 
 Run `make`, then `./main` and after it populates the `/data/` folder run
-`gnuplot plot_f.gp plot_g.gp plot_h.gp plot_pi.gp`
+`gnuplot plot.gp`
