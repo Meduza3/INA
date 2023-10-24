@@ -9,5 +9,6 @@ On Arch Linux with yay:
 
 ### Running the program
 
-Run `make`, then `./main` and after it populates the `/data/` folder run
-`gnuplot plot.gp`
+Run `$ make`, then `$ ./main` and after it populates the `data/` folder run
+
+`$ gnuplot plot.gp`
