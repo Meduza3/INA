@@ -1,5 +1,7 @@
 # MonteCarlo Integrals
 
+Requirements in polish in `task.pdf`
+
 ### Installation
 
 Depends on `gnuplot` and the `g++` compiler
