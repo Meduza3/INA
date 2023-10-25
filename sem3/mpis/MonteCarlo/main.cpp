@@ -10,7 +10,7 @@ double calculateIntegral(double (*f)(double), double a, double b, int n) {
     double M = f(x);
     double C = 0;
 
-    for (int i = 0; i < n; i++) {
+    while (x < b) {
         x += h;
         if (f(x) > M) {
             M = f(x);
