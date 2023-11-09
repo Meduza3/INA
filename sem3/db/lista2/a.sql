@@ -1,0 +1,3 @@
+CREATE DATABASE aparaty;
+CREATE USER '272329'@'localhost' IDENTIFIED BY 'Zubrzycki29';
+GRANT SELECT, INSERT, UPDATE ON aparaty.* TO '272329'@'localhost';
