@@ -1,0 +1,15 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>80</x><y>380</y><w>100</w><h>30</h></coordinates><panel_attributes>START</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>390</x><y>110</y><w>160</w><h>60</h></coordinates><panel_attributes>1. ZOBACZ FAKTURY
+--
+Wyswietl faktury</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>220</y><w>160</w><h>60</h></coordinates><panel_attributes>2. DODAJ FAKTURE
+--
+Dodaj fakture do listy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>330</y><w>160</w><h>60</h></coordinates><panel_attributes>3. USUN FAKTURE
+--
+Usun fakture z listy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>370</x><y>440</y><w>170</w><h>60</h></coordinates><panel_attributes>4. EDYTUJ FAKTURE
+--
+Edytuj liste pozycji wybranej
+faktury z listy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>530</y><w>150</w><h>60</h></coordinates><panel_attributes>5. EXPORT JSON
+--
+Wyswietl faktury z listy
+faktur w formacie JSON</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>620</y><w>140</w><h>60</h></coordinates><panel_attributes>6. WYJDZ
+--
+Nic nie robi</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>370</y><w>100</w><h>30</h></coordinates><panel_attributes>Czy 6?</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>140</y><w>240</w><h>270</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>220;10;10;250</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>250</y><w>210</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>190;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>360</y><w>210</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>190;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>390</y><w>200</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>180;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>390</y><w>210</w><h>190</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>190;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>400</y><w>210</w><h>270</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>190;250;10;10</additional_attributes></element></diagram>
