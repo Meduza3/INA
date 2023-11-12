@@ -56,4 +56,29 @@ public class Faktura {
         System.out.println("-----------------------------");
     }
 
+    public String exportJSON(){
+        String json = "{\n";
+            json += "\n\t\"id\": " + this.ID + ",";
+            json += "\n\t\"dataWystawienia\": \"" + this.dataWystawienia.toString() + "\",";
+            json += "\n\t\"pozycje\": [";
+
+
+            for (Pozycja pozycja : this.pozycje) {
+                json += "[";
+
+                json += "\"" + pozycja.getNazwa() + "\",";
+                json += "\"" + pozycja.getIlosc() + "\",";
+                json += "\"" + pozycja.getCena() + "\"";
+
+                json += "],";
+            }
+
+            int size = json.length();
+            json = json.substring(0, size - 1);
+
+            json += "]";
+        json += "}";
+        return json;
+    }
+
 }

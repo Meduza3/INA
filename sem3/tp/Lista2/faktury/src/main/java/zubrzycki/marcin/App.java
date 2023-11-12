@@ -102,7 +102,9 @@ public class App
                     }
                     break;
                 case 5:
-                    
+                    for (Faktura fakt : faktury) {
+                        System.out.println(fakt.exportJSON());
+                    }
                 case 6:
 
                     System.out.println("Do widzenia!");
