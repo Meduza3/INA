@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 
-bool checkCn(std::vector<int> urny){
+bool checkCn(std::vector<int> &urny){
     int n = urny.size();
     bool res;
     for(int i = 1; i < n; i++){
@@ -14,7 +14,7 @@ bool checkCn(std::vector<int> urny){
     return 1;
 }
 
-bool checkDn(std::vector<int> urny){
+bool checkDn(std::vector<int> &urny){
     int n = urny.size();
     bool res;
     for(int i = 1; i < n; i++){
@@ -26,9 +26,9 @@ bool checkDn(std::vector<int> urny){
 }
 
 int main() {
-    std::ofstream outfile("data/data.txt");
+    std::ofstream outfile("data/data99.txt");
 
-        for(int n = 1000; n <= 1000000; n += 1000){
+        for(int n = 99000; n <= 1000000; n += 1000){
                 unsigned int B_n_avg = 0;
                 unsigned int U_n_avg = 0;
                 unsigned int C_n_avg = 0;
