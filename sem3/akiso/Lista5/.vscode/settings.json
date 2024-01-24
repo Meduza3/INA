@@ -1,0 +1,4 @@
+{
+    "ros.distro": "noetic",
+    "C_Cpp.errorSquiggles": "disabled"
+}
