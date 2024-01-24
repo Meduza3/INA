@@ -1,23 +1,17 @@
-
-
-
-;------------------------------------------------------------------------------------
-; int strlen(String message)
-; returns the length of the string
 strlen:
-    push      ebx               ; push ebx value to the stack to save it
+    push      ebx
     mov       ebx,  eax
 
 .nextChar:
-    cmp       byte [eax], 0     ; look for 0 in string(end of string)
-    jz        .finished         ; jump if zero flag is set(cmp can set it if x == y)
-    inc       eax               ; increment eax by one byte
-    jmp       .nextChar         ; jump to nextChar label
+    cmp       byte [eax], 0
+    jz        .finished
+    inc       eax
+    jmp       .nextChar
 
 .finished:
-    sub       eax, ebx          ; eax = eax - ebx <- adresses, ebx points to the start of the string, eax was incremented, the result is the number of bytes between them
-    pop       ebx               ; pop from stack back into into ebx
-    ret                         ; return to where the function was called
+    sub       eax, ebx
+    pop       ebx
+    ret
 
 
 sprint:
@@ -33,7 +27,7 @@ sprint:
 
     mov       ecx, eax
     mov       ebx, 1
-    mov       eax, 4            ; SYS_WRITE(code 4)
+    mov       eax, 4
     int       80h
 
     pop       ebx
@@ -42,9 +36,8 @@ sprint:
     ret
 
 
-;------------------------------------------------------------------------------------
-; void printLF(String message)
-; prints the LF character
+
+
 printLF:
     push    eax
     mov     eax, 0Ah
@@ -55,10 +48,6 @@ printLF:
     pop     eax
     ret
 
-
-;------------------------------------------------------------------------------------
-; void sprintLF(String message)
-; prints the string with linfeed(newline) character
 sprintLF:
     call    sprint
     call    printLF

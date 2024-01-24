@@ -1,5 +1,5 @@
-@ compile: arm-none-eabi-as main.asm -o main.o && arm-none-eabi-gcc -specs=rdimon.specs main.o
-@ run:     qemu-arm-static a.out
+@ arm-none-eabi-as main.asm -o main.o && arm-none-eabi-gcc -specs=rdimon.specs main.o
+@ qemu-arm-static a.out
 
 .data
 format_str: .asciz "%d\n"       @ format for printf
@@ -42,12 +42,12 @@ isPrime:
     blt     notPrime                
 
     mov     r7, r0                  @ move the number to r7
-    lsr     r5, r0, #1              @ r5 = (r0 >> 1) | r5 = r5/2
+    lsr     r5, r0, #1              @ r5 = (r0 >> 1), więc r5 = r5/2
 
     mov     r6, #2                  @ set the loop counter to 2
 loop:
     cmp     r6, r5                  @ check if counter > n/2
-    bgt     prime                   @ if so, stop comparing, the number is prime
+    bgt     prime
 
     mov     r0, r7                  @ load the number
     mov     r1, r6                  @ load the counter as a divisor
