@@ -1,0 +1,1 @@
+fun main() = print "Hello Standard ML\n";
