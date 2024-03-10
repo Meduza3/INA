@@ -1,0 +1,81 @@
+V "GNAT Lib v13"
+M P W=b
+P ZX
+
+RN
+RV NO_IO
+
+U main%b		main.ada		875b43a6 NE OO SU
+W ada%s			ada.ads			ada.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W matma%s		matma.adb		matma.ali
+Z system.img_int%s	s-imgint.ads		s-imgint.ali
+
+D ada.ads		20240202103600 76789da1 ada%s
+D a-assert.ads		20240202103600 ba465f5c ada.assertions%s
+D a-except.ads		20240202103600 2a7d8d70 ada.exceptions%s
+D a-ioexce.ads		20240202103600 40018c65 ada.io_exceptions%s
+D a-numeri.ads		20240202103600 84bea7a3 ada.numerics%s
+D a-nubinu.ads		20240202103600 93f1f3d1 ada.numerics.big_numbers%s
+D a-nbnbig.ads		20240202103600 711e0174 ada.numerics.big_numbers.big_integers_ghost%s
+D a-stream.ads		20240202103600 119b8fb3 ada.streams%s
+D a-string.ads		20240202103600 90ac6797 ada.strings%s
+D a-sttebu.ads		20240202103600 f1ad67a2 ada.strings.text_buffers%s
+D a-stuten.ads		20240202103600 c6ced0ae ada.strings.utf_encoding%s
+D a-tags.ads		20240202103600 9eaa38c6 ada.tags%s
+D a-textio.ads		20240202103600 5c2c6153 ada.text_io%s
+D a-unccon.ads		20240202103600 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20240202103600 15f799c2 interfaces%s
+D i-cstrea.ads		20240202103600 e53d8b8e interfaces.c_streams%s
+D main.ada		20240308184431 3a701461 main%b
+D matma.ads		20240308184241 e1073694 matma%s
+D system.ads		20240202103600 426dafb8 system%s
+D s-assert.ads		20240202103600 9c4520c7 system.assertions%s
+D s-casuti.ads		20240202103600 cf13d755 system.case_util%s
+D s-crtl.ads		20240202103600 8a0692f8 system.crtl%s
+D s-exctab.ads		20240202103600 91bef6ef system.exception_table%s
+D s-ficobl.ads		20240202103600 dc5161d4 system.file_control_block%s
+D s-imagei.ads		20240202103600 c707dfd0 system.image_i%s
+D s-imgint.ads		20240202103600 d4a52a9b system.img_int%s
+D s-parame.ads		20240202103600 d494a4a6 system.parameters%s
+D s-putima.ads		20240202103600 17291fe4 system.put_images%s
+D s-secsta.ads		20240202103600 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240202103600 df77073e system.soft_links%s
+D s-stache.ads		20240202103600 0b81c1fe system.stack_checking%s
+D s-stalib.ads		20240202103600 1c9580f6 system.standard_library%s
+D s-stoele.ads		20240202103600 ab5468e4 system.storage_elements%s
+D s-stoele.adb		20240202103600 8f5a9db6 system.storage_elements%b
+D s-traent.ads		20240202103600 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240202103600 fa2a7f59 system.unsigned_types%s
+D s-valint.ads		20240202103600 1f610d7a system.val_int%s
+D s-valuns.ads		20240202103600 e8a1f424 system.val_uns%s
+D s-valuti.ads		20240202103600 fcd603d8 system.val_util%s
+D s-valuei.ads		20240202103600 11081e09 system.value_i%s
+D s-vaispe.ads		20240202103600 44130d39 system.value_i_spec%s
+D s-valueu.ads		20240202103600 18770347 system.value_u%s
+D s-vauspe.ads		20240202103600 a67b2f28 system.value_u_spec%s
+D s-wchcon.ads		20240202103600 d9032363 system.wch_con%s
+D s-widuns.ads		20240202103600 866a5800 system.wid_uns%s
+D s-widthu.ads		20240202103600 b32f15e2 system.width_u%s
+G a e
+G c Z b b [main standard 4 11 none]
+G r c none [main standard 4 11 none] [nwd matma 4 14 none]
+G r c none [main standard 4 11 none] [diophantine matma 12 14 none]
+X 1 ada.ads
+16K9*Ada 20e8 17|1r6 1r23
+X 13 a-textio.ads
+58K13*Text_IO 787e16 17|1w10 1r27
+566U14*Put_Line 17|17s5
+X 17 main.ada
+4U11*Main 4b11 19l5 19t9
+5i5 N{natural} 10m5 15r25
+6i5 M{natural} 11m5 15r28
+7i5 Result{natural} 15m5 17r28
+8r5 Sol{18|6R10} 16m5
+X 18 matma.ads
+1K9*Matma 17|2w6 2r17 15r15 18|13e10
+4V14*NWD{integer} 17|15s21
+6R10*Solution 17|8r11 18|10e15
+12V14*Diophantine{6R10} 17|16s12
+

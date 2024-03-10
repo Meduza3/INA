@@ -1,0 +1,22 @@
+V "GNAT Lib v13"
+P ZX
+
+RN
+
+U silnia%b		silnia.adb		a8171a9c NE OO PK
+
+U silnia%s		silnia.ads		58f9895c EE NE OO PK
+
+D silnia.ads		20240308182039 58f9895c silnia%s
+D silnia.adb		20240308182228 f0ee93c0 silnia%b
+D system.ads		20240202103600 426dafb8 system%s
+G a e
+G c Z s b [silnia silnia 2 14 none]
+X 1 silnia.ads
+1K9*Silnia 3l5 3e11 2|1b14 14l9 14t15
+2V14*Silnia{natural} 2>21 2|2b14 13l13 13t19
+2i21 N{natural} 2|2b21 5r16 8r29
+X 2 silnia.adb
+3i9 Result{natural} 6r24 9m21 9r31 11r24
+8i21 I{integer} 9r40
+
