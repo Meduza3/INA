@@ -17,7 +17,7 @@
 
 **PROGRAMOWANIE W LOGICE**
 
-- Lista 3.L - Wykonac do 04.04
+- Lista 3.L - Wykonac do 04.04 Jest wykonane :)
 - Lista 4.L - Wykonac do 04.18
 - Lista 5.L - Wykonac do 04.25
 - Lista 6.L - Wykonac do 05.23
@@ -27,3 +27,10 @@
 
 **WYBRANE ZAGADNIENIA ALGEBRY**
 
+- 1
+- 2
+- 3
+- 4
+- 5
+- 7
+- 8
