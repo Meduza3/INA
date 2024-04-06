@@ -17,11 +17,9 @@ def partition(arr, low, high):
     return (i+1)
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python quicksort.py LENGTH TABLE")
-        sys.exit(1)
-    
-    table = list(map(int, sys.argv[2].split()))
+    input_data = input().split()  # Odczytaj dane jako linie tekstu ze standardowego wejścia
+    length = int(input_data[0])
+    table = list(map(int, input_data[1:]))
     
     quicksort(table, 0, len(table)-1)
     
