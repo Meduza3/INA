@@ -1,11 +1,9 @@
 import sys
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python insertionsort.py LENGTH TABLE")
-        sys.exit(1)
-    length = int(sys.argv[1])
-    table = list(map(int, sys.argv[2].split()))
+    input_data = input().split()  # Odczytaj dane jako linie tekstu ze standardowego wejścia
+    length = int(input_data[0])
+    table = list(map(int, input_data[1:]))
     insertion_sort(table)
     print(table)
 
