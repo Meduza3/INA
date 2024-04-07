@@ -4,12 +4,14 @@ P ZX
 
 RN
 RV NO_IO
+RV NO_DYNAMIC_SIZED_OBJECTS
 
-U main%b		main.ada		875b43a6 NE OO SU
+U main%b		main.adb		7d7b24b7 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
-W matma%s		matma.adb		matma.ali
+W mymathloop%s		mymathloop.ads		mymathloop.ali
+Z system.concat_4%s	s-conca4.adb		s-conca4.ali
 Z system.img_int%s	s-imgint.ads		s-imgint.ali
 
 D ada.ads		20240202103600 76789da1 ada%s
@@ -28,11 +30,12 @@ D a-textio.ads		20240202103600 5c2c6153 ada.text_io%s
 D a-unccon.ads		20240202103600 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20240202103600 15f799c2 interfaces%s
 D i-cstrea.ads		20240202103600 e53d8b8e interfaces.c_streams%s
-D main.ada		20240308184431 3a701461 main%b
-D matma.ads		20240308184241 e1073694 matma%s
+D main.adb		20240407194558 deb27ecb main%b
+D mymathloop.ads	20240407194602 ffe53b2f mymathloop%s
 D system.ads		20240202103600 426dafb8 system%s
 D s-assert.ads		20240202103600 9c4520c7 system.assertions%s
 D s-casuti.ads		20240202103600 cf13d755 system.case_util%s
+D s-conca4.ads		20240202103600 33f85f3e system.concat_4%s
 D s-crtl.ads		20240202103600 8a0692f8 system.crtl%s
 D s-exctab.ads		20240202103600 91bef6ef system.exception_table%s
 D s-ficobl.ads		20240202103600 dc5161d4 system.file_control_block%s
@@ -60,22 +63,21 @@ D s-widuns.ads		20240202103600 866a5800 system.wid_uns%s
 D s-widthu.ads		20240202103600 b32f15e2 system.width_u%s
 G a e
 G c Z b b [main standard 4 11 none]
-G r c none [main standard 4 11 none] [nwd matma 4 14 none]
-G r c none [main standard 4 11 none] [diophantine matma 12 14 none]
+G r c none [main standard 4 11 none] [silnia mymathloop 2 14 none]
 X 1 ada.ads
 16K9*Ada 20e8 17|1r6 1r23
 X 13 a-textio.ads
 58K13*Text_IO 787e16 17|1w10 1r27
-566U14*Put_Line 17|17s5
-X 17 main.ada
-4U11*Main 4b11 19l5 19t9
-5i5 N{natural} 10m5 15r25
-6i5 M{natural} 11m5 15r28
-7i5 Result{natural} 15m5 17r28
-8r5 Sol{18|6R10} 16m5
-X 18 matma.ads
-1K9*Matma 17|2w6 2r17 15r15 18|13e10
-4V14*NWD{integer} 17|15s21
-6R10*Solution 17|8r11 18|10e15
-12V14*Diophantine{6R10} 17|16s12
+566U14*Put_Line 17|11s5
+X 17 main.adb
+4U11*Main 4b11 12l5 12t9
+5i5 N{natural} 10r22 11r46
+6i5 A{integer}
+6i8 B{integer}
+7i5 Result{natural} 10m5 11r74
+8r5 Dio_Solution{18|5R10}
+X 18 mymathloop.ads
+1K9*MyMathLoop 17|2w6 2r22 18|12e15
+2V14*Silnia{natural} 17|10s15
+5R10*Diophantine_Solution 17|8r20 18|9e15
 
