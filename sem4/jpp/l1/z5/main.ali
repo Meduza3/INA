@@ -1,0 +1,56 @@
+V "GNAT Lib v10"
+P ZX
+
+RN
+
+U main%s		main.ads		b43fee34 NE OO PK
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+
+D ada.ads		20230707070819 76789da1 ada%s
+D a-unccon.ads		20230707070819 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20230707070819 5ab55268 interfaces%s
+D i-c.ads		20230707070819 5421119b interfaces.c%s
+D main.ads		20240409201906 e01effaf main%s
+D system.ads		20230707070819 4635ec04 system%s
+D s-exctab.ads		20230707070819 54135002 system.exception_table%s
+D s-parame.ads		20230707070819 48ec542b system.parameters%s
+D s-stalib.ads		20230707070819 09bd3940 system.standard_library%s
+G a e
+G c Z s s [silnia_r main 9 18 none]
+G c Z s s [nwd_r main 12 18 none]
+G c Z s s [extended_euclid_r main 15 18 none]
+G c Z s s [silnia_l main 18 18 none]
+G c Z s s [nwd_l main 21 18 none]
+G c Z s s [extended_euclid_l main 24 18 none]
+G c Z s s [diophantine_solutionIP main 4 14 none]
+X 3 interfac.ads
+38K9*Interfaces 184e15 5|1r6 5r21 6r21 9r31 9r56 12r31 12r56 15r43 18r31
+. 18r56 21r31 21r56 24r43
+X 4 i-c.ads
+18K20*C 230e17 5|1w17 5r32 6r32 9r42 9r67 12r42 12r67 15r54 18r42 18r67 21r42
+. 21r67 24r54
+35I9*int<integer> 5|5r34 6r34 9r44 9r69 12r44 12r69 15r56 18r44 18r69 21r44
+. 21r69 24r56
+X 5 main.ads
+3K9*Main 26l5 26e9
+4R14*Diophantine_Solution 7e19 15r68 24r68
+5i17*X{4|35I9}
+6i17*Y{4|35I9}
+9V18*silnia_r{4|35I9} 9>27 10b<c,silnia_r>27
+9i27 N{4|35I9}
+12V18*nwd_r{4|35I9} 12>24 12>27 13b<c,nwd_r>27
+12i24 A{4|35I9}
+12i27 B{4|35I9}
+15V18*extended_euclid_r{4R14} 15>36 15>39 16b<c,extended_euclid_r>27
+15i36 A{4|35I9}
+15i39 B{4|35I9}
+18V18*silnia_l{4|35I9} 18>27 19b<c,silnia_l>27
+18i27 N{4|35I9}
+21V18*nwd_l{4|35I9} 21>24 21>27 22b<c,nwd_l>27
+21i24 A{4|35I9}
+21i27 B{4|35I9}
+24V18*extended_euclid_l{4R14} 24>36 24>39 25b<c,extended_euclid_l>27
+24i36 A{4|35I9}
+24i39 B{4|35I9}
+

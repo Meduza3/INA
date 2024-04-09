@@ -1,0 +1,50 @@
+V "GNAT Lib v10"
+A -gnatA
+A -gnatwa
+A -gnat2012
+A -mtune=generic
+A -march=x86-64
+P ZX
+
+RN
+RV NO_RECURSION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U mymathrec%b		mymathrec.adb		ddda7945 NE OO PK
+
+U mymathrec%s		mymathrec.ads		460bad28 EE NE OO PK
+
+D mymathrec.ads		20240409192654 460bad28 mymathrec%s
+D mymathrec.adb		20240409193408 9bd1d46d mymathrec%b
+D system.ads		20230707070819 4635ec04 system%s
+G a e
+G c Z s b [silnia mymathrec 2 14 none]
+G c Z s b [nwd mymathrec 4 14 none]
+G c Z s b [extended_euclid mymathrec 13 14 none]
+G c Z s s [diophantine_solutionIP mymathrec 7 10 none]
+X 1 mymathrec.ads
+1K9*MyMathRec 15l5 15e14 2|1b14 53l5 53t14
+2V14*Silnia{natural} 2>21 3i<c,silnia_r>22 2|2b14 7s24 9l9 9t15
+2i21 N{natural} 2|2b21 4r12 7r20 7r31
+4V14*NWD{natural} 4>18 4>21 5i<c,nwd_r>22 2|11b14 16s20 18l9 18t12 38s23
+4i18 A{natural} 2|11b18 14r20 16r27
+4i21 B{natural} 2|11b21 13r12 16r24 16r33
+7R10*Diophantine_Solution 11e15 13r56 2|20r56 24r43
+8i9*X{integer} 2|40m26 43r38 44r87 45m34 45r48 45r75 48r57
+9i9*Y{integer} 2|41m26 46m34 46r48 46r75 48m34
+10i9*GCD{natural}
+13V14*Extended_Euclid{7R10} 13>30 13>33 13>36 14i<c,exeuclid_r>22 2|20b14
+. 44s42 52l13 52t28
+13i30 A{integer} 2|20b30 27r20 38r31 43r25 44r61 44r74 48r44
+13i33 B{integer} 2|20b33 32r20 38r39 43r45 44r58 44r67 48r62
+13i36 C{integer} 2|20b36 39r24 43r21 44r70 48r40
+X 2 mymathrec.adb
+21i17 GCD_AB{integer} 38m13 39r28
+22i17 Sign_A{integer} 28m25 30m25 40r31 45r52
+22i25 Sign_B{integer} 33m25 35m25 46r52
+23i17 Div{integer} 39m17 40r40
+24r17 Solution{1|7R10} 40m17 41m17 43r29 44r78 45m25 45r39 46m25 46r39 48m25
+. 48r48 51r24
+24r27 Next_Solution{1|7R10} 44m25 45r61 46r61
+

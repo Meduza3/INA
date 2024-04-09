@@ -3,9 +3,7 @@ with MyMathLoop; use MyMathLoop;
 
 procedure Main is
     N : Natural := 10;
-    A, B : Integer;
     Result : Natural;
-    Dio_Solution : Diophantine_Solution;
 begin
     Result := Silnia(N);
     Put_Line("Factorial of " & Natural'Image(N) & " is " & Natural'Image(Result));
