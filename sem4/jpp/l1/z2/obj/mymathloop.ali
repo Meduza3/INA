@@ -1,0 +1,56 @@
+V "GNAT Lib v10"
+A -gnatA
+A -gnatwa
+A -gnat2012
+A -mtune=generic
+A -march=x86-64
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U mymathloop%b		mymathloop.adb		82a304cb NE OO PK
+
+U mymathloop%s		mymathloop.ads		9a00b3aa EE NE OO PK
+
+D mymathloop.ads	20240409190241 9a00b3aa mymathloop%s
+D mymathloop.adb	20240409194038 18a3b761 mymathloop%b
+D system.ads		20230707070819 4635ec04 system%s
+G a e
+G c Z s b [silnia mymathloop 2 14 none]
+G c Z s b [nwd mymathloop 4 14 none]
+G c Z s b [extended_euclid mymathloop 13 14 none]
+G c Z s s [diophantine_solutionIP mymathloop 7 10 none]
+X 1 mymathloop.ads
+1K9*MyMathLoop 15l5 15e15 2|1b14 59l5 59t15
+2V14*Silnia{natural} 2>21 3i<c,silnia_l>22 2|2b14 9l9 9t15
+2i21 N{natural} 2|2b21 5r21
+4V14*NWD{natural} 4>18 4>21 5i<c,nwd_l>22 2|11b14 22l9 22t12
+4i18 A{natural} 2|11b18 13r24
+4i21 B{natural} 2|11b21 14r24
+7R10*Diophantine_Solution 11e15 13r53 2|24r53 56r12
+8i9*X{integer} 2|56m34
+9i9*Y{integer} 2|56m46
+10i9*GCD{natural} 2|56m58
+13V14*Extended_Euclid{7R10} 13>30 13>33 14i<c,exeuclid_l>22 2|24b14 57l5
+. 57t20
+13i30 A{integer} 2|24b30 25r26
+13i33 B{integer} 2|24b33 26r26
+X 2 mymathloop.adb
+3i9 Res{natural} 6m13 6r20 8r16
+5i13 J{integer} 6r26
+12i9 Temp{natural} 17m13 19r18
+13i9 X{natural} 17r21 18m13 21r16
+14i9 Y{natural} 16r15 17r27 18r18 19m13
+25i5 Local_A{integer} 27r27 51r17 52m9
+26i5 Local_B{integer} 32r11 33r29 37r33 52r20 53m9 53r29
+27i5 Old_R{integer} 33r21 37r14 38m9 56r73
+27i12 R{integer} 36r17 37m9
+28i5 Old_S{integer} 42r14 43m9 56r39
+28i12 S{integer} 41r17 42m9 42r33
+29i5 Old_T{integer} 47r14 48m9 56r51
+29i12 T{integer} 46r17 47m9 47r33
+30i5 Quotient{integer} 33m9 37r22 42r22 47r22
+30i15 Temp{integer} 36m9 38r18 41m9 43r18 46m9 48r18 51m9 53r20
+

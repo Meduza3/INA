@@ -22,29 +22,38 @@ package body MyMathLoop is
     end NWD;
 
     function Extended_Euclid(A, B : Integer) return Diophantine_Solution is
-        Old_R, R : Integer := A;
-        Old_S, S : Integer := 1;
-        Old_T, T : Integer := 0;
-        Quotient, Temp : Integer;
-    begin
-        while B /= 0 loop
-            Quotient := Old_R / B;
-            Temp := R;
-            R := Old_R - Quotient * B;
-            Old_R := Temp;
+    Local_A : Integer := A;
+    Local_B : Integer := B; -- Use local variables for manipulation
+    Old_R, R : Integer := Local_A; -- Start with Local_A
+    Old_S, S : Integer := 1;
+    Old_T, T : Integer := 0;
+    Quotient, Temp : Integer;
+begin
+    while Local_B /= 0 loop -- Use Local_B in condition
+        Quotient := Old_R / Local_B;
 
-            Temp := S;
-            S := Old_S - Quotient * S;
-            Old_S := Temp;
+        -- Update R
+        Temp := R;
+        R := Old_R - Quotient * Local_B;
+        Old_R := Temp;
 
-            Temp := T;
-            T := Old_T - Quotient * T;
-            Old_T := Temp;
+        -- Update S
+        Temp := S;
+        S := Old_S - Quotient * S;
+        Old_S := Temp;
 
-            Temp := A;
-            A := B;
-            B := Temp;
-        end loop;
-        return Diophantine_Solution'(X => Old_S, Y => Old_T, GCD => Natural(Old_R)); -- Cast Old_R to Natural as GCD cannot be negative.
-    end Extended_Euclid;
+        -- Update T
+        Temp := T;
+        T := Old_T - Quotient * T;
+        Old_T := Temp;
+
+        -- Prepare for the next iteration
+        Temp := Local_A;
+        Local_A := Local_B;            -- Local_A takes the value of Local_B
+        Local_B := Temp mod Local_B;   -- Local_B takes the remainder
+    end loop;
+
+    return Diophantine_Solution'(X => Old_S, Y => Old_T, GCD => Natural(Old_R));
+end Extended_Euclid;
+
 end MyMathLoop;

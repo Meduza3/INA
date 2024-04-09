@@ -1,0 +1,1 @@
+main.adb:5:05: warning: "N" is not modified, could be declared constant

@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "limits.h": "c",
+        "random": "c",
+        "*.tcc": "c",
+        "string_view": "c",
+        "ranges": "c",
+        "functional": "c"
+    }
+}

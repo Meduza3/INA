@@ -1,0 +1,94 @@
+V "GNAT Lib v10"
+M P W=b
+P ZX
+
+RN
+RV NO_IO
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U main_program%b	main_program.adb	21b41454 NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W main%s		main.ads		main.ali
+Z system.concat_2%s	s-conca2.adb		s-conca2.ali
+Z system.concat_4%s	s-conca4.adb		s-conca4.ali
+Z system.img_int%s	s-imgint.adb		s-imgint.ali
+
+D ada.ads		20230707070819 76789da1 ada%s
+D a-except.ads		20230707070819 a7106115 ada.exceptions%s
+D a-ioexce.ads		20230707070819 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20230707070819 119b8fb3 ada.streams%s
+D a-tags.ads		20230707070819 491b781d ada.tags%s
+D a-textio.ads		20230707070819 aef4d56d ada.text_io%s
+D a-unccon.ads		20230707070819 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20230707070819 5ab55268 interfaces%s
+D i-c.ads		20230707070819 5421119b interfaces.c%s
+D i-cstrea.ads		20230707070819 e53d8b8e interfaces.c_streams%s
+D main.ads		20240409201906 e01effaf main%s
+D main_program.adb	20240409202455 3b7f2f0d main_program%b
+D system.ads		20230707070819 4635ec04 system%s
+D s-conca2.ads		20230707070819 02a0d7d0 system.concat_2%s
+D s-conca4.ads		20230707070819 7e642b20 system.concat_4%s
+D s-crtl.ads		20230707070819 0ebbdb71 system.crtl%s
+D s-exctab.ads		20230707070819 54135002 system.exception_table%s
+D s-ficobl.ads		20230707070819 078245e4 system.file_control_block%s
+D s-imgint.ads		20230707070819 02dbe0c2 system.img_int%s
+D s-parame.ads		20230707070819 48ec542b system.parameters%s
+D s-secsta.ads		20230707070819 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20230707070819 a7318a92 system.soft_links%s
+D s-stache.ads		20230707070819 a37c21ec system.stack_checking%s
+D s-stalib.ads		20230707070819 09bd3940 system.standard_library%s
+D s-stoele.ads		20230707070819 2dc34a04 system.storage_elements%s
+D s-traent.ads		20230707070819 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20230707070819 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20230707070819 1b7d22d2 system.wch_con%s
+G a e
+G c Z b b [main_program standard 5 11 none]
+G r c none [main_program standard 5 11 none] [silnia_l main 18 18 none]
+G r c none [main_program standard 5 11 none] [nwd_l main 21 18 none]
+G r c none [main_program standard 5 11 none] [extended_euclid_l main 24 18 none]
+G r c none [main_program standard 5 11 none] [silnia_r main 9 18 none]
+G r c none [main_program standard 5 11 none] [nwd_r main 12 18 none]
+G r c none [main_program standard 5 11 none] [extended_euclid_r main 15 18 none]
+X 1 ada.ads
+16K9*Ada 20e8 12|1r6 6r9
+X 6 a-textio.ads
+57K13*Text_IO 727e16 12|1w10 6r13
+508U14*Put_Line 12|26s5 27s5 29s5 31s5 32s5 34s5
+X 8 interfac.ads
+38K9*Interfaces 184e15 12|2r6 9r9 10r9 11r9 12r10 13r10 16r10 17r10 18r10
+. 19r11 20r11 26r32 27r37 29r44 29r91 31r31 32r35 34r42 34r88
+X 9 i-c.ads
+18K20*C 230e17 12|2w17 9r20 10r20 11r20 12r21 13r21 16r21 17r21 18r21 19r22
+. 20r22 26r43 27r48 29r55 29r102 31r42 32r46 34r53 34r99
+35I9*int<integer> 12|9r22 10r22 11r22 12r23 13r23 16r23 17r23 18r23 19r24
+. 20r24 26r45 27r50 29r57 29r104 31r44 32r48 34r55 34r101
+X 11 main.ads
+3K9*Main 26e9 12|3w6 7r9 26r55 27r60 31r54 32r58
+4R14*Diophantine_Solution 7e19 12|14r17 21r18
+5i17*X{9|35I9} 12|29r78 34r75
+6i17*Y{9|35I9} 12|29r125 34r121
+9V18*silnia_r{9|35I9} 12|31s59
+12V18*nwd_r{9|35I9} 12|32s63
+15V18*extended_euclid_r{4R14} 12|33s18
+18V18*silnia_l{9|35I9} 12|26s60
+21V18*nwd_l{9|35I9} 12|27s65
+24V18*extended_euclid_l{4R14} 12|28s19
+X 12 main_program.adb
+5U11*main_program 5b11 35l5 35t17
+9i5 N{9|35I9} 31r68
+10i5 A{9|35I9} 32r69
+11i5 B{9|35I9} 32r72
+12i5 EA{9|35I9} 33r36
+13i5 EB{9|35I9} 33r40
+14r5 Solution1{11|4R14} 33m5 34r65 34r111
+16i5 NL{9|35I9} 26r69
+17i5 AL{9|35I9} 27r71
+18i5 BL{9|35I9} 27r75
+19i5 EAL{9|35I9} 28r37
+20i5 EBL{9|35I9} 28r42
+21r5 Solution1L{11|4R14} 28m5 29r67 29r114
+
