@@ -1,0 +1,1 @@
+gcc run_pythonloop.c -o run_python $(python3-config --cflags --ldflags --embed)

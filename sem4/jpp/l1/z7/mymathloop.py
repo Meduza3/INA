@@ -4,6 +4,12 @@ def factorial(n):
 		result *= i
 	return result
 
+def gcd(a, b):
+	if b == 0:
+		return a
+	else:
+		return gcd(b, a % b)
+
 def gcd_extended(a, b):
     if a == 0:
         return b, 0, 1
@@ -29,6 +35,3 @@ def diophantine(a, b, c):
     
     # Output the solutions which include all modifications due to sign changes
     return x, y
-
-
-print(diophantine(6, 9, 21))
