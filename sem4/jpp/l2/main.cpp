@@ -6,8 +6,7 @@
 
 class GF1234577_int {
     //Cialo skonczone o charakterystyce 1234577
-    // a / b = a * b^1
-    //b * b^-1 = 1 mod 1234577
+
     private:
         int value;
         static int modInverse(int a, int mod){
