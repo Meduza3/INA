@@ -1,6 +1,8 @@
 **TECHNOLOGIE SIECIOWE**
 - Lista 1
 - Lista 2
+
+
 - Lista 3
 - Lista 4
 - Lista 5
@@ -11,12 +13,13 @@
 
 **JEZYKI I PARADYGMATY PROGRAMOWANIA**
 
-- Lista 2.L - Wykonac do 04.12
 - Lista 3.L - Wykonac do 04.19
 
 **PROGRAMOWANIE W LOGICE**
 
 - Lista 4.L - Wykonac do 04.18
+
+
 - Lista 5.L - Wykonac do 04.25
 - Lista 6.L - Wykonac do 05.23
 - Lista 7.L - Wykonac do 06.13
