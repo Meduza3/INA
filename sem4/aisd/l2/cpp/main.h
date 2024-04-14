@@ -8,12 +8,16 @@
 #include <sstream>
 #include "sorts.h"
 #include <string.h>
+#include <fstream>
 
 
 enum algorithm {
     INSERTION,
     QUICK,
-    HYBRID
+    HYBRID,
+    MERGE,
+    CUSTOM,
+    DUALPIVOT
 };
 
 
