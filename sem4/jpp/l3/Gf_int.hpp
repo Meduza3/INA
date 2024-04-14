@@ -1,125 +1,73 @@
-
 #include <iostream>
-#include <ostream>
+#include <stdexcept>
 
 template<int CHARACTERISTIC>
 class GF_Int {
+private:
+    int value;
 
-    private:
-        int value;
-        static int modInverse(int a){
-            int m0 = CHARACTERISTIC, t, q;
-            int x0 = 0, x1 = 1;
-            if(CHARACTERISTIC == 1) {
-                return 0;
-            }
-            while(a > 1) {
-                q = a / CHARACTERISTIC;
-                t = CHARACTERISTIC;
-                CHARACTERISTIC = a % CHARACTERISTIC, a = t;
-                t = x0;
-                x0 = x1 - q * x0;
-                x1 = t;
-            }
-            if (x1 < 0){
-                x1 += m0;
-            }
-            return x1;
+    static int modInverse(int a, int m) {
+        int m0 = m, t, q;
+        int x0 = 0, x1 = 1;
+        if (m == 1) return 0;
+        while (a > 1) {
+            q = a / m;
+            t = m;
+            m = a % m;
+            a = t;
+            t = x0;
+            x0 = x1 - q * x0;
+            x1 = t;
         }
-
-
-    public:
-        int get_value() const {
-            return value;
-        }
-        void set_value(int x){
-            value = x % CHARACTERISTIC;
-        }
-
-        int get_characteristic() const {
-            return CHARACTERISTIC;
-        }
-
-
-
-    GF_Int<T>(int val = 0){
-        set_value(val);
+        if (x1 < 0) x1 += m0;
+        return x1;
     }
 
+public:
+    GF_Int(int val = 0) {
+        value = (val % CHARACTERISTIC + CHARACTERISTIC) % CHARACTERISTIC;
+    }
 
-    GF_Int<T>& operator=(const GF_Int<T>& rhs);
+    int get_value() const {
+        return value;
+    }
 
-    GF_Int<T>& operator+=(const GF_Int<T>& rhs);
+    static int get_characteristic() {
+        return CHARACTERISTIC;
+    }
 
-    GF_Int<T>& operator-=(const GF_Int<T>& rhs);
+    GF_Int& operator+=(const GF_Int& rhs) {
+        value = (value + rhs.value) % CHARACTERISTIC;
+        return *this;
+    }
 
-    GF_Int<T>& operator*=(const GF_Int<T>& rhs);
+    GF_Int& operator-=(const GF_Int& rhs) {
+        value = (value - rhs.value + CHARACTERISTIC) % CHARACTERISTIC;
+        return *this;
+    }
 
-    GF_Int<T>& operator/=(const GF_Int<T>& rhs);
+    GF_Int& operator*=(const GF_Int& rhs) {
+        long long product = static_cast<long long>(value) * rhs.value % CHARACTERISTIC;
+        value = static_cast<int>(product);
+        return *this;
+    }
 
-    template<int M>
-    friend GF_Int<M> operator*(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
+    GF_Int& operator/=(const GF_Int& rhs) {
+        int rhs_val = rhs.get_value();
+        if (rhs_val == 0) throw std::invalid_argument("Attempt to divide by zero!");
+        int inverse = modInverse(rhs_val, CHARACTERISTIC);
+        value = static_cast<long long>(value) * inverse % CHARACTERISTIC;
+        return *this;
+    }
 
-    template<int M>
-    friend GF_Int<M> operator+(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend GF_Int<M> operator-(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend GF_Int<M> operator/(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend bool operator==(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend bool operator!=(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend bool operator<=(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend bool operator>=(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend bool operator<(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-    template<int M>
-    friend bool operator>(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-    
-    template<int M>
-    friend std::ostream& operator<<(std::ostream& os, const GF_Int<M>& obj);
-
+    friend GF_Int operator+(GF_Int lhs, const GF_Int& rhs) { return lhs += rhs; }
+    friend GF_Int operator-(GF_Int lhs, const GF_Int& rhs) { return lhs -= rhs; }
+    friend GF_Int operator*(GF_Int lhs, const GF_Int& rhs) { return lhs *= rhs; }
+    friend GF_Int operator/(GF_Int lhs, const GF_Int& rhs) { return lhs /= rhs; }
 };
 
-static int modInverse(int a, int mod);
-
 template<int M>
-GF_Int<M> operator+(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-GF_Int<M> operator-(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-GF_Int<M> operator/(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-GF_Int<M> operator*(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-bool operator==(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-bool operator!=(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-bool operator<=(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-bool operator>=(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-bool operator>(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
-
-template<int M>
-bool operator<(const GF_Int<M>& lhs, const GF_Int<M>& rhs);
+std::ostream& operator<<(std::ostream& os, const GF_Int<M>& obj) {
+    os << obj.get_value();
+    return os;
+}
