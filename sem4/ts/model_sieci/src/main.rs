@@ -7,11 +7,11 @@ use petgraph::{algo::connected_components, graph::{Node, NodeIndex, UnGraph}, pr
 use colored::*;
 use rand::{rngs::ThreadRng, Rng};
 use petgraph::algo::astar;
-const BITS_PER_PACKET: i32 = 12000;
+const BITS_PER_PACKET: u128 = 12000;
 
 fn main() {
 
-    let mut graph: UnGraph<i32, Edge> = UnGraph::new_undirected();
+    let mut graph: UnGraph<u128, Edge> = UnGraph::new_undirected();
 
     let mut nodes = Vec::new();
     for _ in 0..20 {
@@ -30,7 +30,7 @@ fn main() {
     for i in 0..20 {
         for j in 0..20 {
             if i != j {
-                n[i][j] = rng.gen_range(1.0..5.0);
+                n[i][j] = rng.gen_range(0.0..1480.0);
             } else {
                 n[i][j] = 0.0;
             }
@@ -39,34 +39,34 @@ fn main() {
 
     //println!("{:?}", n);
 
-    graph.add_edge(nodes[0], nodes[1], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[1], nodes[2], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[2], nodes[3], Edge::new(700 * BITS_PER_PACKET, 0.95));
-    graph.add_edge(nodes[3], nodes[4], Edge::new(400 * BITS_PER_PACKET,  0.90));
-    graph.add_edge(nodes[4], nodes[0], Edge::new(400 * BITS_PER_PACKET, 0.90));
+    graph.add_edge(nodes[0], nodes[1], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[1], nodes[2], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[2], nodes[3], Edge::new(3 * 1000000000, 0.95));
+    graph.add_edge(nodes[3], nodes[4], Edge::new(1 * 1000000000,  0.90));
+    graph.add_edge(nodes[4], nodes[0], Edge::new(1 * 1000000000, 0.90));
 
-    graph.add_edge(nodes[5], nodes[6], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[6], nodes[7], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[7], nodes[8], Edge::new(700 * BITS_PER_PACKET, 0.95));
-    graph.add_edge(nodes[8], nodes[9], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[9], nodes[5], Edge::new(400 * BITS_PER_PACKET, 0.90));
+    graph.add_edge(nodes[5], nodes[6], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[6], nodes[7], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[7], nodes[8], Edge::new(3 * 1000000000, 0.95));
+    graph.add_edge(nodes[8], nodes[9], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[9], nodes[5], Edge::new(1 * 1000000000, 0.90));
 
-    graph.add_edge(nodes[10], nodes[11], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[11], nodes[12], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[12], nodes[13], Edge::new(700 * BITS_PER_PACKET, 0.95));
-    graph.add_edge(nodes[13], nodes[14], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[14], nodes[10], Edge::new(400 * BITS_PER_PACKET, 0.90));
+    graph.add_edge(nodes[10], nodes[11], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[11], nodes[12], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[12], nodes[13], Edge::new(3 * 1000000000, 0.95));
+    graph.add_edge(nodes[13], nodes[14], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[14], nodes[10], Edge::new(1 * 1000000000, 0.90));
 
-    graph.add_edge(nodes[15], nodes[16], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[16], nodes[17], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[17], nodes[18], Edge::new(700 * BITS_PER_PACKET, 0.95));
-    graph.add_edge(nodes[18], nodes[19], Edge::new(400 * BITS_PER_PACKET, 0.90));
-    graph.add_edge(nodes[19], nodes[15], Edge::new(400 * BITS_PER_PACKET, 0.90));
+    graph.add_edge(nodes[15], nodes[16], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[16], nodes[17], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[17], nodes[18], Edge::new(3 * 1000000000, 0.95));
+    graph.add_edge(nodes[18], nodes[19], Edge::new(1 * 1000000000, 0.90));
+    graph.add_edge(nodes[19], nodes[15], Edge::new(1 * 1000000000, 0.90));
 
-    graph.add_edge(nodes[2], nodes[8], Edge::new(1000 * BITS_PER_PACKET, 0.98));
-    graph.add_edge(nodes[7], nodes[13], Edge::new(1000 * BITS_PER_PACKET, 0.98));
-    graph.add_edge(nodes[12], nodes[18], Edge::new(1000 * BITS_PER_PACKET, 0.98));
-    graph.add_edge(nodes[3],nodes[17], Edge::new(1000 * BITS_PER_PACKET,  0.98));
+    graph.add_edge(nodes[2], nodes[8], Edge::new(3 * 1000000000, 0.85));
+    graph.add_edge(nodes[7], nodes[13], Edge::new(3 * 1000000000, 0.85));
+    graph.add_edge(nodes[12], nodes[18], Edge::new(3 * 1000000000, 0.85));
+    graph.add_edge(nodes[3],nodes[17], Edge::new(3 * 1000000000,  0.85));
 
     println!("{}", "Eksperyment 1:".underline());
     run_experiment1(&mut graph.clone(), &mut n.clone(), &mut rng.clone(), &nodes.clone());
@@ -79,49 +79,50 @@ fn main() {
     
 }
 
-fn run_experiment1(graph: &mut UnGraph<i32, Edge>, n: &mut Vec<Vec<f64>>, rng: &mut ThreadRng, nodes: &Vec<NodeIndex>) {
+fn run_experiment1(graph: &mut UnGraph<u128, Edge>, n: &mut Vec<Vec<f64>>, rng: &mut ThreadRng, nodes: &Vec<NodeIndex>) {
     let mut file = File::create("data1.txt").unwrap();
 
     for _ in 0..10 {
-        let (s, n_c, o, t_s) = run_simulation(graph.clone(), n.clone(), rng.clone(), nodes.clone(), 0.3, 100);
+        let (s, n_c, o, t_s) = run_simulation(graph.clone(), n.clone(), rng.clone(), nodes.clone(), 0.3, 1000);
 
-        println!("{}", format!("Success: {}% | Not connected: {}%, Overloaded: {}%, Too slow: {}%", s as f64, n_c as f64, o as f64, t_s as f64).bright_purple().bold());
-        file.write_all(format!("{}  {}  {}  {}\n", s, n_c, o, t_s).as_bytes());
+        println!("{}", format!("Success: {}% | Not connected: {}%, Overloaded: {}%, Too slow: {}%", s as f64/10.0, n_c as f64/10.0, o as f64/10.0, t_s as f64/10.0).bright_purple().bold());
+        let _ = file.write_all(format!("{}  {}  {}  {}\n", s, n_c, o, t_s).as_bytes());
         println!("Increasing n[*][*] by *= 1.1");
         increase_values(n, 1.1);
     }
 }
 
-fn run_experiment2(graph: &mut UnGraph<i32, Edge>, n: &mut Vec<Vec<f64>>, rng: &mut ThreadRng, nodes: &Vec<NodeIndex>) {
+fn run_experiment2(graph: &mut UnGraph<u128, Edge>, n: &mut Vec<Vec<f64>>, rng: &mut ThreadRng, nodes: &Vec<NodeIndex>) {
     let mut file = File::create("data2.txt").unwrap();
 
     for _ in 0..10 {
-        let (s, n_c, o, t_s) = run_simulation(graph.clone(), n.clone(), rng.clone(), nodes.clone(), 0.3, 100);
+        let (s, n_c, o, t_s) = run_simulation(graph.clone(), n.clone(), rng.clone(), nodes.clone(), 0.3, 1000);
 
-        println!("{}", format!("Success: {}% | Not connected: {}%, Overloaded: {}%, Too slow: {}%", s as f64, n_c as f64, o as f64, t_s as f64).bright_purple().bold());
-        file.write_all(format!("{}  {}  {}  {}\n", s, n_c, o, t_s).as_bytes());
+        println!("{}", format!("Success: {}% | Not connected: {}%, Overloaded: {}%, Too slow: {}%", s as f64/10.0, n_c as f64/10.0, o as f64/10.0, t_s as f64/10.0).bright_purple().bold());
+        let _ = file.write_all(format!("{}  {}  {}  {}\n", s, n_c, o, t_s).as_bytes());
         println!("Increasing capacities by *= 1.1");
         increase_capacity(graph, 1.1);
     }
 }
 
-fn run_experiment3(mut graph: &mut UnGraph<i32, Edge>, n: &mut Vec<Vec<f64>>, rng: &mut ThreadRng, nodes: &Vec<NodeIndex>) {
+fn run_experiment3(mut graph: &mut UnGraph<u128, Edge>, n: &mut Vec<Vec<f64>>, rng: &mut ThreadRng, nodes: &Vec<NodeIndex>) {
     let mut file = File::create("data3.txt").unwrap();
 
     for _ in 0..10 {
-        let (s, n_c, o, t_s) = run_simulation(graph.clone(), n.clone(), rng.clone(), nodes.clone(), 0.3, 100);
+        let (s, n_c, o, t_s) = run_simulation(graph.clone(), n.clone(), rng.clone(), nodes.clone(), 0.3, 1000);
 
-        println!("{}", format!("Success: {}% | Not connected: {}%, Overloaded: {}%, Too slow: {}%", s as f64, n_c as f64, o as f64, t_s as f64).bright_purple().bold());
-        file.write_all(format!("{}  {}  {}  {}\n", s, n_c, o, t_s).as_bytes());
+        println!("{}", format!("Success: {}% | Not connected: {}%, Overloaded: {}%, Too slow: {}%", s as f64/10.0, n_c as f64/10.0, o as f64/10.0, t_s as f64/10.0).bright_purple().bold());
+        let _ = file.write_all(format!("{}  {}  {}  {}\n", s, n_c, o, t_s).as_bytes());
 
         add_random_edge(&mut graph);
+        increase_capacity(graph, 1.1);
     }
 }
 
-fn increase_capacity(graph: &mut UnGraph<i32, Edge>, increase: f64) {
+fn increase_capacity(graph: &mut UnGraph<u128, Edge>, increase: f64) {
     for edge_index in graph.edge_indices() {
         if let Some(edge) = graph.edge_weight_mut(edge_index) {
-            edge.capacity = (edge.capacity as f64 * increase) as i32;
+            edge.capacity = (edge.capacity as f64 * increase) as u128;
         }
     }
 }
@@ -134,7 +135,7 @@ fn increase_values(n: &mut Vec<Vec<f64>>, increase: f64) {
     }
 }
 
-fn add_random_edge(graph: &mut UnGraph<i32, Edge>) {
+fn add_random_edge(graph: &mut UnGraph<u128, Edge>) {
     //Add a random edge between two existing nodes
     let mut rng = rand::thread_rng();
     let num_nodes = graph.node_count();
@@ -146,16 +147,16 @@ fn add_random_edge(graph: &mut UnGraph<i32, Edge>) {
                 break index;
             }
         };
-        let node1 = NodeIndex::new(node1_index);
-        let node2 = NodeIndex::new(node2_index);
-        let capacity = rng.gen_range(200..1000) * BITS_PER_PACKET;
-        let reliability = rng.gen_range(0.8..1.0);
+        let node1: NodeIndex = NodeIndex::new(node1_index);
+        let node2: NodeIndex = NodeIndex::new(node2_index);
+        let capacity = 5/6 * 100000000000;
+        let reliability = rng.gen_range(0.0..0.01);
         println!("Added between {:?} and {:?}", node1, node2);
         graph.add_edge(node1, node2, Edge::new(capacity, reliability));
     }
 }
 
-fn run_simulation(graph: UnGraph<i32, Edge>, n: Vec<Vec<f64>>, rng: ThreadRng, nodes: Vec<NodeIndex>, threshold: f64, iterations: i32) -> (i32, i32, i32, i32) {
+fn run_simulation(graph: UnGraph<u128, Edge>, n: Vec<Vec<f64>>, rng: ThreadRng, nodes: Vec<NodeIndex>, threshold: f64, iterations: u128) -> (u128, u128, u128, u128) {
     let mut success = 0;
     let mut not_connected = 0;
     let mut overloaded = 0;
@@ -185,7 +186,7 @@ enum FailedExperiment {
     TooSlow,
 }
 
-fn perform_experiment(mut graph: UnGraph<i32, Edge>, n: Vec<Vec<f64>>, mut rng: ThreadRng, nodes: Vec<NodeIndex>, threshold: f64) -> Result<bool, FailedExperiment> {
+fn perform_experiment(mut graph: UnGraph<u128, Edge>, n: Vec<Vec<f64>>, mut rng: ThreadRng, nodes: Vec<NodeIndex>, threshold: f64) -> Result<bool, FailedExperiment> {
 
     for edge_index in graph.edge_indices() {
         if let Some(edge) = graph.edge_weight(edge_index) {
@@ -251,11 +252,11 @@ fn perform_experiment(mut graph: UnGraph<i32, Edge>, n: Vec<Vec<f64>>, mut rng: 
     //println!("{:?}", graph)
 }
 
-fn assign_flow(graph: &mut UnGraph<i32, Edge>, n: Vec<Vec<f64>>,  nodes: Vec<NodeIndex>) {
+fn assign_flow(graph: &mut UnGraph<u128, Edge>, n: Vec<Vec<f64>>,  nodes: Vec<NodeIndex>) {
     for i in 0..20 {
         for j in 0..20 {
             if i != j {
-                let n_value = n[i][j] as i32; // Convert n_value to i32
+                let n_value = n[i][j] as u128; // Convert n_value to u128
                 let path = astar(&*graph, nodes[i], |finish| finish == nodes[j], |_| 0, |_| 0);
                 if let Some((_, path)) = path {
                     for window in path.windows(2) {
@@ -275,13 +276,13 @@ fn assign_flow(graph: &mut UnGraph<i32, Edge>, n: Vec<Vec<f64>>,  nodes: Vec<Nod
 
 #[derive(Debug, Clone)] // Implement the Clone trait for the Edge struct
 struct Edge {
-    capacity: i32,
-    flow: i32,
+    capacity: u128,
+    flow: u128,
     reliability: f64,
 }
 
 impl Edge {
-    fn new(capacity: i32, reliability: f64) -> Edge {
+    fn new(capacity: u128, reliability: f64) -> Edge {
         Edge {capacity, flow: 0, reliability}
     }
 }
