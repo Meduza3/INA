@@ -3,18 +3,18 @@ use crate::dhsetup::{self, DHSetup};
 use rand::Rng;
 
 #[derive(Clone)]
-pub struct User<const N: i128> {
+pub struct User<const N: i32> {
     setup: dhsetup::DHSetup<N>,
     secret: GFInt<N>,
     public_key: GFInt<N>,
     encryption_key: GFInt<N>,
 }
 
-impl<const N: i128> User<N> {
+impl<const N: i32> User<N> {
 
     fn generate_secret(&mut self) {
         let mut rng = rand::thread_rng();
-        let secret_value: i128 = rng.gen_range(1..N-2);
+        let secret_value: i32 = rng.gen_range(1..N-2);
         self.secret = GFInt::new(secret_value);
         self.public_key = self.setup.clone().power(self.setup.clone().get_generator(), self.secret.get_value() as u128)
     }
