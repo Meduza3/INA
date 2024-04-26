@@ -45,22 +45,22 @@ int main(int argc, char* argv[]) {
 
     std::string filename;
     if(picked_algorithm == INSERTION) {
-        results = sorts::insertionSort(listOfNumbers, metrics);
+        results = sorts::insertionSort(listOfNumbers, metrics, listOfNumbers.size());
         filename = "data/insertion.txt";
     } else if (picked_algorithm == QUICK) {
-        results = sorts::quickSort(listOfNumbers, 0, listOfNumbers.size() - 1, metrics);
+        results = sorts::quickSort(listOfNumbers, 0, listOfNumbers.size() - 1, metrics, listOfNumbers.size());
         filename = "data/quick.txt";   
     } else if (picked_algorithm == HYBRID) {
-        results = sorts::hybridSort(listOfNumbers, metrics);
+        results = sorts::hybridSort(listOfNumbers, metrics, listOfNumbers.size());
         filename = "data/hybrid.txt";   
     } else if (picked_algorithm == MERGE) {
-        results = sorts::mergeSort(listOfNumbers, 0, listOfNumbers.size() - 1, metrics);
+        results = sorts::mergeSort(listOfNumbers, 0, listOfNumbers.size() - 1, metrics, listOfNumbers.size());
         filename = "data/merge.txt";   
     } else if (picked_algorithm == DUALPIVOT) {
-        results = sorts::dualPivotQuickSort(listOfNumbers, 0, listOfNumbers.size() - 1, metrics);
+        results = sorts::dualPivotQuickSort(listOfNumbers, 0, listOfNumbers.size() - 1, metrics, listOfNumbers.size());
         filename = "data/dualpivot.txt";   
     } else if (picked_algorithm == CUSTOM) {
-        results = sorts::customSort(listOfNumbers, metrics);
+        results = sorts::customSort(listOfNumbers, metrics, listOfNumbers.size());
         filename = "data/custom.txt";   
     }
 

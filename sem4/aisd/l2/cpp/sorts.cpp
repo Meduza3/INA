@@ -6,10 +6,9 @@ void sorts::printArray(const std::vector<int>& arr) {
         std::cout << std::endl;
 }
 
-sorts::SortResults sorts::insertionSort(std::vector<int>& arr, sorts::SortMetrics& metrics) {
+sorts::SortResults sorts::insertionSort(std::vector<int>& arr, sorts::SortMetrics& metrics, int n) {
     int i, j, key;
     std::vector<int> arr_copy = arr;
-    int n = arr.size();
     for (i = 1; i < n; i++) {
         key = arr[i];
         j = i - 1;
@@ -26,8 +25,6 @@ sorts::SortResults sorts::insertionSort(std::vector<int>& arr, sorts::SortMetric
         arr[j + 1] = key;
         printArray(arr);
     }
-    printf("Original array: ");
-    printArray(arr_copy);
     return(sorts::SortResults{arr, metrics});
 }
 
@@ -47,25 +44,25 @@ int sorts::partition(std::vector<int>& arr, int low, int high, sorts::SortMetric
     return (i + 1);
 }
 
-sorts::SortResults sorts::quickSort(std::vector<int>& arr, int low, int high, sorts::SortMetrics& metrics) {
+sorts::SortResults sorts::quickSort(std::vector<int>& arr, int low, int high, sorts::SortMetrics& metrics, int n) {
     if (low < high) {
         int pi = sorts::partition(arr, low, high, metrics);
-        quickSort(arr, low, pi - 1, metrics);
-        quickSort(arr, pi + 1, high, metrics);
+        quickSort(arr, low, pi - 1, metrics, n);
+        quickSort(arr, pi + 1, high, metrics, n);
+        if(n <= 40) {
         printArray(arr);
+        }
     }
     return {arr, metrics};
 }
 
-void sorts::merge(std::vector<int>& arr, int l, int m, int r, sorts::SortMetrics& metrics) {
+void sorts::merge(std::vector<int>& arr, int l, int m, int r, sorts::SortMetrics& metrics, int n) {
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
 
-    // Create temp arrays
     std::vector<int> L(n1), R(n2);
 
-    // Copy data to temp arrays L[] and R[]
     for (i = 0; i < n1; i++)
         L[i] = arr[l + i];
     for (j = 0; j < n2; j++)
@@ -87,48 +84,49 @@ void sorts::merge(std::vector<int>& arr, int l, int m, int r, sorts::SortMetrics
         k++;
     }
 
-    // Copy the remaining elements of L[], if there are any
     while (i < n1) {
+        metrics.swaps++;
         arr[k] = L[i];
         i++;
         k++;
     }
 
-    // Copy the remaining elements of R[], if there are any
     while (j < n2) {
+        metrics.swaps++;
         arr[k] = R[j];
         j++;
         k++;
     }
 
-    // Optional: print array to trace the sort
-    printArray(arr);
+    if(n <= 40) {
+        printArray(arr);
+    }
 }
 
-sorts::SortResults sorts::mergeSort(std::vector<int>& arr, int l, int r, sorts::SortMetrics metrics) {
+sorts::SortResults sorts::mergeSort(std::vector<int>& arr, int l, int r, sorts::SortMetrics metrics, int n) {
     if (l < r) {
         int m = l + (r - l) / 2;
 
-        mergeSort(arr, l, m, metrics);
-        mergeSort(arr, m + 1, r, metrics);
+        mergeSort(arr, l, m, metrics, n);
+        mergeSort(arr, m + 1, r, metrics, n);
 
-        merge(arr, l, m, r, metrics);
+        merge(arr, l, m, r, metrics, n);
     }
-    return {arr, metrics};
+    return {arr, metrics};  
 }
 
-sorts::SortResults sorts::hybridSort(std::vector<int>& arr, sorts::SortMetrics& metrics) {
+sorts::SortResults sorts::hybridSort(std::vector<int>& arr, sorts::SortMetrics& metrics, int n) {
     if(arr.size() < 17){
         std::cout << "Using insertionSort:\n";
-        insertionSort(arr, metrics);
+        insertionSort(arr, metrics, n);
     } else {
         std::cout << "Using quickSort:\n";
-        quickSort(arr, 0, arr.size() - 1, metrics);
+        quickSort(arr, 0, arr.size() - 1, metrics, n);
     }
     return {arr, metrics};
 }
 
-void sorts::dualPivotPartition(std::vector<int>& arr, int low, int high, int& lp, int& rp, sorts::SortMetrics& metrics) {
+void sorts::dualPivotPartition(std::vector<int>& arr, int low, int high, int& lp, int& rp, sorts::SortMetrics& metrics, int n) {
     if (arr[low] > arr[high])
         std::swap(arr[low], arr[high]);
 
@@ -172,13 +170,17 @@ void sorts::dualPivotPartition(std::vector<int>& arr, int low, int high, int& lp
     rp = g;  // Update right pivot index
 }
 
-sorts::SortResults sorts::dualPivotQuickSort(std::vector<int>& arr, int low, int high, sorts::SortMetrics& metrics) {
+sorts::SortResults sorts::dualPivotQuickSort(std::vector<int>& arr, int low, int high, sorts::SortMetrics& metrics, int n) {
     if (low < high) {
         int lp, rp;
-        dualPivotPartition(arr, low, high, lp, rp, metrics);
-        dualPivotQuickSort(arr, low, lp - 1, metrics);
-        dualPivotQuickSort(arr, lp + 1, rp - 1, metrics);
-        dualPivotQuickSort(arr, rp + 1, high, metrics);
+        dualPivotPartition(arr, low, high, lp, rp, metrics, n);
+        dualPivotQuickSort(arr, low, lp - 1, metrics, n);
+        dualPivotQuickSort(arr, lp + 1, rp - 1, metrics, n);
+        dualPivotQuickSort(arr, rp + 1, high, metrics, n);
+
+        if( n <= 40) {
+            printArray(arr);
+        }
     }
     return {arr, metrics};
 }
@@ -197,7 +199,7 @@ void sorts::findRuns(std::vector<int>& arr, std::vector<int>& runs) {
     }
 }
 
-void sorts::mergeRuns(std::vector<int>& arr, int start, int mid, int end, sorts::SortMetrics& metrics) {
+void sorts::mergeRuns(std::vector<int>& arr, int start, int mid, int end, sorts::SortMetrics& metrics, int n) {
     std::vector<int> temp(end - start + 1);
     int i = start, j = mid + 1, k = 0;
 
@@ -211,31 +213,37 @@ void sorts::mergeRuns(std::vector<int>& arr, int start, int mid, int end, sorts:
     }
 
     while (i <= mid) {
+        metrics.swaps++;
         temp[k++] = arr[i++];
     }
 
     while (j <= end) {
+        metrics.swaps++;
         temp[k++] = arr[j++];
     }
 
     for (i = start, k = 0; i <= end; i++, k++) {
         arr[i] = temp[k];
     }
-}
 
-void sorts::adaptiveMergeSort(std::vector<int>& arr, std::vector<int>& runs, int low, int high, sorts::SortMetrics& metrics) {
-    if (low < high) {
-        int mid = low + (high - low) / 2;
-        adaptiveMergeSort(arr, runs, low, mid, metrics);
-        adaptiveMergeSort(arr, runs, mid + 1, high, metrics);
-        mergeRuns(arr, runs[low], runs[mid], runs[high], metrics);
+    if( n <= 40) {
+        printArray(arr);
     }
 }
 
-sorts::SortResults sorts::customSort(std::vector<int>& arr, sorts::SortMetrics& metrics) {
+void sorts::adaptiveMergeSort(std::vector<int>& arr, std::vector<int>& runs, int low, int high, sorts::SortMetrics& metrics, int n) {
+    if (low < high) {
+        int mid = low + (high - low) / 2;
+        adaptiveMergeSort(arr, runs, low, mid, metrics, n);
+        adaptiveMergeSort(arr, runs, mid + 1, high, metrics, n);
+        mergeRuns(arr, runs[low], runs[mid], runs[high], metrics, n);
+    }
+}
+
+sorts::SortResults sorts::customSort(std::vector<int>& arr, sorts::SortMetrics& metrics, int n) {
     std::vector<int> runs;
     findRuns(arr, runs);
-    adaptiveMergeSort(arr, runs, 0, runs.size() - 1, metrics);
+    adaptiveMergeSort(arr, runs, 0, runs.size() - 1, metrics, n);
     return {arr, metrics};
 }
 

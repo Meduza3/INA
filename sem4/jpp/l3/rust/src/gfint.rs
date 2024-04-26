@@ -1,36 +1,38 @@
+use std::ops::{Add, Sub, Mul, Div};
 use std::fmt;
-use std::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 
-struct GFInt<const CHARACTERISTIC: i32> {
-    value: i32,
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct GFInt<const N: i128> {
+    value: i128,
 }
 
-impl<const CHARACTERISTIC: i32> GFInt<CHARACTERISTIC> {
-    fn new(val: i32) -> Self {
-        GFInt {
-            value: ((val % CHARACTERISTIC + CHARACTERISTIC) % CHARACTERISTIC),
-        }
+impl<const N: i128> GFInt<N> {
+    pub fn new(val: i128) -> Self {
+        let value = val.rem_euclid(N);
+        GFInt { value: value }
     }
 
-    fn value(&self) -> i32 {
+    pub fn get_value(self) -> i128 {
         self.value
     }
 
-    fn mod_inverse(a: i32, m: i32) -> i32 {
-        let (mut m0, mut t, mut q) = (m, 0, 0);
-        let (mut x0, mut x1) = (0, 1);
+    fn mod_inverse(a: i128, modulus: i128) -> i128 {
+        let m0 = modulus;
+        let mut x0 = 0;
+        let mut x1 = 1;
+        let mut a = a;
+        let mut r#mod = modulus;
 
-        if m == 1 {
+        if modulus == 1 {
             return 0;
         }
 
-        let mut a = a;
         while a > 1 {
-            q = a / m;
-            t = m;
-            m = a % m;
+            let q = a / r#mod;
+            let t = r#mod;
+            r#mod = a % r#mod;
             a = t;
-            t = x0;
+            let t = x0;
             x0 = x1 - q * x0;
             x1 = t;
         }
@@ -43,70 +45,57 @@ impl<const CHARACTERISTIC: i32> GFInt<CHARACTERISTIC> {
     }
 }
 
-impl<const CHARACTERISTIC: i32> fmt::Display for GFInt<CHARACTERISTIC> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.value)
-    }
-}
-
-impl<const CHARACTERISTIC: i32> Add for GFInt<CHARACTERISTIC> {
+impl<const N: i128> Add for GFInt<N> {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        Self::new(self.value + rhs.value)
+        Self::new((self.value + rhs.value).rem_euclid(N))
     }
 }
 
-impl<const CHARACTERISTIC: i32> AddAssign for GFInt<CHARACTERISTIC> {
-    fn add_assign(&mut self, rhs: Self) {
-        self.value = (self.value + rhs.value) % CHARACTERISTIC;
-    }
-}
-
-impl<const CHARACTERISTIC: i32> Sub for GFInt<CHARACTERISTIC> {
+impl<const N: i128> Sub for GFInt<N> {
     type Output = Self;
 
-    fn sub(self, rhs: Self) -> Self::Output {
-        Self::new(self.value - rhs.value)
+    fn sub(self, rhs:Self) -> Self::Output {
+       Self::new((self.value - rhs.value).rem_euclid(N))
     }
 }
 
-impl<const CHARACTERISTIC: i32> SubAssign for GFInt<CHARACTERISTIC> {
-    fn sub_assign(&mut self, rhs: Self) {
-        self.value = (self.value - rhs.value + CHARACTERISTIC) % CHARACTERISTIC;
-    }
-}
-
-impl<const CHARACTERISTIC: i32> Mul for GFInt<CHARACTERISTIC> {
+impl<const N: i128> Mul for GFInt<N> {
     type Output = Self;
 
     fn mul(self, rhs: Self) -> Self::Output {
-        let product = (self.value as i64 * rhs.value as i64) % CHARACTERISTIC as i64;
-        Self::new(product as i32)
+        Self::new((self.value as i64 * rhs.value as i64 % N as i64) as i128)
     }
 }
 
-impl<const CHARACTERISTIC: i32> MulAssign for GFInt<CHARACTERISTIC> {
-    fn mul_assign(&mut self, rhs: Self) {
-        self.value = ((self.value as i64 * rhs.value as i64) % CHARACTERISTIC as i64) as i32;
-    }
-}
-
-impl<const CHARACTERISTIC: i32> Div for GFInt<CHARACTERISTIC> {
+impl<const N: i128> Div for GFInt<N> {
     type Output = Self;
 
     fn div(self, rhs: Self) -> Self::Output {
         if rhs.value == 0 {
             panic!("Attempt to divide by zero!");
         }
-        let inverse = Self::mod_inverse(rhs.value, CHARACTERISTIC);
-        let result = (self.value as i64 * inverse as i64) % CHARACTERISTIC as i64;
-        Self::new(result as i32)
+        let inverse = Self::mod_inverse(rhs.value, N);
+        Self::new((self.value as i64 * inverse as i64 % N as i64) as i128)
     }
 }
 
-impl<const CHARACTERISTIC: i32> DivAssign for GFInt<CHARACTERISTIC> {
-    fn div_assign(&mut self, rhs: Self) {
-        *self = *self / rhs;
+impl<const N: i128> fmt::Display for GFInt<N> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.value)
     }
+}
+
+fn main() {
+    let a = GFInt::<1234567891>::new(4591);
+    let b = GFInt::<1234567891>::new(1435);
+    let c = GFInt::<1234567891>::new(5925);
+    let d = GFInt::<1234567891>::new(14854);
+
+    println!("a + b = {}", a + b);
+    println!("a - d = {}", a - d);
+    println!("d * c = {}", d * c);
+    println!("c / b = {}", c / b);
+    println!("is a equal to b*d? {}", if a == b * d { "Yes" } else { "No" });
 }
