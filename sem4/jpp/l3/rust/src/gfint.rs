@@ -2,21 +2,21 @@ use std::ops::{Add, Sub, Mul, Div};
 use std::fmt;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct GFInt<const N: i128> {
-    value: i128,
+pub struct GFInt<const N: i32> {
+    value: i32,
 }
 
-impl<const N: i128> GFInt<N> {
-    pub fn new(val: i128) -> Self {
+impl<const N: i32> GFInt<N> {
+    pub fn new(val: i32) -> Self {
         let value = val.rem_euclid(N);
         GFInt { value: value }
     }
 
-    pub fn get_value(self) -> i128 {
+    pub fn get_value(self) -> i32 {
         self.value
     }
 
-    fn mod_inverse(a: i128, modulus: i128) -> i128 {
+    fn mod_inverse(a: i32, modulus: i32) -> i32 {
         let m0 = modulus;
         let mut x0 = 0;
         let mut x1 = 1;
@@ -45,7 +45,7 @@ impl<const N: i128> GFInt<N> {
     }
 }
 
-impl<const N: i128> Add for GFInt<N> {
+impl<const N: i32> Add for GFInt<N> {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -53,7 +53,7 @@ impl<const N: i128> Add for GFInt<N> {
     }
 }
 
-impl<const N: i128> Sub for GFInt<N> {
+impl<const N: i32> Sub for GFInt<N> {
     type Output = Self;
 
     fn sub(self, rhs:Self) -> Self::Output {
@@ -61,15 +61,15 @@ impl<const N: i128> Sub for GFInt<N> {
     }
 }
 
-impl<const N: i128> Mul for GFInt<N> {
+impl<const N: i32> Mul for GFInt<N> {
     type Output = Self;
 
     fn mul(self, rhs: Self) -> Self::Output {
-        Self::new((self.value as i64 * rhs.value as i64 % N as i64) as i128)
+        Self::new((self.value as i64 * rhs.value as i64 % N as i64) as i32)
     }
 }
 
-impl<const N: i128> Div for GFInt<N> {
+impl<const N: i32> Div for GFInt<N> {
     type Output = Self;
 
     fn div(self, rhs: Self) -> Self::Output {
@@ -77,11 +77,11 @@ impl<const N: i128> Div for GFInt<N> {
             panic!("Attempt to divide by zero!");
         }
         let inverse = Self::mod_inverse(rhs.value, N);
-        Self::new((self.value as i64 * inverse as i64 % N as i64) as i128)
+        Self::new((self.value as i64 * inverse as i64 % N as i64) as i32)
     }
 }
 
-impl<const N: i128> fmt::Display for GFInt<N> {
+impl<const N: i32> fmt::Display for GFInt<N> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.value)
     }

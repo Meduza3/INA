@@ -10,7 +10,7 @@ mod user;
 
 
 fn main() {
-    const CHARACTERISTIC: i128 = 1234567891;
+    const CHARACTERISTIC: i32 = 1234567891;
     let dh_setup: DHSetup<CHARACTERISTIC> = DHSetup::new();
 
     let mut alice: User<CHARACTERISTIC> = User::new(dh_setup.clone());
