@@ -15,5 +15,11 @@ fn main() {
     println!("{:?}", randselect::rand_select(&mut arr, 0, arr_len - 1, 5));
     
 
+    println!("{:?}", select::select(&mut arr, 0, arr_len - 1, 1));
+    println!("{:?}", select::select(&mut arr, 0, arr_len - 1, 2));
+    println!("{:?}", select::select(&mut arr, 0, arr_len - 1, 3));
+    println!("{:?}", select::select(&mut arr, 0, arr_len - 1, 4));
+    println!("{:?}", select::select(&mut arr, 0, arr_len - 1, 5));
+
 }
 
