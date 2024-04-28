@@ -36,11 +36,15 @@ fn main() {
         let i = numbers[1];
         let mut numbers: Vec<usize> = numbers[2..].to_vec();
         let initial_numbers = numbers.clone();
+        let mut comparisons: usize = 0;
+        let mut swaps: usize = 0;
         let goal = if mode == "rand" {
-            randselect::rand_select(&mut numbers, 0, size - 1, i)
+            randselect::rand_select(&mut numbers, 0, size - 1, i, &mut comparisons, &mut swaps)
         } else {
-            select::select(&mut numbers, 0, size - 1, i)
+            select::select(&mut numbers, 0, size - 1, i, &mut comparisons, &mut swaps)
         };
+        println!("Porównania: {comparisons}");
+        println!("Przestawienia: {swaps}");
         if size <= 50 {
             println!("Tryb: {mode}");
             println!("Przed SELECT: {:?}", initial_numbers);
