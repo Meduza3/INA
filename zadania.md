@@ -6,7 +6,7 @@
 
 **ALGORYTMY I STRUKTURY DANYCH**
 
-- Lista 3.L - Wykonac do 05.06
+- Lista 3.L - Wykonac do 05.06 
 
 **JEZYKI I PARADYGMATY PROGRAMOWANIA**
 
