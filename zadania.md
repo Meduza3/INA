@@ -1,16 +1,17 @@
 **TECHNOLOGIE SIECIOWE**
 
-- Lista 3
+- Lista 3 na 14.05
+
 - Lista 4
-- Lista 5
+- Lista 5 
 
 **ALGORYTMY I STRUKTURY DANYCH**
 
-- Lista 3.L - Wykonac do 05.06 
+- Lista 3.L - Wykonac do 05.06 <--- Wysłać na SVNa
 
 **JEZYKI I PARADYGMATY PROGRAMOWANIA**
 
-- Lista 3.L - Wykonac do 04.19
+- Lista 3.L - Wykonac do 04.19 <--- Poprawić błędy w Javie
 
 **PROGRAMOWANIE W LOGICE**
 
@@ -25,4 +26,4 @@
 **WYBRANE ZAGADNIENIA ALGEBRY**
 
 - 7
-- 8
+- 8 
