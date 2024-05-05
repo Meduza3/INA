@@ -33,19 +33,26 @@ fn partition_median_of_medians(arr: &mut [usize], p: usize, q: usize, comparison
         select(&mut medians, 0, medians_len - 1, medians_len / 2, comparisons, swaps)
     };
 
-    let mut i = p;
-    let mut j = q;
-    while i < j {
-        while arr[i] < median_of_medians { i += 1; }
-        while arr[j] > median_of_medians { j -= 1; }
-        if i < j {
-            arr.swap(i, j);
+    let pivot_index = arr.iter().position(|&x| x == median_of_medians).unwrap();
+    
+    arr.swap(pivot_index, q);
+    let mut store_index = p;
+
+    for i in p..q {
+        *comparisons += 1;
+        if arr[i] < median_of_medians {
+            arr.swap(store_index, i);
+            *swaps += 1;
+            store_index += 1;
         }
     }
-    i
+    
+    arr.swap(store_index, q);
+    store_index
 }
 
 fn median_of_five(arr: &mut [usize], comparisons: &mut usize, swaps: &mut usize) -> usize {
+
     for i in 0..arr.len() {
         for j in i + 1..arr.len() {
             *comparisons += 1;
@@ -55,5 +62,6 @@ fn median_of_five(arr: &mut [usize], comparisons: &mut usize, swaps: &mut usize)
             }
         }
     }
+
     arr[arr.len() / 2]
 }
