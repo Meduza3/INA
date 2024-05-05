@@ -6,11 +6,11 @@ x_values = []
 y_values = []
 
 # Read data from the file
-with open('output.txt', 'r') as file:
+with open('select-7.txt', 'r') as file:
     for line in file:
         x, y, z = line.split()  # Assuming the values are separated by whitespace
         x_values.append(float(x))
-        y_values.append(float(y))
+        y_values.append(float(z))
 
 # Calculate the average of the corresponding y values
 averages = {}
@@ -28,6 +28,6 @@ for x, y_list in averages.items():
 # Plot the averages
 plt.plot(x_avg, y_avg)
 plt.xlabel('Rozmiar tablicy')
-plt.ylabel('Średnia ilość porównań')
-plt.title('Porównania - Rand Select')
-plt.savefig('comparisons_rand.png')
+plt.ylabel('Średnia ilość przestawień')
+plt.title('Przestawienia - Select-7')
+plt.savefig('swaps_select7.png')
