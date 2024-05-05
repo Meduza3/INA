@@ -2,7 +2,7 @@ use rand::Rng;
 
 pub fn rand_select(arr: &mut Vec<usize>, p: usize, q: usize, i: usize, comparisons: &mut usize, swaps: &mut usize) -> usize {
     if p == q {
-        return arr[p as usize];
+        return arr[p];
     }
 
     let r = rand_partition(arr, p, q, comparisons, swaps); // Globalny indeks pivota

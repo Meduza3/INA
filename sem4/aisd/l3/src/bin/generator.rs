@@ -12,6 +12,6 @@ fn main() {
     print!("{} ", rand::thread_rng().gen_range(1..args[1].parse().unwrap()));
 
     for _ in 0..count {
-        print!("{} ", rand::thread_rng().gen_range(1..=200));
+        print!("{} ", rand::thread_rng().gen_range(1..=2*count));
     }
 }

@@ -1,7 +1,8 @@
-use std::io::{self, BufRead};
+use std::{fs::OpenOptions, io::{self, BufRead, Write}};
 
 mod select;
 mod randselect;
+
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -45,6 +46,13 @@ fn main() {
         };
         println!("Porównania: {comparisons}");
         println!("Przestawienia: {swaps}");
+        let mut file = OpenOptions::new()
+        .append(true)
+        .create(true)
+        .open("output.txt").unwrap();
+        let data = format!("{}\t {}\t{}\n", size, comparisons, swaps);
+        let _ = file.write_all(data.as_bytes());
+        println!("Rozmiar: {}\tPorównania: {}\tPrzestawienia: {}", size, comparisons, swaps);
         if size <= 50 {
             println!("Tryb: {mode}");
             println!("Przed SELECT: {:?}", initial_numbers);
