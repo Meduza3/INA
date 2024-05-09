@@ -13,8 +13,12 @@ public class User {
         generateSecret();
     }
 
+    public GF_Int getSecret() {
+        return secret;
+    }
+
     private void generateSecret() {
-        int secretValue = 1 + rng.nextInt(dhSetup.getCharacteristic() - 2);
+        long secretValue = 1 + rng.nextInt((int) (dhSetup.getCharacteristic() - 2));
         secret = new GF_Int(secretValue, dhSetup.getCharacteristic());
         publicKey = dhSetup.power(dhSetup.getGenerator(), secret.getValue());
     }
@@ -28,10 +32,12 @@ public class User {
     }
 
     public GF_Int encrypt(GF_Int m) {
-        return m.multiply(encryptionKey);
+        //return m.multiply(encryptionKey);
+        return dhSetup.power(m, encryptionKey.getValue());
     }
 
     public GF_Int decrypt(GF_Int c) {
-        return c.divide(encryptionKey);
+        GF_Int inverseKey = encryptionKey.inverse();
+        return inverseKey.multiply(c);
     }
 }
