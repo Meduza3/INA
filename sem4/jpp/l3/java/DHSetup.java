@@ -3,50 +3,59 @@ import java.util.List;
 import java.util.Random;
 
 public class DHSetup {
-    private int CHARACTERISTIC;
+    private long CHARACTERISTIC;
     private GF_Int generator;
     private Random random = new Random();
 
 
-    public int getCharacteristic() {
+    public long getCharacteristic() {
         return CHARACTERISTIC;
     }
 
-    public DHSetup(int characteristic) {
+    public DHSetup(long characteristic) {
         this.CHARACTERISTIC = characteristic;
         generateGenerator();
     }
 
-    private int powerMod(int x, int y, int p) {
-        int res = 1;
+    private long powerMod(long x, long y, long p) {
+        if (y == 0) {
+            return x;
+        }
+
+        if (x == 0) {
+            return y;
+        }
+        long res = 1;
         x = x % p;
+        if (x < 0) x += p;
         while (y > 0) {
             if ((y & 1) == 1) {
                 res = (res * x) % p;
             }
             y = y >> 1;
             x = (x * x) % p;
+            if (x < 0) x += p;
         }
         return res;
     }
 
-    private boolean isPrime(int n) {
-        if (n <= 1) return false;
-        if (n <= 3) return true;
-        if (n % 2 == 0 || n % 3 == 0) return false;
-        for (int i = 5; i * i <= n; i += 6)
-            if (n % i == 0 || n % (i + 2) == 0)
+    public boolean isGenerator(long g, long p) {
+        List<Long> factors = primeFactors(p - 1);
+        for (long factor : factors) {
+            if (powerMod(g, (p - 1) / factor, p) == 1) {
                 return false;
+            }
+        }
         return true;
     }
 
-    private List<Integer> primeFactors(int n) {
-        List<Integer> factors = new ArrayList<>();
+    private List<Long> primeFactors(long n) {
+        List<Long> factors = new ArrayList<>();
         while (n % 2 == 0) {
-            factors.add(2);
+            factors.add(2L);
             n = n / 2;
         }
-        for (int i = 3; i <= Math.sqrt(n); i = i + 2) {
+        for (long i = 3; i <= Math.sqrt(n); i = i + 2) {
             while (n % i == 0) {
                 factors.add(i);
                 n = n / i;
@@ -58,12 +67,12 @@ public class DHSetup {
     }
 
     private void generateGenerator() {
-        List<Integer> factors = primeFactors(CHARACTERISTIC - 1);
+        List<Long> factors = primeFactors(CHARACTERISTIC - 1);
 
         while (true) {
-            int candidate = 2 + random.nextInt(CHARACTERISTIC - 2);
+            long candidate = 2L + (long) (Math.random() * (CHARACTERISTIC - 2));
             boolean found = true;
-            for (int factor : factors) {
+            for (long factor : factors) {
                 if (powerMod(candidate, (CHARACTERISTIC - 1) / factor, CHARACTERISTIC) == 1) {
                     found = false;
                     break;
@@ -83,6 +92,7 @@ public class DHSetup {
         while (b > 0) {
             if (b % 2 != 0) {
                 result = result.multiply(base);
+                result = result.mod();
             }
             base = base.multiply(base);
             b /= 2;
