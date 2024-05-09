@@ -5,7 +5,9 @@ pub fn select(arr: &mut [usize], p: usize, q:usize, i:usize, comparisons: &mut u
 
     let pivot_index = partition_median_of_medians(arr, p, q, comparisons, swaps);
     let k = pivot_index - p + 1;
-
+    if arr.len() <= 50 {
+        println!("{:?}", arr);
+    }
     if i == k {
         arr[pivot_index]
     } else if i < k {
