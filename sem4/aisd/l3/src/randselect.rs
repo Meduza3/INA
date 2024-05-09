@@ -4,7 +4,9 @@ pub fn rand_select(arr: &mut Vec<usize>, p: usize, q: usize, i: usize, compariso
     if p == q {
         return arr[p];
     }
-
+    if arr.len() <= 50 {
+        println!("{:?}", arr);
+    }
     let r = rand_partition(arr, p, q, comparisons, swaps); // Globalny indeks pivota
     let k = r - p + 1; //Lokalny indeks pivota
 
