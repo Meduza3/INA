@@ -35,6 +35,6 @@ class User {
         }
 
         GF_Int<CHARACTERISTIC> decrypt(GF_Int<CHARACTERISTIC> c) {
-                return c / encryptionKey;
+            return c / encryptionKey;
         }
 };
