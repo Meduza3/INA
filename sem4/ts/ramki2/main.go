@@ -2,52 +2,67 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"hash/crc32"
+	"io/ioutil"
 )
 
 func main() {
+	// Read file Z
+	zContents, err := ioutil.ReadFile("z")
+	if err != nil {
+		fmt.Println("Error reading file Z:", err)
+		return
+	}
 
-	//Read file Z
+	// Calculate CRC
+	crc := generateCRC(zContents)
+	crcString := fmt.Sprintf("%032b", crc)
 
-	z_contents, _ := os.ReadFile("z")
+	// Convert to string for processing
+	zContentsString := string(zContents)
 
-	z_contents_string := string(z_contents)
-	fmt.Println(z_contents_string)
-	header := "_____header_____"
-	crc := "______crc_______"
+	// Create the sequence with CRC
+	sequence := zContentsString + crcString
 
-	final_string := "01111110"
-	final_string += header
-	//Bit stuffing - Dodaj 0 po pięciu jedynkach na raz
-	final_string += stuff_bits(z_contents_string)
-	final_string += crc
-	final_string += "01111110"
-	file, _ := os.OpenFile("w", os.O_WRONLY|os.O_CREATE, 0644)
-	defer file.Close()
-	_, err := file.WriteString(final_string)
-	check(err)
+	// Perform bit stuffing
+	stuffedSequence := stuffBits(sequence)
+
+	// Frame the sequence
+	stopSequence := "01111110"
+	finalString := stopSequence + stuffedSequence + stopSequence
+
+	// Write to file W
+	err = ioutil.WriteFile("w", []byte(finalString), 0644)
+	if err != nil {
+		fmt.Println("Error writing to file W:", err)
+		return
+	}
+
+	fmt.Println("Framing completed successfully!")
 }
 
-// Print to file W
+// Perform bit stuffing
+func stuffBits(signal string) string {
+	stuffedSignal := ""
+	consecutiveOnes := 0
 
-func stuff_bits(signal string) string {
-	stuffed_signal := ""
-	consecutive_ones := 0
-	for _, signal_value := range signal {
-		stuffed_signal = stuffed_signal + string(signal_value)
-		if string(signal_value) == "1" {
-			consecutive_ones++
+	for _, signalValue := range signal {
+		stuffedSignal += string(signalValue)
+		if signalValue == '1' {
+			consecutiveOnes++
+		} else {
+			consecutiveOnes = 0
 		}
-		if consecutive_ones == 5 {
-			consecutive_ones = 0
-			stuffed_signal = stuffed_signal + "0"
+		if consecutiveOnes == 5 {
+			stuffedSignal += "0"
+			consecutiveOnes = 0
 		}
 	}
-	return stuffed_signal
+
+	return stuffedSignal
 }
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
+// Generate CRC32 checksum
+func generateCRC(bits []byte) uint32 {
+	return crc32.ChecksumIEEE(bits)
 }
