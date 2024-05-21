@@ -1,0 +1,1 @@
+open('ex1.prog', read, X), scanner(X, Y), close(X), phrase(program(PROGRAM), Y).
