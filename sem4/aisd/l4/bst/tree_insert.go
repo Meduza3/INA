@@ -3,16 +3,11 @@ package bst
 import (
 	"fmt"
 	"math/rand/v2"
+	"slices"
 )
 
 type Tree struct {
 	Root *Node
-}
-
-type ComplexityResults struct {
-	Porownania          int
-	OdczytyPodstawienia int
-	Wysokosc            int
 }
 
 func New(key int) *Tree {
@@ -60,9 +55,11 @@ func (t *Tree) Insert(key int) {
 func (t *Tree) InsertStats(key int, stats *ComplexityResults) {
 	node := &Node{Key: key}
 	if t.Root == node {
+		stats.Porownania++
 		return
 	}
-	t.Root = t.Root.insert(node)
+	stats.OdczytyPodstawienia++
+	t.Root = t.Root.insertStats(node, stats)
 }
 
 func (n *Node) insert(node *Node) *Node {
@@ -74,6 +71,25 @@ func (n *Node) insert(node *Node) *Node {
 		n.Right = n.Right.insert(node)
 	} else {
 		node.Parent = n
+		n.Left = n.Left.insert(node)
+	}
+	return n
+}
+
+func (n *Node) insertStats(node *Node, stats *ComplexityResults) *Node {
+	if n == nil {
+		return node
+	}
+	stats.Porownania++
+	if n.Key < node.Key {
+		stats.OdczytyPodstawienia++
+		node.Parent = n
+		stats.OdczytyPodstawienia++
+		n.Right = n.Right.insert(node)
+	} else {
+		stats.OdczytyPodstawienia++
+		node.Parent = n
+		stats.OdczytyPodstawienia++
 		n.Left = n.Left.insert(node)
 	}
 	return n
@@ -102,8 +118,8 @@ func AddNRandom(tree *Tree, n int, print bool) []int {
 
 func AddNRandomStats(tree *Tree, n int, print bool, stats *ComplexityResults) []int {
 	s := make([]int, n)
-	for i := 0; i < 50; i++ {
-		random := rand.IntN(100)
+	for i := 0; i < n; i++ {
+		random := rand.IntN(2 * n)
 		if !contains(s, random) {
 			s[i] = random
 		} else {
@@ -112,12 +128,37 @@ func AddNRandomStats(tree *Tree, n int, print bool, stats *ComplexityResults) []
 	}
 
 	for i := 0; i < n; i++ {
-		fmt.Printf("tree.Insert(%d)\n", s[i])
 		tree.InsertStats(s[i], stats)
 		if print {
+			fmt.Printf("tree.Insert(%d)\n", s[i])
 			PrintBST(tree.Root, tree.Height(), '-')
 		}
 	}
+	stats.Wysokosc = tree.Height()
+	return s
+}
+
+func AddNSortedStats(tree *Tree, n int, print bool, stats *ComplexityResults) []int {
+	s := make([]int, n)
+	for i := 0; i < n; i++ {
+		random := rand.IntN(2 * n)
+		if !contains(s, random) {
+			s[i] = random
+		} else {
+			i--
+		}
+	}
+
+	slices.Sort(s)
+
+	for i := 0; i < n; i++ {
+		tree.InsertStats(s[i], stats)
+		if print {
+			fmt.Printf("tree.Insert(%d)\n", s[i])
+			PrintBST(tree.Root, tree.Height(), '-')
+		}
+	}
+	stats.Wysokosc = tree.Height()
 	return s
 }
 
