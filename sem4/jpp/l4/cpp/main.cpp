@@ -15,7 +15,7 @@ int main() {
 
   for(int i = 0; i < ilosc_filozofow; i++) {
     Widelec left = widelce[i];
-    Widelec right = widelce[(i + 1) % ilosc_filozofow];
+    Widelec    right = widelce[(i + 1) % ilosc_filozofow];
 
   }
 }
