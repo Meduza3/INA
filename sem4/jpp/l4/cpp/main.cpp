@@ -9,26 +9,21 @@ const int min_dobranoc = 50;
 const int max_dobranoc = 100;
 const int ilosc_posilkow = 5;
 
-int main() {
-  std::vector<std::thread> filozofowie(ilosc_filozofow);
-  std::vector<Widelec> widelce(ilosc_filozofow);
-
-  for(int i = 0; i < ilosc_filozofow; i++) {
-    Widelec left = widelce[i];
-    Widelec right = widelce[(i + 1) % ilosc_filozofow];
-
-  }
-}
 
 class Filozof {
   private:
     int id;
-    Widelec* left;
-    Widelec* right;
+    std::mutex* left;
+    std::mutex* right;
     int ilosc_posilkow;
     
   public:
-    Filozof(int id, Widelec* left, Widelec* right, int ilosc_posilkow);
+    Filozof(int id, std::mutex &left, std::mutex &right, int ilosc_posilkow){
+      this->id = id;
+      this->left = &left;
+      this->right = &right;
+      this->ilosc_posilkow = ilosc_posilkow;
+    }
 
 
     void operator()() {
@@ -47,12 +42,14 @@ class Filozof {
       std::cout << "Filozof " << this->id << " skonczyl jesc \n";
     } 
 
-    void podnies_widelec(Widelec* widelec) {
-      widelec->mutex.lock();
+    void podnies_widelec(std::mutex &widelec) {
+      dobranoc();
+      widelec.lock();
     }
 
-    void odloz_widelec(Widelec* widelec) {
-      widelec->mutex.unlock();
+    void odloz_widelec(std::mutex &widelec) {
+      dobranoc();
+      widelec.unlock();
     }
 
     void dobranoc() {
@@ -65,16 +62,29 @@ class Filozof {
     void start() {
       for(int i = 0; i < this->ilosc_posilkow; i++){
         this->mysl();
-        this->podnies_widelec(this->left);
-        this->podnies_widelec(this->right);
+        this->podnies_widelec(*this->left);
+        this->podnies_widelec(*this->right);
         this->jedz();
-        this->odloz_widelec(this->left);
-        this->odloz_widelec(this->right);
+        this->odloz_widelec(*this->left);
+        this->odloz_widelec(*this->right);
       }
     }
 };
 
-class Widelec {
-  public:
-    std::mutex mutex;
-};
+
+int main() {
+  std::vector<std::thread> filozofowie(ilosc_filozofow);
+  std::vector<std::mutex> widelce(ilosc_filozofow);
+
+  for(int i = 0; i < ilosc_filozofow; i++) {
+    auto& left = widelce[i];
+    auto& right = widelce[(i + 1) % ilosc_filozofow];
+    Filozof filozof = (i % 2 == 0) ? Filozof(i, right, left, ilosc_posilkow) : Filozof(i, left, right, ilosc_posilkow);
+    filozofowie[i] = std::thread(filozof);
+  }
+  for (auto &filozof : filozofowie) {
+    filozof.join();
+  }
+
+  return 0;
+}
