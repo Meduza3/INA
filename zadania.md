@@ -8,8 +8,7 @@
 **ALGORYTMY I STRUKTURY DANYCH**
 
 - Lista 4.L - Wykonać do 06.04
-  - 2 Eksperyment BST
-  - 3 RBTrees
+  - 3 RBTrees zostało delete
   - 4 Eksperyment RBTrees
   - 5 Splay Tree
   - 6 Eksperyment Splay Tree
