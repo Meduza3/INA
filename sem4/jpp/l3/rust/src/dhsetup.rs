@@ -70,7 +70,7 @@ impl<const N: i32> DHSetup<N> {
         self.generator
     }
 
-    pub fn power(self, a: GFInt<N>, b: u128 ) -> GFInt<N> {
+    pub fn power(&self, a: GFInt<N>, b: u128 ) -> GFInt<N> {
         let mut result: GFInt<N> = GFInt::new(1);
         for _ in 0..b {
             result = result * a;

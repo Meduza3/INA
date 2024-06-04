@@ -6,7 +6,6 @@ mod select3;
 mod select7;
 mod select9;
 
-
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 2 {
@@ -21,7 +20,7 @@ fn main() {
         "-select-7" => "select-7",
         "-select-9" => "select-9",
         _ => {
-            eprintln!("🦀: {} run <-rand|-select|-select-3>", args[0]); // Uniform error handling
+            eprintln!("🦀: {} run <-rand|-select|-select-3|-select-7|-select-9>", args[0]); // Uniform error handling
             std::process::exit(1);
         }
     };
@@ -33,11 +32,12 @@ fn main() {
             .split_whitespace()
             .map(|num| num.parse().unwrap())
             .collect();
-
+            
             if numbers.len() < 3 {
                 eprintln!("🦀: Zapomniałeś czegoś w tablicy");
                 continue;
             }
+            
 
         let size = numbers[0];
         let i = numbers[1];

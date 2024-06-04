@@ -1,0 +1,2 @@
+open('ex1.prog' , read, X), scanner(X, Y), close(X), write(Y).
+hetmany(8, X), board(X).
