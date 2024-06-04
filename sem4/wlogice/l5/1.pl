@@ -40,16 +40,14 @@ id(ID) :-
   upcase_atom(ID, ID).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-tokenize(InputStream, Tokens) :-
+tokenize(InputStream, Tokens) :- % Tokenize na start
     get_char(InputStream, Char),
-    tokenize(Char, InputStream, Tokens).
+    tokenize(Char, InputStream, Tokens). % Tokenize pierwszego chara
 
-tokenize(end_of_file, _, []) :- !.
+tokenize(end_of_file, _, []) :- !. % Jak skonczy sie plik, konczy sie prolog
 
-tokenize(Char, InputStream, Tokens) :-
+tokenize(Char, InputStream, Tokens) :- % Pomin whitespace
     whitespace(Char),
     get_char(InputStream, NextChar),
     tokenize(NextChar, InputStream, Tokens).
@@ -82,7 +80,7 @@ tokenize(Char, InputStream, [TokensHead|TokensTail]) :-
         )
     ).
 
-tokenize(Char, InputStream, [Word|TokensTail]) :-
+tokenize(Char, InputStream, [Word|TokensTail]) :- % Cale slowo jest dodane do listy tokenow
     check_char_and_read_word(Char, NextChar, Chars, InputStream),
     atom_chars(Word, Chars),
     tokenize(NextChar, InputStream, TokensTail).
@@ -99,8 +97,6 @@ check_char_and_read_word(Char, LastChar, [Char|Chars], InputStream) :-
     check_char_and_read_word(NextChar, LastChar, Chars, InputStream).
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 categorize_tokens([], []) :- !.
 
@@ -108,13 +104,14 @@ categorize_tokens([TokensHead|TokensTail], [key(TokensHead)|OutputTail]) :-
     key(TokensHead),
     categorize_tokens(TokensTail, OutputTail).
 
+categorize_tokens([TokensHead|TokensTail], [int(TokensHead)|OutputTail]) :-
+    int(TokensHead),
+    categorize_tokens(TokensTail, OutputTail).
+
 categorize_tokens([TokensHead|TokensTail], [sep(TokensHead)|OutputTail]) :-
     sep(TokensHead),
     categorize_tokens(TokensTail, OutputTail).
 
-categorize_tokens([TokensHead|TokensTail], [int(TokensHead)|OutputTail]) :-
-    int(TokensHead),
-    categorize_tokens(TokensTail, OutputTail).
 
 categorize_tokens([TokensHead|TokensTail], [id(TokensHead)|OutputTail]) :-
     id(TokensHead),
@@ -123,8 +120,6 @@ categorize_tokens([TokensHead|TokensTail], [id(TokensHead)|OutputTail]) :-
 categorize_tokens([TokensHead|TokensTail], [unknown(TokensHead)|OutputTail]) :-
     categorize_tokens(TokensTail, OutputTail).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 scanner(InputStream, Tokens) :-

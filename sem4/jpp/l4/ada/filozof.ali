@@ -1,0 +1,136 @@
+V "GNAT Lib v10"
+P ZX
+
+RN
+RV NO_DELAY
+RV NO_FIXED_POINT
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_RELATIVE_DELAY
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_TASKING
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+RV MAX_TASK_ENTRIES=1
+RV MAX_ENTRY_QUEUE_LENGTH=1+
+
+U filozof%b		filozof.adb		9e89653e OO PK
+W ada%s			ada.ads			ada.ali
+Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.float_random%s  a-nuflra.adb	a-nuflra.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z system%s		system.ads		system.ali
+Z system.concat_3%s	s-conca3.adb		s-conca3.ali
+Z system.img_int%s	s-imgint.adb		s-imgint.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.tasking%s	s-taskin.adb		s-taskin.ali
+Z system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+Z system.tasking.protected_objects.operations%s  s-tpobop.adb  s-tpobop.ali
+Z system.tasking.rendezvous%s  s-tasren.adb	s-tasren.ali
+Z system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+
+U filozof%s		filozof.ads		643a7613 EE NE OO PK
+Z ada.real_time%s	a-reatim.adb		a-reatim.ali
+Z system%s		system.ads		system.ali
+Z system.parameters%s	s-parame.adb		s-parame.ali
+Z system.task_info%s	s-tasinf.adb		s-tasinf.ali
+Z system.tasking%s	s-taskin.adb		s-taskin.ali
+Z system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+W widelec%s		widelec.adb		widelec.ali
+
+D ada.ads		20230707070819 76789da1 ada%s
+D a-calend.ads		20230707070819 474d9720 ada.calendar%s
+D a-caldel.ads		20230707070819 9f20b83d ada.calendar.delays%s
+D a-except.ads		20230707070819 a7106115 ada.exceptions%s
+D a-finali.ads		20230707070819 bf4f806b ada.finalization%s
+D a-ioexce.ads		20230707070819 e4a01f64 ada.io_exceptions%s
+D a-numeri.ads		20230707070819 bb51c45a ada.numerics%s
+D a-nuflra.ads		20230707070819 4056ab7a ada.numerics.float_random%s
+D a-reatim.ads		20230707070818 0240fc73 ada.real_time%s
+D a-stream.ads		20230707070819 119b8fb3 ada.streams%s
+D a-tags.ads		20230707070819 491b781d ada.tags%s
+D a-textio.ads		20230707070819 aef4d56d ada.text_io%s
+D a-unccon.ads		20230707070819 0e9b276f ada.unchecked_conversion%s
+D filozof.ads		20240523083439 0416c113 filozof%s
+D filozof.adb		20240523084920 743dda3a filozof%b
+D interfac.ads		20230707070819 5ab55268 interfaces%s
+D i-c.ads		20230707070819 5421119b interfaces.c%s
+D i-cstrea.ads		20230707070819 e53d8b8e interfaces.c_streams%s
+D system.ads		20230707070819 4635ec04 system%s
+D s-atacco.ads		20230707070819 4c36d12f system.address_to_access_conversions%s
+D s-conca3.ads		20230707070819 0b705ca5 system.concat_3%s
+D s-crtl.ads		20230707070819 0ebbdb71 system.crtl%s
+D s-exctab.ads		20230707070819 54135002 system.exception_table%s
+D s-ficobl.ads		20230707070819 078245e4 system.file_control_block%s
+D s-finroo.ads		20230707070819 4ff27390 system.finalization_root%s
+D s-imgint.ads		20230707070819 02dbe0c2 system.img_int%s
+D s-linux.ads		20230707070818 ed0b8aee system.linux%s
+D s-multip.ads		20230707070819 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20230708061938 56602da1 system.os_constants%s
+D s-osinte.ads		20230708061938 baabc537 system.os_interface%s
+D s-parame.ads		20230707070819 48ec542b system.parameters%s
+D s-rannum.ads		20230707070819 99ade2f2 system.random_numbers%s
+D s-secsta.ads		20230707070819 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20230707070819 a7318a92 system.soft_links%s
+D s-stache.ads		20230707070819 a37c21ec system.stack_checking%s
+D s-stausa.ads		20230707070819 017a0a05 system.stack_usage%s
+D s-stalib.ads		20230707070819 09bd3940 system.standard_library%s
+D s-stoele.ads		20230707070819 2dc34a04 system.storage_elements%s
+D s-tasinf.ads		20230707070818 2b3f8252 system.task_info%s
+D s-taspri.ads		20230707070818 f40ac08d system.task_primitives%s
+D s-taprop.ads		20230707070818 1dd2e1b6 system.task_primitives.operations%s
+D s-taskin.ads		20230707070818 b9d612e2 system.tasking%s
+D s-taprob.ads		20230707070818 acd6094d system.tasking.protected_objects%s
+D s-tpoben.ads		20230707070819 60ad3dae system.tasking.protected_objects.entries%s
+D s-tpobop.ads		20230707070819 5f548bb3 system.tasking.protected_objects.operations%s
+D s-tasren.ads		20230707070818 a67a9949 system.tasking.rendezvous%s
+D s-tassta.ads		20230707070818 cca55c94 system.tasking.stages%s
+D s-traent.ads		20230707070819 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20230707070819 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20230707070819 1b7d22d2 system.wch_con%s
+D widelec.ads		20240523083253 602cb700 widelec%s
+G a e
+G c Z s b [filozof_task filozof 4 15 none]
+G c Z s b [start filozof__filozof_task 5 15 none]
+G c Z s s [filozof_taskVIP filozof 4 5 none]
+G r o none [start filozof__filozof_task 5 15 none] [podnies widelec__widelec 3 15 none]
+G r p none [start filozof__filozof_task 5 15 none] [odloz widelec__widelec 4 19 none]
+G r o none [filozof_task filozof 4 15 none] [podnies widelec__widelec 3 15 none]
+G r p none [filozof_task filozof 4 15 none] [odloz widelec__widelec 4 19 none]
+X 1 ada.ads
+16K9*Ada 20e8 15|1r6 1r37 2r6 2r23
+X 7 a-numeri.ads
+16K13*Numerics 32e17 15|1r10 1r41
+X 8 a-nuflra.ads
+41K22*Float_Random 74e30 15|1w19 1r50
+47R9*Generator<32|63R9> 15|6r15
+49F12*Uniformly_Distributed{float}
+51V13*Random{49F12}<32|71p13> 15|14s44 21s44
+53U14*Reset<32|100p14> 15|11s9
+X 12 a-textio.ads
+57K13*Text_IO 727e16 15|2w10 2r27
+508U14*Put_Line 15|13s13 15s13 20s13 22s13
+X 14 filozof.ads
+3K9*Filozof 7l5 7e12 15|4b14 28l5 28t12
+4T15*Filozof_Task 4d29 4d43 4d49 4d90 6l9 6e21 15|5b15 27l9 27t21
+4i29 Id{integer} 15|13r53 15r53 20r53 22r53
+4i90 Ilosc_Posilkow{integer} 15|12r23
+5Y15 Start 15|10b16
+X 15 filozof.adb
+6r9 Rng{8|47R9} 11r16 14r52 21r52
+7f9 Min_Dobranoc{float} 14r29 14r75 21r29 21r75
+8f9 Max_Dobranoc{float} 14r60 21r60
+12i13 I{integer}
+X 36 s-stausa.ads
+208U14*Initialize 209i<c,__gnat_stack_usage_initialize>22
+273U14*Output_Results 277i<c,__gnat_stack_usage_output_results>22
+X 51 widelec.ads
+1K9*Widelec 14|1w6 4r73 51|8e12
+2W20*Widelec 14|4r81 51|7e16
+3Y15 Podnies 15|17s18 24s18
+4U19 Odloz 15|18s19 25s19
+
