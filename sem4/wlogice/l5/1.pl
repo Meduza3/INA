@@ -1,128 +1,89 @@
-whitespace(' ').
-whitespace('\t').
-whitespace('\n').
-whitespace('\r').
+keyWord(read).
+keyWord(write).
+keyWord(if).
+keyWord(then).
+keyWord(else).
+keyWord(fi).
+keyWord(while).
+keyWord(do).
+keyWord(od).
+keyWord(and).
+keyWord(or).
+keyWord(mod).
 
-key(read).
-key(write).
-key(if).
-key(then).
-key(else).
-key(fi).
-key(while).
-key(do).
-key(od).
-key(and).
-key(or).
-key(mod).
+separator(';').
+separator('+').
+separator('-').
+separator('*').
+separator('/').
+separator('(').
+separator(')').
+separator('<').
+separator('>').
+separator('=<').
+separator('>=').
+separator(':=').
+separator('=').
+separator('/=').
 
-sep(';').
-sep('+').
-sep('-').
-sep('*').
-sep('/').
-sep('(').
-sep(')').
-sep('<').
-sep('>').
-sep('=<').
-sep('>=').
-sep(':=').
-sep('=').
-sep('/=').
+whiteChar(' ').
+whiteChar('\t').
+whiteChar('\n').
+whiteChar('\r').
 
-int(String) :-
-  atom_number(String, Number),
-  integer(Number),
-  Number >= 0.
+variable(X) :- 
+    atom_chars(X, List), 	
+    \+ (member(X, List),
+    \+ char_type(X, upper)).
 
-id(ID) :-
-  upcase_atom(ID, ID).
+checkToken(L, end_of_file, L).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+checkToken(L, X, L2) :- 
+    atom_chars(X, Chars),
+    last(Chars, ';') -> 
+        (select(';', Chars, NL), !,
+        atom_chars(T, NL),
+        addToken(L, T, L3),
+        append(L3, [sep(';')], L2));
+        addToken(L, X, L2).
 
-tokenize(InputStream, Tokens) :- % Tokenize na start
-    get_char(InputStream, Char),
-    tokenize(Char, InputStream, Tokens). % Tokenize pierwszego chara
+addToken(L, end_of_file, L).
 
-tokenize(end_of_file, _, []) :- !. % Jak skonczy sie plik, konczy sie prolog
+addToken(L, X, L2) :-  	
+    (keyWord(X) -> append(L, [key(X)], L2);
+    (separator(X) -> append(L, [sep(X)], L2);
+    (atom_number(X, N), integer(N), N >= 0) -> append(L, [int(N)], L2);
+    (variable(X) -> append(L, [id(X)], L2);
+    L2 = L))).
 
-tokenize(Char, InputStream, Tokens) :- % Pomin whitespace
-    whitespace(Char),
-    get_char(InputStream, NextChar),
-    tokenize(NextChar, InputStream, Tokens).
+readNext(end_of_file, L, L) :- !.
 
-tokenize(Char, InputStream, [TokensHead|TokensTail]) :-
-    (
-        sep(Char) ; Char = ':'
-    ),
-    get_char(InputStream, SecondChar),
-    (
-        SecondChar = end_of_file ->
-        (
-            TokensHead = Char,
-            TokensTail = []
-        );
-        (
-            atom_chars(CombinedChars, [Char, SecondChar]),
-            (
-                sep(CombinedChars) ->
-                (
-                    TokensHead = CombinedChars,
-                    get_char(InputStream, ThirdChar),
-                    tokenize(ThirdChar, InputStream, TokensTail)
-                );
-                (
-                    TokensHead = Char,
-                    tokenize(SecondChar, InputStream, TokensTail)
-                )
-            )
-        )
-    ).
+readNext(C1, X, X2) :- 	
+    whiteChar(C1), !,
+    get_char(C2),
+    readNext(C2, X, X2).
 
-tokenize(Char, InputStream, [Word|TokensTail]) :- % Cale slowo jest dodane do listy tokenow
-    check_char_and_read_word(Char, NextChar, Chars, InputStream),
-    atom_chars(Word, Chars),
-    tokenize(NextChar, InputStream, TokensTail).
+readNext(C1, L, X) :- 	
+    readWord(C1, C2, '', H),
+    checkToken(L, H, L2),
+    readNext(C2, L2, X).
 
+readWord(end_of_file, end_of_file, N, N) :- !.
 
-check_char_and_read_word(end_of_file, _, [], _) :- !.
-check_char_and_read_word(LastChar, LastChar, [], _) :-
-    (
-        whitespace(LastChar) ; sep(LastChar) ; LastChar = ':'
-    ),
-    !.
-check_char_and_read_word(Char, LastChar, [Char|Chars], InputStream) :-
-    get_char(InputStream, NextChar),
-    check_char_and_read_word(NextChar, LastChar, Chars, InputStream).
-  
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+readWord(C, C, N, N) :- 
+    whiteChar(C), !.
 
-categorize_tokens([], []) :- !.
+readWord(C1, C3, N1, N) :- 	
+    atom_concat(N1, C1, N2),
+    get_char(C2),
+    readWord(C2, C3, N2, N).
 
-categorize_tokens([TokensHead|TokensTail], [key(TokensHead)|OutputTail]) :-
-    key(TokensHead),
-    categorize_tokens(TokensTail, OutputTail).
+tokenize(X) :- 	
+    get_char(C),
+    readNext(C, [], X).
 
-categorize_tokens([TokensHead|TokensTail], [int(TokensHead)|OutputTail]) :-
-    int(TokensHead),
-    categorize_tokens(TokensTail, OutputTail).
-
-categorize_tokens([TokensHead|TokensTail], [sep(TokensHead)|OutputTail]) :-
-    sep(TokensHead),
-    categorize_tokens(TokensTail, OutputTail).
-
-
-categorize_tokens([TokensHead|TokensTail], [id(TokensHead)|OutputTail]) :-
-    id(TokensHead),
-    categorize_tokens(TokensTail, OutputTail).
-
-categorize_tokens([TokensHead|TokensTail], [unknown(TokensHead)|OutputTail]) :-
-    categorize_tokens(TokensTail, OutputTail).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-scanner(InputStream, Tokens) :-
-    tokenize(InputStream, TokensWithoutCategories),
-    categorize_tokens(TokensWithoutCategories, Tokens),
-    !.
+scanner(FD, Tokens) :- 	
+    current_input(Input),
+    set_input(FD),
+    tokenize(Tokens),
+    set_input(Input).

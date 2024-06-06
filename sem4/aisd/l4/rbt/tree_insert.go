@@ -123,61 +123,57 @@ func (t *Tree) InsertStats(key int, stats *ComplexityResults) *Node {
 }
 
 func (t *Tree) insertFixup(z *Node) {
-
-	if z.Parent.Color == BLACK {
-		z.Color = RED
+	if z == nil {
 		return
 	}
-
-	for z.Parent != nil && z.Parent.Color == RED {
+	for z != t.Root && z.Parent.Color == RED {
 		var G *Node // grandparent
-		if z.Parent.Parent == nil {
-			G = nil
-		} else {
+		if z.Parent.Parent != nil {
 			G = z.Parent.Parent
+		} else {
+			break // If there is no grandparent, break out of the loop
 		}
+
 		if z.Parent == G.Left {
-			U := G.Right                    // uncle
-			if U != nil && U.Color == RED { // Case I2
+			U := G.Right // uncle
+			if U != nil && U.Color == RED {
 				z.Parent.Color = BLACK
 				U.Color = BLACK
 				G.Color = RED
 				z = G
 			} else {
-				if z == z.Parent.Right { // Case I5
+				if z == z.Parent.Right {
 					z = z.Parent
 					t.leftRotate(z)
 				}
-				// Case I6
 				z.Parent.Color = BLACK
 				G.Color = RED
 				t.rightRotate(G)
 			}
 		} else {
-			U := G.Left                     // uncle
-			if U != nil && U.Color == RED { // Case I2
+			U := G.Left // uncle
+			if U != nil && U.Color == RED {
 				z.Parent.Color = BLACK
 				U.Color = BLACK
 				G.Color = RED
 				z = G
 			} else {
-				if z == z.Parent.Left { // Case I5
+				if z == z.Parent.Left {
 					z = z.Parent
 					t.rightRotate(z)
 				}
-				// Case I6
 				z.Parent.Color = BLACK
 				G.Color = RED
 				t.leftRotate(G)
 			}
 		}
 	}
-	t.Root.Color = BLACK // Case I4
+	t.Root.Color = BLACK // Ensure the root is always black
 }
 
 func (t *Tree) insertFixupStats(z *Node, stats *ComplexityResults) {
 
-	if z.Parent.Color == BLACK {
+	if z.Parent == nil || z.Parent.Color == BLACK {
 		z.Color = RED
 		return
 	}
