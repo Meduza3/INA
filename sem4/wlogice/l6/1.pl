@@ -10,7 +10,6 @@ program([H|T]) -->
 program([]) -->
   [].
 
-
 instrukcja(assign(X, Y)) -->
   [id(X)],
   [sep(:=)],
@@ -93,8 +92,6 @@ skladnik(X mod Y) -->
 
 skladnik(X) -->
   czynnik(X).
-
-% Od tego momentu nie wiem czy to konieczne
 
 czynnik(id(X)) -->
   [id(X)].

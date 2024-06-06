@@ -9,9 +9,8 @@ licznik(s(X), L) -->
   licznik(X, L),
   L.
 
-anbfibn --> licznik(X, 'a'), fibCounter(X, 'b').
+anbfibn --> licznik(X, 'a'), fibo_licznik(X, 'b').
 
-fibCounter(0, _) --> ''.
-fibCounter(s(0), L) --> L.
-fibCounter(s(s(X)), L) --> fibCounter(X, L), fibCOunter(s(X), L).
-
+fibo_licznik(0, _) --> ''.
+fibo_licznik(s(0), L) --> L.
+fibo_licznik(s(s(X)), L) --> fibo_licznik(X, L), fibo_licznik(s(X), L).
