@@ -125,13 +125,11 @@ func (k *Kabel) propaguj() {
 		for j < MEDIUM_LENGTH {
 			if (*k)[j][i] != -1 {
 				propagated := false
-				if j < stacje[i].location {
-					if j > 0 && (*k)[j-1][i] != -99 {
-						(*k)[j-1][i] = (*k)[j][i]
-						propagated = true
-					}
+				if j > 0 {
+					(*k)[j-1][i] = (*k)[j][i]
+					propagated = true
 				}
-				if j >= stacje[i].location && j < MEDIUM_LENGTH-1 && (*k)[j+1][i] != -99 {
+				if j < MEDIUM_LENGTH-1 {
 					(*k)[j+1][i] = (*k)[j][i]
 					propagated = true
 				}

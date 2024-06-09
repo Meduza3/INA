@@ -1,0 +1,23 @@
+2024/06/04 23:03:58 interference detected by C (with #)
+2024/06/04 23:03:58 interference detected by A (with #)
+2024/06/04 23:03:59 A will now attempt to repeat (range 2)
+2024/06/04 23:03:59 A picked slot 1
+2024/06/04 23:03:59 C will now attempt to repeat (range 2)
+2024/06/04 23:03:59 C picked slot 2
+2024/06/04 23:04:05 A successful!
+2024/06/04 23:04:09 C successful!
+2024/06/04 23:06:12 interference detected by C (with #)
+2024/06/04 23:06:12 interference detected by A (with #)
+2024/06/04 23:06:13 A will now attempt to repeat (range 2)
+2024/06/04 23:06:13 A picked slot 2
+2024/06/04 23:06:13 C will now attempt to repeat (range 2)
+2024/06/04 23:06:13 C picked slot 2
+2024/06/04 23:06:21 interference detected by C (with #)
+2024/06/04 23:06:22 interference detected by A (with #)
+2024/06/04 23:06:23 A will now attempt to repeat (range 4)
+2024/06/04 23:06:23 A picked slot 3
+2024/06/04 23:06:23 C will now attempt to repeat (range 4)
+2024/06/04 23:06:23 C picked slot 4
+2024/06/04 23:06:36 A successful!
+2024/06/04 23:06:40 C successful!
+signal: interrupt
