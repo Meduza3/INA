@@ -4,10 +4,17 @@ import (
 	"container/heap"
 	"fmt"
 	"math/rand"
+	"strconv"
 )
 
+type Edge struct {
+	from int
+	to   int
+	cost float64
+}
+
 type Item struct {
-	value    float64
+	value    Edge
 	priority int
 	index    int
 }
@@ -43,24 +50,25 @@ func (pq *PriorityQueue) Pop() any {
 	return item
 }
 
-func (pq *PriorityQueue) update(item *Item, value float64, priority int) {
+func (pq *PriorityQueue) update(item *Item, value Edge, priority int) {
 	item.value = value
 	item.priority = priority
 	heap.Fix(pq, item.index)
 }
 
 const (
-	N = 10
+	N = 5
 )
 
 type Graph struct {
-	size   int
-	matrix [][]float64
+	size    int
+	matrix  [][]float64
+	visited []bool
 }
 
 func newGraph(n int) *Graph {
 	matrix := createMatrix(n)
-	return &Graph{size: n, matrix: matrix}
+	return &Graph{size: n, matrix: matrix, visited: make([]bool, n)}
 }
 
 func createMatrix(n int) [][]float64 {
@@ -83,7 +91,7 @@ func newRandomGraph(n int) *Graph {
 	return graph
 }
 
-func printGraph(g *Graph) {
+func (g *Graph) print() {
 	for i := 0; i < g.size; i++ {
 		fmt.Print("[ ")
 		for j := 0; j < g.size; j++ {
@@ -94,10 +102,50 @@ func printGraph(g *Graph) {
 	}
 }
 
+func lazyPrim(g *Graph) {
+	node := 0
+	g.visited[node] = true
+
+	pq := &PriorityQueue{}
+	heap.Init(pq)
+
+	addEdges := func(currentNode int) {
+		for adj := 0; adj < g.size; adj++ {
+			if !g.visited[adj] && g.matrix[currentNode][adj] != 0 {
+				heap.Push(pq, &Item{
+					value: Edge{
+						from: currentNode,
+						to:   adj,
+						cost: g.matrix[node][adj],
+					},
+					priority: -int(g.matrix[node][adj] * 100_000),
+				})
+			}
+		}
+	}
+
+	addEdges(node) //Adding initial edges
+
+	for pq.Len() > 0 {
+		item := heap.Pop(pq).(*Item)
+		edge := item.value
+
+		if !g.visited[edge.to] {
+			g.visited[edge.to] = true
+			addEdges(edge.to)
+			fmt.Println("Edge from:", strconv.Itoa(edge.from), "to:", strconv.Itoa(edge.to), "cost:", edge.cost)
+		}
+
+	}
+
+}
+
 func main() {
 	fmt.Println("Hello Graphs!")
 
 	graph := newRandomGraph(N)
-	printGraph(graph)
+	graph.print()
+
+	lazyPrim(graph)
 
 }
