@@ -2,10 +2,16 @@ package main
 
 import (
 	"container/heap"
+	"encoding/csv"
 	"fmt"
 	"math/rand"
+	"os"
 	"strconv"
 )
+
+type MSTree struct {
+	AdjList [][]int
+}
 
 type Edge struct {
 	from int
@@ -57,7 +63,7 @@ func (pq *PriorityQueue) update(item *Item, value Edge, priority int) {
 }
 
 const (
-	N = 5
+	N = 1000
 )
 
 type Graph struct {
@@ -102,7 +108,55 @@ func (g *Graph) print() {
 	}
 }
 
-func lazyPrim(g *Graph) {
+func find(node int, ufs []int) int {
+	if ufs[node] != node {
+		ufs[node] = find(ufs[node], ufs)
+	}
+	return ufs[node]
+}
+func kruskal(g *Graph) (opeartionCount int) {
+	pq := &PriorityQueue{}
+	heap.Init(pq)
+
+	for i := 0; i < g.size; i++ {
+		for j := i + 1; j < g.size; j++ {
+			if g.matrix[i][j] != 0 {
+				heap.Push(pq, &Item{
+					value:    Edge{from: i, to: j, cost: g.matrix[i][j]},
+					priority: -int(g.matrix[i][j] * 100_000),
+				})
+				opeartionCount++
+			}
+		}
+	}
+
+	ufs := make([]int, g.size)
+	for i := range ufs {
+		ufs[i] = i
+	}
+
+	same := func(node1, node2 int) bool {
+		return find(node1, ufs) == find(node2, ufs)
+	}
+
+	union := func(node1, node2 int) {
+		ufs[find(node1, ufs)] = find(node2, ufs)
+	}
+
+	for pq.Len() > 0 {
+		item := heap.Pop(pq).(*Item)
+		opeartionCount++
+		edge := item.value
+
+		if !same(edge.from, edge.to) {
+			union(edge.from, edge.to)
+		}
+	}
+
+	return
+}
+
+func lazyPrim(g *Graph) (operationCount int) {
 	node := 0
 	g.visited[node] = true
 
@@ -120,6 +174,7 @@ func lazyPrim(g *Graph) {
 					},
 					priority: -int(g.matrix[node][adj] * 100_000),
 				})
+				operationCount++
 			}
 		}
 	}
@@ -128,24 +183,42 @@ func lazyPrim(g *Graph) {
 
 	for pq.Len() > 0 {
 		item := heap.Pop(pq).(*Item)
+		operationCount++
 		edge := item.value
 
 		if !g.visited[edge.to] {
 			g.visited[edge.to] = true
 			addEdges(edge.to)
-			fmt.Println("Edge from:", strconv.Itoa(edge.from), "to:", strconv.Itoa(edge.to), "cost:", edge.cost)
+			//fmt.Println("Edge from:", strconv.Itoa(edge.from), "to:", strconv.Itoa(edge.to), "cost:", edge.cost)
 		}
 
 	}
 
+	return
 }
 
 func main() {
 	fmt.Println("Hello Graphs!")
 
-	graph := newRandomGraph(N)
-	graph.print()
+	file, err := os.Create("output.csv")
+	if err != nil {
+		return
+	}
+	defer file.Close()
 
-	lazyPrim(graph)
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	writer.Write([]string{"n", "operationCountPrim", "operationCountKruskal"})
+
+	for n := 25; n <= 10000; n += 25 {
+		graph := newRandomGraph(n)
+		//graph.print()
+
+		operationCountPrim := lazyPrim(graph)
+		operationCountKruskal := kruskal(graph)
+		fmt.Println(strconv.Itoa(n) + " : " + strconv.Itoa(operationCountPrim) + " : " + strconv.Itoa(operationCountKruskal))
+		writer.Write([]string{strconv.Itoa(n), strconv.Itoa(operationCountPrim), strconv.Itoa(operationCountKruskal)})
+	}
 
 }
