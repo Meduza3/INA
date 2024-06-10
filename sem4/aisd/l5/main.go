@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
+	"time"
 )
 
 type MSTree struct {
@@ -209,16 +210,22 @@ func main() {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	writer.Write([]string{"n", "operationCountPrim", "operationCountKruskal"})
+	writer.Write([]string{"n", "timePrim", "timeKruskal"})
 
-	for n := 25; n <= 10000; n += 25 {
+	for n := 10; n <= 500; n += 10 {
 		graph := newRandomGraph(n)
 		//graph.print()
 
-		operationCountPrim := lazyPrim(graph)
-		operationCountKruskal := kruskal(graph)
-		fmt.Println(strconv.Itoa(n) + " : " + strconv.Itoa(operationCountPrim) + " : " + strconv.Itoa(operationCountKruskal))
-		writer.Write([]string{strconv.Itoa(n), strconv.Itoa(operationCountPrim), strconv.Itoa(operationCountKruskal)})
+		startTimePrim := time.Now()
+		_ = lazyPrim(graph)
+		timeTakenPrim := time.Since(startTimePrim).Milliseconds()
+
+		startTimeKruskal := time.Now()
+		_ = kruskal(graph)
+		timeTakenKruskal := time.Since(startTimeKruskal).Milliseconds()
+
+		fmt.Println(strconv.Itoa(n) + " : " + strconv.FormatInt(timeTakenPrim, 10) + " : " + strconv.FormatInt(timeTakenKruskal, 10))
+		writer.Write([]string{strconv.Itoa(n), strconv.FormatInt(timeTakenPrim, 10), strconv.FormatInt(timeTakenKruskal, 10)})
 	}
 
 }
