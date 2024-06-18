@@ -115,7 +115,8 @@ func find(node int, ufs []int) int {
 	}
 	return ufs[node]
 }
-func kruskal(g *Graph) (opeartionCount int) {
+
+func kruskal(g *Graph) []Edge {
 	pq := &PriorityQueue{}
 	heap.Init(pq)
 
@@ -126,7 +127,6 @@ func kruskal(g *Graph) (opeartionCount int) {
 					value:    Edge{from: i, to: j, cost: g.matrix[i][j]},
 					priority: -int(g.matrix[i][j] * 100_000),
 				})
-				opeartionCount++
 			}
 		}
 	}
@@ -144,25 +144,29 @@ func kruskal(g *Graph) (opeartionCount int) {
 		ufs[find(node1, ufs)] = find(node2, ufs)
 	}
 
+	mst := []Edge{}
+
 	for pq.Len() > 0 {
 		item := heap.Pop(pq).(*Item)
-		opeartionCount++
 		edge := item.value
 
 		if !same(edge.from, edge.to) {
 			union(edge.from, edge.to)
+			mst = append(mst, Edge{from: edge.from, to: edge.to, cost: edge.cost})
 		}
 	}
 
-	return
+	return mst
 }
 
-func lazyPrim(g *Graph) (operationCount int) {
+func prim(g *Graph) []Edge {
 	node := 0
 	g.visited[node] = true
 
 	pq := &PriorityQueue{}
 	heap.Init(pq)
+
+	mst := []Edge{}
 
 	addEdges := func(currentNode int) {
 		for adj := 0; adj < g.size; adj++ {
@@ -175,7 +179,6 @@ func lazyPrim(g *Graph) (operationCount int) {
 					},
 					priority: -int(g.matrix[node][adj] * 100_000),
 				})
-				operationCount++
 			}
 		}
 	}
@@ -184,18 +187,17 @@ func lazyPrim(g *Graph) (operationCount int) {
 
 	for pq.Len() > 0 {
 		item := heap.Pop(pq).(*Item)
-		operationCount++
 		edge := item.value
 
 		if !g.visited[edge.to] {
 			g.visited[edge.to] = true
 			addEdges(edge.to)
-			//fmt.Println("Edge from:", strconv.Itoa(edge.from), "to:", strconv.Itoa(edge.to), "cost:", edge.cost)
+			mst = append(mst, Edge{from: edge.from, to: edge.to, cost: edge.cost})
 		}
 
 	}
 
-	return
+	return mst
 }
 
 func main() {
@@ -217,7 +219,7 @@ func main() {
 		//graph.print()
 
 		startTimePrim := time.Now()
-		_ = lazyPrim(graph)
+		_ = prim(graph)
 		timeTakenPrim := time.Since(startTimePrim).Milliseconds()
 
 		startTimeKruskal := time.Now()
