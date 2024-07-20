@@ -6,12 +6,62 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
-	"strconv"
-	"time"
+	"sort"
+	"strings"
 )
 
 type MSTree struct {
 	AdjList [][]int
+}
+
+func edgesToGraph(edges []Edge, size int) Graph {
+	// Initialize a matrix with zero values
+	matrix := make([][]float64, size)
+	for i := range matrix {
+		matrix[i] = make([]float64, size)
+	}
+
+	// Populate the matrix with edge costs
+	for _, edge := range edges {
+		matrix[edge.from][edge.to] = edge.cost
+		matrix[edge.to][edge.from] = edge.cost // for undirected graph
+	}
+
+	return Graph{size: size, matrix: matrix}
+}
+
+func printTree(edges []Edge) {
+	// Create an adjacency list
+	adjList := make(map[int][]Edge)
+	for _, edge := range edges {
+		adjList[edge.from] = append(adjList[edge.from], edge)
+	}
+
+	// Find the root of the tree (assuming 0 as root if it exists)
+	root := 0
+	if _, exists := adjList[0]; !exists {
+		for node := range adjList {
+			root = node
+			break
+		}
+	}
+
+	// Helper function to create indentation
+	repeatString := func(s string, count int) string {
+		return strings.Repeat(s, count)
+	}
+
+	// Print the tree using DFS
+	var dfs func(node int, depth int)
+	dfs = func(node int, depth int) {
+		fmt.Printf("%s%d\n", repeatString("  ", depth), node)
+		for _, edge := range adjList[node] {
+			dfs(edge.to, depth+1)
+		}
+	}
+
+	// Start DFS from the root
+	dfs(root, 0)
 }
 
 type Edge struct {
@@ -116,6 +166,45 @@ func find(node int, ufs []int) int {
 	return ufs[node]
 }
 
+type UnionFind struct {
+	parent []int
+	rank   []int
+}
+
+func NewUnionFind(size int) *UnionFind {
+	uf := &UnionFind{
+		parent: make([]int, size),
+		rank:   make([]int, size),
+	}
+	for i := range uf.parent {
+		uf.parent[i] = i
+	}
+	return uf
+}
+
+func (uf *UnionFind) find(node int) int {
+	if uf.parent[node] != node {
+		uf.parent[node] = uf.find(uf.parent[node]) // Path Compression
+	}
+	return uf.parent[node]
+}
+
+func (uf *UnionFind) union(node1, node2 int) {
+	root1 := uf.find(node1)
+	root2 := uf.find(node2)
+
+	if root1 != root2 {
+		if uf.rank[root1] > uf.rank[root2] {
+			uf.parent[root2] = root1
+		} else if uf.rank[root1] < uf.rank[root2] {
+			uf.parent[root1] = root2
+		} else {
+			uf.parent[root2] = root1
+			uf.rank[root1]++ // Increase rank if both have same rank
+		}
+	}
+}
+
 func kruskal(g *Graph) []Edge {
 	pq := &PriorityQueue{}
 	heap.Init(pq)
@@ -131,18 +220,7 @@ func kruskal(g *Graph) []Edge {
 		}
 	}
 
-	ufs := make([]int, g.size)
-	for i := range ufs {
-		ufs[i] = i
-	}
-
-	same := func(node1, node2 int) bool {
-		return find(node1, ufs) == find(node2, ufs)
-	}
-
-	union := func(node1, node2 int) {
-		ufs[find(node1, ufs)] = find(node2, ufs)
-	}
+	uf := NewUnionFind(g.size)
 
 	mst := []Edge{}
 
@@ -150,9 +228,9 @@ func kruskal(g *Graph) []Edge {
 		item := heap.Pop(pq).(*Item)
 		edge := item.value
 
-		if !same(edge.from, edge.to) {
-			union(edge.from, edge.to)
-			mst = append(mst, Edge{from: edge.from, to: edge.to, cost: edge.cost})
+		if uf.find(edge.from) != uf.find(edge.to) {
+			uf.union(edge.from, edge.to)
+			mst = append(mst, edge)
 		}
 	}
 
@@ -175,9 +253,9 @@ func prim(g *Graph) []Edge {
 					value: Edge{
 						from: currentNode,
 						to:   adj,
-						cost: g.matrix[node][adj],
+						cost: g.matrix[currentNode][adj], // <-- This should reference currentNode, not node
 					},
-					priority: -int(g.matrix[node][adj] * 100_000),
+					priority: -int(g.matrix[currentNode][adj] * 100_000),
 				})
 			}
 		}
@@ -200,6 +278,145 @@ func prim(g *Graph) []Edge {
 	return mst
 }
 
+func createAdjList(mst []Edge, size int) [][]int {
+	adjList := make([][]int, size)
+	for _, edge := range mst {
+		adjList[edge.from] = append(adjList[edge.from], edge.to)
+		adjList[edge.to] = append(adjList[edge.to], edge.from)
+	}
+	return adjList
+}
+
+// DFS
+func calculateSubtreeSizes(node int, adjList [][]int, visited []bool, subtreeSizes []int) int {
+	visited[node] = true
+	subtreeSize := 1
+	for _, child := range adjList[node] {
+		if !visited[child] {
+			subtreeSize += calculateSubtreeSizes(child, adjList, visited, subtreeSizes)
+		}
+	}
+	subtreeSizes[node] = subtreeSize
+	return subtreeSize
+}
+
+func broadcastOrder(node int, adjList [][]int, visited []bool, subtreeSizes []int, order []int) {
+	visited[node] = true
+	children := []int{}
+
+	// Gather all unvisited children
+	for _, child := range adjList[node] {
+		if !visited[child] {
+			children = append(children, child)
+		}
+	}
+
+	// Debug: Print the current node and its children
+	//fmt.Printf("Current Node: %d, Children: %v\n", node, children)
+
+	// Sort children based on the size of their subtree, largest first
+	if len(children) > 0 {
+		sort.Slice(children, func(i, j int) bool {
+			// Debug: Print subtree sizes comparison
+			fmt.Printf("Comparing subtree sizes: %d (%d) vs %d (%d)\n", children[i], subtreeSizes[children[i]], children[j], subtreeSizes[children[j]])
+			return subtreeSizes[children[i]] > subtreeSizes[children[j]]
+		})
+	}
+
+	// Recursively determine order for children
+	for _, child := range children {
+		order = append(order, child)
+		broadcastOrder(child, adjList, visited, subtreeSizes, order)
+	}
+}
+
+func simulateBroadcasts(nodeCount, simulations int) []int {
+	roundsData := make([]int, 0, simulations)
+
+	for i := 0; i < simulations; i++ {
+		graph := newRandomGraph(nodeCount)
+		mst := prim(graph)
+		adjList := createAdjList(mst, nodeCount)
+
+		startNode := rand.Intn(nodeCount)
+		rounds := simulateBroadcastFromNode(adjList, startNode, nodeCount)
+		roundsData = append(roundsData, rounds)
+	}
+	return roundsData
+}
+
+func simulateBroadcastFromNode(adjList [][]int, startNode, nodeCount int) int {
+	subtreeSizes := make([]int, nodeCount)
+	visited := make([]bool, nodeCount)
+
+	calculateSubtreeSizes(startNode, adjList, visited, subtreeSizes)
+
+	// Reset visited for the actual broadcast simulation
+	for i := range visited {
+		visited[i] = false
+	}
+
+	order := make([]int, 0, nodeCount)
+	order = append(order, startNode)
+	broadcastOrder(startNode, adjList, visited, subtreeSizes, order) // corrected line
+
+	return simulateRounds(order, adjList)
+}
+
+func simulateRounds(order []int, adjList [][]int) int {
+	rounds := 0
+	queue := []int{order[0]}
+	visited := make([]bool, len(adjList))
+	visited[order[0]] = true
+
+	for len(queue) > 0 {
+		nextQueue := []int{}
+		for _, node := range queue {
+			for _, child := range adjList[node] {
+				if !visited[child] {
+					visited[child] = true
+					nextQueue = append(nextQueue, child)
+				}
+			}
+		}
+		queue = nextQueue
+		if len(queue) > 0 {
+			rounds++
+		}
+	}
+	return rounds
+}
+
+func analyzeRounds(roundsData []int) (float64, int, int) {
+	var total int
+	minRounds := int(^uint(0) >> 1) // max int
+	maxRounds := 0
+
+	for _, rounds := range roundsData {
+		total += rounds
+		if rounds < minRounds {
+			minRounds = rounds
+		}
+		if rounds > maxRounds {
+			maxRounds = rounds
+		}
+	}
+
+	average := float64(total) / float64(len(roundsData))
+	return average, minRounds, maxRounds
+}
+
+func totalEdgeCost(graph *Graph) float64 {
+	totalCost := 0.0
+	// Iterate over the upper triangle of the adjacency matrix
+	for i := 0; i < graph.size; i++ {
+		for j := i + 1; j < graph.size; j++ {
+			totalCost += graph.matrix[i][j]
+		}
+	}
+	return totalCost
+}
+
 func main() {
 	fmt.Println("Hello Graphs!")
 
@@ -212,22 +429,60 @@ func main() {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	writer.Write([]string{"n", "timePrim", "timeKruskal"})
+	//Experiment 1:
+	//writer.Write([]string{"n", "timePrim", "timeKruskal"})
+	//for n := 10; n <= 500; n += 10 {
+	//	graph := newRandomGraph(n)
+	//graph.print()
 
-	for n := 10; n <= 500; n += 10 {
-		graph := newRandomGraph(n)
-		//graph.print()
+	//	startTimePrim := time.Now()
+	//	_ = prim(graph)
+	//	timeTakenPrim := time.Since(startTimePrim).Milliseconds()
 
-		startTimePrim := time.Now()
-		_ = prim(graph)
-		timeTakenPrim := time.Since(startTimePrim).Milliseconds()
+	//	startTimeKruskal := time.Now()
+	//	_ = kruskal(graph)
+	//	timeTakenKruskal := time.Since(startTimeKruskal).Milliseconds()
 
-		startTimeKruskal := time.Now()
-		_ = kruskal(graph)
-		timeTakenKruskal := time.Since(startTimeKruskal).Milliseconds()
+	//	fmt.Println(strconv.Itoa(n) + " : " + strconv.FormatInt(timeTakenPrim, 10) + " : " + strconv.FormatInt(timeTakenKruskal, 10))
+	//	writer.Write([]string{strconv.Itoa(n), strconv.FormatInt(timeTakenPrim, 10), strconv.FormatInt(timeTakenKruskal, 10)})
+	//}
 
-		fmt.Println(strconv.Itoa(n) + " : " + strconv.FormatInt(timeTakenPrim, 10) + " : " + strconv.FormatInt(timeTakenKruskal, 10))
-		writer.Write([]string{strconv.Itoa(n), strconv.FormatInt(timeTakenPrim, 10), strconv.FormatInt(timeTakenKruskal, 10)})
-	}
+	//Experiment 2:
+	//err = writer.Write([]string{"Number of Nodes", "Average Rounds", "Minimum Rounds", "Maximum Rounds"})
+	//if err != nil {
+	//	fmt.Println("Error writing header:", err)
+	//	return
+	//}
 
+	//for n := 10; n <= 1000; n += 10 {
+	//	roundsData := simulateBroadcasts(n, 100)
+	//	avgRounds, minRounds, maxRounds := analyzeRounds(roundsData)
+	//	err = writer.Write([]string{
+	//		strconv.Itoa(n),
+	//		fmt.Sprintf("%.2f", avgRounds),
+	//		strconv.Itoa(minRounds),
+	//		strconv.Itoa(maxRounds),
+	//	})
+	//	if err != nil {
+	//		fmt.Println("Error writing data:", err)
+	//		return
+	//	}
+	//	writer.Flush()
+
+	k := 5
+	g := newRandomGraph(k)
+	fmt.Println("Original graph:")
+	g.print()
+
+	primMST := prim(g)
+	primGraph := edgesToGraph(primMST, k)
+	fmt.Println("prim MST:")
+	primGraph.print()
+	fmt.Printf("Total MST cost: %f\n", totalEdgeCost(&primGraph))
+
+	kruskalMST := kruskal(g)
+	kruskalGraph := edgesToGraph(kruskalMST, k)
+	fmt.Println("Kruskal MST:")
+	kruskalGraph.print()
+	fmt.Printf("Total MST cost: %f\n", totalEdgeCost(&kruskalGraph))
 }

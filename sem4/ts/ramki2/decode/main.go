@@ -18,25 +18,31 @@ func main() {
 	// Convert to string for processing
 	wContentsString := string(wContents)
 
-	// Remove stop sequences
-	stopSequence := "01111110"
-	if !strings.HasPrefix(wContentsString, stopSequence) || !strings.HasSuffix(wContentsString, stopSequence) {
-		fmt.Println("Invalid framing in file W")
+	// Split into frames by the stop sequence
+	frames := strings.Split(wContentsString, "01111110")
+	var allData string
+
+	for _, frame := range frames {
+		if frame == "" {
+			continue
+		}
+
+		// Perform bit destuffing on each frame
+		destuffed := destuffBits(frame)
+		allData += destuffed
+	}
+
+	if len(allData) < 32 {
+		fmt.Println("Invalid or insufficient data for CRC check.")
 		return
 	}
-	wContentsString = strings.TrimPrefix(wContentsString, stopSequence)
-	wContentsString = strings.TrimSuffix(wContentsString, stopSequence)
-
-	// Perform bit destuffing
-	destuffedSequence := destuffBits(wContentsString)
 
 	// Separate the data and CRC
-	dataLength := len(destuffedSequence) - 32
-	data := destuffedSequence[:dataLength]
-	crcString := destuffedSequence[dataLength:]
+	dataLength := len(allData) - 32
+	data := allData[:dataLength]
+	crcString := allData[dataLength:]
 
-	// Verify CRC
-	expectedCRC := generateCRC([]byte(data))
+	// Convert binary string CRC to uint32
 	actualCRC := uint32(0)
 	for i := 0; i < 32; i++ {
 		if crcString[i] == '1' {
@@ -44,6 +50,8 @@ func main() {
 		}
 	}
 
+	// Verify CRC
+	expectedCRC := generateCRC([]byte(data))
 	if expectedCRC != actualCRC {
 		fmt.Println("CRC mismatch! Data may be corrupted.")
 		return
@@ -72,8 +80,9 @@ func destuffBits(signal string) string {
 			consecutiveOnes = 0
 		}
 		if consecutiveOnes == 5 {
-			// Skip the next '0'
-			i++
+			if i+1 < len(signal) && signal[i+1] == '0' {
+				i++ // Skip the '0' after five consecutive '1's
+			}
 			consecutiveOnes = 0
 		}
 	}
