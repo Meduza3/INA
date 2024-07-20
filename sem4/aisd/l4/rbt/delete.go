@@ -118,7 +118,7 @@ func (tree *Tree) deleteCase1Stats(node *Node, stats *ComplexityResults) {
 
 func (tree *Tree) deleteCase2(node *Node) {
 	sibling := node.sibling()
-	if nodeColor(sibling) == RED {
+	if sibling != nil && nodeColor(sibling) == RED {
 		node.Parent.Color = RED
 		sibling.Color = BLACK
 		if node == node.Parent.Left {
@@ -132,7 +132,7 @@ func (tree *Tree) deleteCase2(node *Node) {
 
 func (tree *Tree) deleteCase2Stats(node *Node, stats *ComplexityResults) {
 	sibling := node.sibling()
-	if nodeColor(sibling) == RED {
+	if sibling != nil && nodeColor(sibling) == RED {
 		node.Parent.Color = RED
 		sibling.Color = BLACK
 		stats.Porownania++
@@ -147,7 +147,7 @@ func (tree *Tree) deleteCase2Stats(node *Node, stats *ComplexityResults) {
 
 func (tree *Tree) deleteCase3(node *Node) {
 	sibling := node.sibling()
-	if nodeColor(node.Parent) == BLACK &&
+	if sibling != nil && nodeColor(node.Parent) == BLACK &&
 		nodeColor(sibling) == BLACK &&
 		nodeColor(sibling.Left) == BLACK &&
 		nodeColor(sibling.Right) == BLACK {
@@ -198,18 +198,24 @@ func (tree *Tree) deleteCase4Stats(node *Node, stats *ComplexityResults) {
 }
 
 func (tree *Tree) deleteCase5(node *Node) {
+	if node == nil || node.Parent == nil {
+		return // Immediate return if the node or its parent is nil
+	}
+
 	sibling := node.sibling()
-	if sibling != nil && node == node.Parent.Left &&
-		nodeColor(sibling) == BLACK &&
-		nodeColor(sibling.Left) == RED &&
-		nodeColor(sibling.Right) == BLACK {
+
+	// Check if sibling and its children exist before proceeding
+	if sibling == nil || sibling.Left == nil || sibling.Right == nil {
+		return
+	}
+
+	if node == node.Parent.Left && nodeColor(sibling) == BLACK && nodeColor(sibling.Left) == RED && nodeColor(sibling.Right) == BLACK {
+		// Ensuring sibling's left child is not nil before accessing
 		sibling.Color = RED
 		sibling.Left.Color = BLACK
 		tree.rotateRight(sibling)
-	} else if node == node.Parent.Right &&
-		nodeColor(sibling) == BLACK &&
-		nodeColor(sibling.Left) == RED &&
-		nodeColor(sibling.Right) == BLACK {
+	} else if node == node.Parent.Right && nodeColor(sibling) == BLACK && nodeColor(sibling.Right) == RED && nodeColor(sibling.Left) == BLACK {
+		// Ensuring sibling's right child is not nil before accessing
 		sibling.Color = RED
 		sibling.Right.Color = BLACK
 		tree.rotateLeft(sibling)
@@ -242,16 +248,16 @@ func (tree *Tree) deleteCase5Stats(node *Node, stats *ComplexityResults) {
 
 func (tree *Tree) deleteCase6(node *Node) {
 	sibling := node.sibling()
-	if sibling != nil {
+	if sibling != nil && node.Parent != nil { // Ensure sibling and parent are not nil
 		sibling.Color = node.Parent.Color
-	}
-	node.Parent.Color = BLACK
-	if node == node.Parent.Left && nodeColor(sibling.Right) == RED {
-		sibling.Right.Color = BLACK
-		tree.rotateLeft(node.Parent)
-	} else if nodeColor(sibling.Left) == RED {
-		sibling.Left.Color = BLACK
-		tree.rotateRight(node.Parent)
+		node.Parent.Color = BLACK
+		if node == node.Parent.Left && sibling.Right != nil && nodeColor(sibling.Right) == RED {
+			sibling.Right.Color = BLACK
+			tree.rotateLeft(node.Parent)
+		} else if sibling.Left != nil && nodeColor(sibling.Left) == RED {
+			sibling.Left.Color = BLACK
+			tree.rotateRight(node.Parent)
+		}
 	}
 }
 

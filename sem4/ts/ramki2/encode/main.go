@@ -16,7 +16,7 @@ func main() {
 
 	// Calculate CRC
 	crc := generateCRC(zContents)
-	crcString := fmt.Sprintf("%032b", crc)
+	crcString := fmt.Sprintf("%032b", crc) // CRC is 32 bits
 
 	// Convert to string for processing
 	zContentsString := string(zContents)
@@ -24,21 +24,32 @@ func main() {
 	// Create the sequence with CRC
 	sequence := zContentsString + crcString
 
-	// Perform bit stuffing
-	stuffedSequence := stuffBits(sequence)
-
-	// Frame the sequence
+	// Perform bit stuffing and framing
 	stopSequence := "01111110"
-	finalString := stopSequence + stuffedSequence + stopSequence
+	framedSequence := frameSequence(sequence, stopSequence, 64)
 
 	// Write to file W
-	err = ioutil.WriteFile("w", []byte(finalString), 0644)
+	err = ioutil.WriteFile("w", []byte(framedSequence), 0644)
 	if err != nil {
 		fmt.Println("Error writing to file W:", err)
 		return
 	}
 
 	fmt.Println("Framing completed successfully!")
+}
+
+func frameSequence(sequence, stopSequence string, frameSize int) string {
+	finalString := ""
+	for i := 0; i < len(sequence); i += frameSize {
+		end := i + frameSize
+		if end > len(sequence) {
+			end = len(sequence)
+		}
+		frame := sequence[i:end]
+		stuffedFrame := stuffBits(frame)
+		finalString += stopSequence + stuffedFrame + stopSequence
+	}
+	return finalString
 }
 
 // Perform bit stuffing
