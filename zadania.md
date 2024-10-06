@@ -1,29 +1,11 @@
-**TECHNOLOGIE SIECIOWE**
+**JFTT**
+ - Cwiczenia Lista 1 zad 5-8
+ - Labolatoria Lista 1 na 30 pazdziernika
 
-- Lista 3 na 14.05
+**AOD**
+ - Cwiczenia Lista 1 i 2
+ - Labolatoria Lista 1 na 30 pazdziernika
 
-- Lista 4
-- Lista 5 
-
-**ALGORYTMY I STRUKTURY DANYCH**
-
-- Lista 4.L - Wykonać do 06.04
-  - 3 RBTrees zostało delete
-  - 4 Eksperyment RBTrees
-  - 5 Splay Tree
-  - 6 Eksperyment Splay Tree
-
-**JEZYKI I PARADYGMATY PROGRAMOWANIA**
-
-Lista 4 zostało CPP i Ada
-
-**PROGRAMOWANIE W LOGICE**
-
-- Lista 7.L - Wykonac do 06.13
-- Lista 8.L - Wykonac do 06.20
-- Lista 9.L - Wykonac do 06.24
-
-**WYBRANE ZAGADNIENIA ALGEBRY**
-
-- 7
-- 8 
+**GRAF**
+ - Cwiczenia Lista 1
+**ON**
