@@ -5,15 +5,18 @@ import (
 	"testing"
 )
 
-// func TestFA(t *testing.T) {
-// 	pattern := "a*"
-// 	file_contents := "aaaa"
-// 	found := patterns.FA(pattern, file_contents)
-// 	want := 0
-// 	if found != want {
-// 		t.Errorf("want: %v got: %v", want, found)
-// 	}
-// }
+func TestAutomatonMatch(t *testing.T) {
+	pattern := "a"
+	file_contents := "aaaa"
+	found, err := patterns.AutomatonMatch(pattern, file_contents)
+	if err != nil {
+		t.Fatalf("got an error: %v", err)
+	}
+	want := 4
+	if found != want {
+		t.Errorf("want: %v got: %v", want, found)
+	}
+}
 
 func TestSuffix(t *testing.T) {
 	cases := []struct {

@@ -5,7 +5,7 @@ import (
 	"patterns/automata"
 )
 
-func buildAlphabet(pattern, text string) string {
+func BuildAlphabet(pattern, text string) string {
 	charSet := make(map[rune]struct{})
 	for _, r := range pattern {
 		charSet[r] = struct{}{}
@@ -20,7 +20,7 @@ func buildAlphabet(pattern, text string) string {
 	return string(alphabet)
 }
 
-func AutomatonMatch(pattern, text string) error {
+func AutomatonMatch(pattern, text string) (int, error) {
 	dfa := automata.NewAutomaton()
 	for idx := 0; idx <= len(pattern); idx++ {
 		dfa.AddState(automata.State(fmt.Sprint(idx)))
@@ -28,7 +28,7 @@ func AutomatonMatch(pattern, text string) error {
 	dfa.SetStartingState("0")
 	dfa.AddAcceptingState(automata.State(fmt.Sprint(len(pattern))))
 
-	alphabet := buildAlphabet(pattern, text)
+	alphabet := BuildAlphabet(pattern, text)
 
 	for idx := 0; idx <= len(pattern); idx++ {
 		for _, r := range alphabet {
@@ -36,12 +36,14 @@ func AutomatonMatch(pattern, text string) error {
 			nextState := automata.State(fmt.Sprint(Suffix(pattern, s)))
 			err := dfa.AddTransition(automata.State(fmt.Sprint(idx)), r, nextState)
 			if err != nil {
-				return fmt.Errorf("error adding transition: %v", err)
+				return 0, fmt.Errorf("error adding transition: %v", err)
 			}
 		}
 	}
 
 	currentState := automata.State("0")
+
+	count := 0
 
 	// Process the text
 	for i, r := range text {
@@ -57,7 +59,8 @@ func AutomatonMatch(pattern, text string) error {
 			// Pattern found at position i - patternLength + 1
 			position := i - len(pattern) + 1
 			fmt.Printf("Pattern found at position %d\n", position)
+			count++
 		}
 	}
-	return nil
+	return count, nil
 }

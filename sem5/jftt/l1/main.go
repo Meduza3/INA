@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	patterns.AutomatonMatch("EU", "BNFEUIABCDFEUI")
+	patterns.AutomatonMatch("", "aba")
 }
