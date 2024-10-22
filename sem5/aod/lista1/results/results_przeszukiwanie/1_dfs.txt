@@ -1,0 +1,11 @@
+Algorytm DFS dla pliku 1.txt
+Kolejność odwiedzania wierzchołków:
+1 3 6 5 2 4
+Drzewo przeszukiwania (wierzchołek: rodzic):
+1: nil
+2: 1
+3: 1
+4: 2
+5: 3
+6: 3
+Czas wykonania DFS: 800ns

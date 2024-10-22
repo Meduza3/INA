@@ -1,0 +1,7 @@
+Liczba silnie spójnych składowych: 5
+Składowa 1: 10 wierzchołków
+Składowa 2: 400000 wierzchołków
+Składowa 3: 360000 wierzchołków
+Składowa 4: 240000 wierzchołków
+Składowa 5: 1 wierzchołków
+Czas wykonania algorytmu SCC: 328.687602ms

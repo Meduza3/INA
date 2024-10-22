@@ -1,0 +1,2 @@
+Graf jest acykliczny.
+Czas wykonania programu: 31.5µs
