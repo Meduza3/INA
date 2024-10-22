@@ -1,0 +1,2 @@
+Graf zawiera cykl skierowany.
+Czas wykonania programu: 191.4µs

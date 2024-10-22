@@ -1,0 +1,2 @@
+Graf nie jest dwudzielny.
+Czas wykonania algorytmu sprawdzania dwudzielności: 1.4531ms

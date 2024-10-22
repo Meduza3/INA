@@ -1,0 +1,4 @@
+Graf jest acykliczny.
+Porządek topologiczny wierzchołków:
+1 2 5 3 6 9 4 7 10 13 8 11 14 12 15 16
+Czas wykonania programu: 1.7µs
