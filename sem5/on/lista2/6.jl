@@ -24,8 +24,11 @@ for (index, (c, x0)) in enumerate(cases)
         push!(x, x_new)
     end
     # Print the sequence
+    println("    \\hline
+    Case $(index): \$c = $(c), x_0 = $(x0)\$ \\\\
+        \\hline")
     for (n, value) in enumerate(x)
-        println("x[$(n - 1)] = $(value)")
+        println("$(n - 1) & $(value) \\\\\\hline")
     end
     println("---------------------------------------------------")
 end
