@@ -4,16 +4,18 @@
     #include <stdbool.h>
     #include <math.h>
 
-    #define MAX_STACK_SIZE 100
+    #define MAX_STACK_SIZE 420
 
     typedef struct {
         int top;
-        int array[MAX_STACK_SIZE];
+        int elements[MAX_STACK_SIZE];
     } Stack; 
 
-    /*****************************************/
-    /************ STACK FUNCTIONS ************/
-    /*****************************************/
+    
+    /* Global Variables */
+    static Stack calculatorStack;
+    static int hasErrorOccurred = 0;
+
     void initStack(Stack* stack) {
         stack->top = -1;
     }
@@ -26,116 +28,117 @@
         return stack->top == MAX_STACK_SIZE - 1;
     }
 
-    int push(Stack* stack, int number) {
+    bool push(Stack* stack, int value) {
         if (isFull(stack)) {
-            return 0;
+            return false;
         }
-
-        stack->top++;
-        stack->array[stack->top] = number;
-        return 1;
+        stack->elements[++stack->top] = value;
+        return true;
     }
 
-    int pop(Stack* stack, int *number) {
+    bool pop(Stack* stack, int* value) {
         if (isEmpty(stack)) {
-            return 0;
+            return false;
         }
-
-        *number = stack->array[stack->top];
-        stack->top--;
-        return 1;
+        *value = stack->elements[stack->top--];
+        return true;
     }
 
-    /******************************************/
-    /******** INPUT HANDLING FUNCTIONS ********/
-    /******************************************/
-    int wasErrorPrinted = 0;
-
-    void printError(const char* message) {
-        if (!wasErrorPrinted) {
+    void displayError(const char* message) {
+        if (!hasErrorOccurred) {
             printf("Error: %s\n", message);
-            wasErrorPrinted = 1;
+            hasErrorOccurred = 1;
         }
     }
 
-    void handleNumber(Stack* stack, const char* yytext) {
+    void processNumber(Stack* stack, const char* yytext) {
         int value = atoi(yytext);
         if (!push(stack, value)) {
-            printError("Stack overflow");
+            displayError("Stack overflow");
         }
     }
 
-    void handleOperator(Stack* stack, char operator) {
-        int b, a, result;
-        if (!pop(stack, &b) || !pop(stack, &a)) {
-            printError("Too few numbers");
+    void processOperator(Stack* stack, char operatorSymbol) {
+        int secondOperand, firstOperand, calculationResult;
+        
+        /* Check if enough operands are available */
+        if (!pop(stack, &secondOperand) || !pop(stack, &firstOperand)) {
+            displayError("Insufficient operands for operation");
             return;
         }
 
-        switch (operator) {
-            case '+': result = a + b; break;
-            case '-': result = a - b; break;
-            case '*': result = a * b; break;
-            case '/':
-                if (b == 0) {
-                    printError("Division by 0");
-                    return;
-                }
-                result = a / b;
+        /* Perform the requested operation */
+        switch (operatorSymbol) {
+            case '+':
+                calculationResult = firstOperand + secondOperand;
                 break;
-            case '^': result = pow(a, b); break;
-            case '%':
-                if (b == 0) {
-                    printError("Division by 0 in modulo");
+            case '-':
+                calculationResult = firstOperand - secondOperand;
+                break;
+            case '*':
+                calculationResult = firstOperand * secondOperand;
+                break;
+            case '/':
+                if (secondOperand == 0) {
+                    displayError("Division by zero");
                     return;
                 }
-                result = a % b;
+                calculationResult = firstOperand / secondOperand;
+                break;
+            case '^':
+                calculationResult = pow(firstOperand, secondOperand);
+                break;
+            case '%':
+                if (secondOperand == 0) {
+                    displayError("Modulo by zero");
+                    return;
+                }
+                calculationResult = firstOperand % secondOperand;
                 break;
             default:
-                printError("Unrecognized operator");
+                displayError("Unknown operator");
                 return;
         }
 
-        if (!push(stack, result)) {
-            printError("Stack overflow");
+        /* Store the result */
+        if (!push(stack, calculationResult)) {
+            displayError("Stack capacity exceeded");
         }
     }
 
-    void handleInvalidSymbol(const char* yytext) {
-        char errorMessage[50];
-        snprintf(errorMessage, 50, "Invalid symbol \"%s\"", yytext);
-        printError(errorMessage);
+    void processInvalidInput(const char* yytext) {
+        char error[100];
+        snprintf(error, 100, "Invalid symbol \"%s\"", yytext);
+        displayError(error);
     }
 
-    void handleEndOfLine(Stack* stack) {
+    void processEndOfLine(Stack* stack) {
         int result;
-        if (!wasErrorPrinted && stack->top == 0 && pop(stack, &result)) {
+        if (!hasErrorOccurred && stack->top == 0 && pop(stack, &result)) {
             printf("= %d\n", result);
         } else if (stack->top > 0) {
-            printError("Too few operators");
+            displayError("Too many operands remaining");
         } else {
-            printError("Too few numbers");
+            displayError("Insufficient operands");
         }
 
-        wasErrorPrinted = 0;
+        hasErrorOccurred = 0;
         initStack(stack);
     }
-
-    Stack stack;
 %}
 
 %%
 
--?[0-9]+                      { handleNumber(&stack, yytext); }
-[\+\-\*/\^\%]                 { handleOperator(&stack, yytext[0]); }
-[[:blank:]]+                  {}
-\n                            { handleEndOfLine(&stack); }
-.                             { handleInvalidSymbol(yytext); }
+-?[0-9]+                      { processNumber(&calculatorStack, yytext); }
+[\+\-\*/\^\%]                 { processOperator(&calculatorStack, yytext[0]); }
+[[:blank:]]+                  {/*ignore whitespace */}
+\n                            { processEndOfLine(&calculatorStack); }
+.                             { processInvalidInput(yytext); }
 
 %%
 
 int main() {
-    initStack(&stack);
+    initStack(&calculatorStack);
 
     printf("Please enter equations(one per line):\n");
     yylex();
