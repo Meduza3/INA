@@ -1,0 +1,113 @@
+
+state 0
+	$accept: .Input $end 
+	Input: .    (1)
+
+	.  reduce 1 (src line 36)
+
+	Input  goto 1
+
+state 1
+	$accept:  Input.$end 
+	Input:  Input.Line EOL 
+
+	$end  accept
+	PROBLEM  shift 5
+	ARC  shift 6
+	.  error
+
+	ProblemLine  goto 3
+	ArcLine  goto 4
+	Line  goto 2
+
+state 2
+	Input:  Input Line.EOL 
+
+	EOL  shift 7
+	.  error
+
+
+state 3
+	Line:  ProblemLine.    (3)
+
+	.  reduce 3 (src line 41)
+
+
+state 4
+	Line:  ArcLine.    (4)
+
+	.  reduce 4 (src line 43)
+
+
+state 5
+	ProblemLine:  PROBLEM.PROBLEM_TYPE NUMBER NUMBER 
+
+	PROBLEM_TYPE  shift 8
+	.  error
+
+
+state 6
+	ArcLine:  ARC.NUMBER NUMBER NUMBER 
+
+	NUMBER  shift 9
+	.  error
+
+
+state 7
+	Input:  Input Line EOL.    (2)
+
+	.  reduce 2 (src line 38)
+
+
+state 8
+	ProblemLine:  PROBLEM PROBLEM_TYPE.NUMBER NUMBER 
+
+	NUMBER  shift 10
+	.  error
+
+
+state 9
+	ArcLine:  ARC NUMBER.NUMBER NUMBER 
+
+	NUMBER  shift 11
+	.  error
+
+
+state 10
+	ProblemLine:  PROBLEM PROBLEM_TYPE NUMBER.NUMBER 
+
+	NUMBER  shift 12
+	.  error
+
+
+state 11
+	ArcLine:  ARC NUMBER NUMBER.NUMBER 
+
+	NUMBER  shift 13
+	.  error
+
+
+state 12
+	ProblemLine:  PROBLEM PROBLEM_TYPE NUMBER NUMBER.    (5)
+
+	.  reduce 5 (src line 47)
+
+
+state 13
+	ArcLine:  ARC NUMBER NUMBER NUMBER.    (6)
+
+	.  reduce 6 (src line 55)
+
+
+8 terminals, 5 nonterminals
+7 grammar rules, 14/16000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+54 working sets used
+memory: parser 3/240000
+0 extra closures
+9 shift entries, 1 exceptions
+4 goto entries
+0 entries saved by goto default
+Optimizer space used: output 13/240000
+13 table entries, 0 zero
+maximum spread: 8, maximum offset: 8
