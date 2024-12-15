@@ -8,7 +8,6 @@ import (
     "strconv"
 )
 
-var result []interface{}
 var problemGraph graph.Graph{}
 
 func (y *YySymType) ChangeStr(str string) {
@@ -47,7 +46,7 @@ Line:
 ProblemLine:
     PROBLEM PROBLEM_TYPE NUMBER NUMBER  {
         size, _ := strconv.Atoi($3)
-        problemGraph = graph.NewGraph(size)
+        Yyrcvr.ProblemGraph = graph.NewGraph(size)
         fmt.Printf("Problem: Type=%s, Wierzchołki=%d, Łuki=%d\n", $2, $3, $4)
     }
 ;
@@ -57,7 +56,7 @@ ArcLine:
         from, _ := strconv.Atoi($2)
         to, _ := strconv.Atoi($3)
         cost, _ := strconv.Atoi($4)
-        problemGraph.AddEdge(from, to, cost)
+        Yyrcvr.ProblemGraph.AddEdge(from, to, cost)
         fmt.Printf("Arc: From=%d, To=%d, Cost=%d\n", $2, $3, $4)
     }
 ;

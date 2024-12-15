@@ -22,4 +22,5 @@ func main() {
 	parser := parser.YyNewParser()
 
 	parser.Parse(lexer_wrapper)
+	fmt.Println(parser.GetGraph())
 }
