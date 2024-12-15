@@ -15,7 +15,7 @@ import (
 var result []interface{}
 var problemGraph graph.Graph{}
 
-func (y YySymType) ChangeStr(str string) {
+func (y *YySymType) ChangeStr(str string) {
     y.str = str
 }
 
@@ -136,12 +136,17 @@ type YyLexer interface {
 type YyParser interface {
 	Parse(YyLexer) int
 	Lookahead() int
+	GetGraph() graph.Graph
 }
 
+func (p *YyParserImpl) GetGraph() graph.Graph {
+	return p.ProblemGraph
+}
 type YyParserImpl struct {
 	lval  YySymType
 	stack [YyInitialStackSize]YySymType
 	char  int
+	ProblemGraph graph.Graph
 }
 
 func (p *YyParserImpl) Lookahead() int {
@@ -455,7 +460,7 @@ Yydefault:
 //line parser.y:48
 		{
 	        size, _ := strconv.Atoi(YyDollar[3].str)
-	        problemGraph = graph.NewGraph(size)
+	        Yyrcvr.ProblemGraph = graph.NewGraph(size)
 	        fmt.Printf("Problem: Type=%s, Wierzchołki=%d, Łuki=%d\n", YyDollar[2].str, YyDollar[3].str, YyDollar[4].str)
 	    }
 	case 6:
@@ -465,7 +470,7 @@ Yydefault:
 	        from, _ := strconv.Atoi(YyDollar[2].str)
 	        to, _ := strconv.Atoi(YyDollar[3].str)
 	        cost, _ := strconv.Atoi(YyDollar[4].str)
-	        problemGraph.AddEdge(from, to, cost)
+	        Yyrcvr.ProblemGraph.AddEdge(from, to, cost)
 	        fmt.Printf("Arc: From=%d, To=%d, Cost=%d\n", YyDollar[2].str, YyDollar[3].str, YyDollar[4].str)
 	    }
 	}
