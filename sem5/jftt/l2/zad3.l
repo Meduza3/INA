@@ -31,7 +31,7 @@ REGULAR_MULTILINE    \/\*[^*!]([^*]|\*[^/])*\*\/
 {REGULAR_MULTILINE}   { handleOutput(yytext, false); }
 
 .|\n                  { ECHO; }                     /* Pass through other characters */
-
+`
 %%
 
 static void handleOutput(const char* text, bool isDocComment) {

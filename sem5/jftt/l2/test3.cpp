@@ -1,4 +1,5 @@
- 
+//#include <iostream>
+
 /**
  * header-name
  */
@@ -11,12 +12,20 @@
 
 //! Comments within `<>` get removed outside #include, but paths with a space are handled
 //! platform specific (Windows includes properly, MacOS doesn't)
-    #include <iostream>
+// #ifndef INCFILE
+// #   define INCFILE <iostream/*redacted*/>
+// #endif
+// #include INCFILE
+#include <iostream>
 
-  
-  int q;
+//*
+//*/
 
- void nuke(void);
+ // 
+int q;
+
+// Comment\
+void nuke(void);
 
 /// TEST MACRO
 #define TEST 1//2137
@@ -28,16 +37,23 @@ int/**/f(){return 42;}
  * Documentation
  */
 int main(void) {
-         std::cout << TEST << "\n";
+    // > 1
+    std::cout << TEST << "\n";
 
     printf("/* foo bar");
-     
-         std::cout << "/* is great */"
+    //*/" bar();
+
+    // > /* is great */ and so is //
+    std::cout << "/* is great */"
         << " and so is //"\
     "\n";
 
-         std::cout << ":o"
-         "a\n";
+    // > :oa
+    std::cout << ":o"
+    // o:
+    "a\n";
 
-         std::cout << f()/**/ << "\n";
+    // >42
+    std::cout << f()/**/ << "\n";
 }
+
