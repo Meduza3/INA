@@ -1,10 +1,12 @@
 **JFTT**
- - Cwiczenia Lista 1 zad 5-8
+ - KOMPILATOR
 
 **AOD**
- - Cwiczenia Lista 1 i 2
- - Labolatoria Lista 1 na 30 pazdziernika
+ - Lista 3 i 4 z labolatoriów
 
 **GRAF**
- - Cwiczenia Lista 1
+ - Nauka na egzamin...
+
 **ON**
+ - Lista 4 i 5 z labolatoriów
+ - Nauka na egzamin :)
