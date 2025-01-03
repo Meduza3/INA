@@ -2,11 +2,13 @@ package graphs
 
 import (
 	"fmt"
+	"math"
 )
 
 type Graph struct {
-	size int
-	data []int
+	Size      int
+	EdgeCount int
+	data      []int
 }
 
 func NewGraph(size int) *Graph {
@@ -15,24 +17,25 @@ func NewGraph(size int) *Graph {
 		data[i] = -1
 	}
 	return &Graph{
-		size: size,
+		Size: size,
 		data: data,
 	}
 }
 
 func (g *Graph) AddEdge(from, to int, cost int) error {
-	if from >= g.size || to >= g.size {
-		return fmt.Errorf("out of bounds! size=%d from=%d to=%d", g.size, from, to)
+	if from >= g.Size || to >= g.Size {
+		return fmt.Errorf("out of bounds! size=%d from=%d to=%d", g.Size, from, to)
 	}
-	g.data[from*g.size+to] = cost
+	g.data[from*g.Size+to] = cost
+	g.EdgeCount++
 	return nil
 }
 
-func maxEdgeCost(g *Graph) int {
+func MaxEdgeCost(g *Graph) int {
 	maxCost := 0
-	for u := 0; u < g.size; u++ {
-		for v := 0; v < g.size; v++ {
-			cost := g.data[u*g.size+v]
+	for u := 0; u < g.Size; u++ {
+		for v := 0; v < g.Size; v++ {
+			cost := g.data[u*g.Size+v]
 			if cost < 0 {
 				continue
 			}
@@ -42,4 +45,20 @@ func maxEdgeCost(g *Graph) int {
 		}
 	}
 	return maxCost
+}
+
+func MinEdgeCost(g *Graph) int {
+	minCost := math.MaxInt
+	for u := 0; u < g.Size; u++ {
+		for v := 0; v < g.Size; v++ {
+			cost := g.data[u*g.Size+v]
+			if cost < 0 {
+				continue
+			}
+			if cost < minCost {
+				minCost = cost
+			}
+		}
+	}
+	return minCost
 }

@@ -1,3 +1,4 @@
+module lista4
 function ilorazyRoznicowe(x::Vector{Float64}, f::Vector{Float64})
   """
   Funkcja oblicza kolejne ilorazy różnicowe węzłów x i wartości funkcji f.
@@ -33,4 +34,5 @@ function ilorazyRoznicowe(x::Vector{Float64}, f::Vector{Float64})
   end
 
   return fx
+end
 end
