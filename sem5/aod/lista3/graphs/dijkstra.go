@@ -8,13 +8,13 @@ import (
 )
 
 func DijkstraBasic(g *Graph, source int) ([]int, []int, error) {
-	if source < 0 || source >= g.size {
+	if source < 0 || source >= g.Size {
 		return nil, nil, fmt.Errorf("source out of bounds: %d", source)
 	}
 
 	// Przygotowujemy tablicę odległości - startowo "nieskończoności".
-	dist := make([]int, g.size)
-	parent := make([]int, g.size)
+	dist := make([]int, g.Size)
+	parent := make([]int, g.Size)
 
 	for i := range dist {
 		dist[i] = math.MaxInt // ustalamy bardzo duże wartości
@@ -46,8 +46,8 @@ func DijkstraBasic(g *Graph, source int) ([]int, []int, error) {
 		}
 
 		// Przeglądamy wszystkie potencjalne krawędzie wychodzące z u.
-		for v := 0; v < g.size; v++ {
-			cost := g.data[u*g.size+v]
+		for v := 0; v < g.Size; v++ {
+			cost := g.data[u*g.Size+v]
 
 			// Jeśli w macierzy jest 0 (i to oznacza brak krawędzi), to pomijamy.
 			// UWAGA: jeśli 0 ma znaczyć "krawędź o koszcie 0", należy to dostosować.
@@ -74,13 +74,13 @@ func DijkstraBasic(g *Graph, source int) ([]int, []int, error) {
 // DijkstraDial implementuje algorytm Diala dla grafu o nieujemnych CAŁKOWITYCH wagach.
 // Zakłada, że cost < 0 jest ignorowane (niedozwolone w teorii).
 func DijkstraDial(g *Graph, source int) ([]int, []int, error) {
-	n := g.size
+	n := g.Size
 	if source < 0 || source >= n {
 		return nil, nil, fmt.Errorf("invalid source: %d", source)
 	}
 
 	// 1. Wyznaczamy maksymalny koszt krawędzi
-	maxC := maxEdgeCost(g)
+	maxC := MaxEdgeCost(g)
 	if maxC == 0 {
 		maxC = 1 // aby mieć co najmniej 1 kubełek, gdy wszystkie koszty=0
 	}
@@ -159,7 +159,7 @@ func DijkstraDial(g *Graph, source int) ([]int, []int, error) {
 }
 
 func DijkstraRadix(g *Graph, source int) ([]int, []int, error) {
-	n := g.size
+	n := g.Size
 	if source < 0 || source >= n {
 		return nil, nil, fmt.Errorf("invalid source: %d", source)
 	}
