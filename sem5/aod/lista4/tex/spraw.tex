@@ -23,7 +23,7 @@
 Rozważany graf jest hiperkostką $H_k, k\in \{1,...,16\}$, czyli grafem którego zbiorem wierzchołków jest zbiór liczb $\{0,...,2^{k}-1\}$. Wierzchołki połączone są ze sobą tylko jeśli zapis binarny ich indeksów rózni się na dokładnie jednej pozycji krawędzią skierowaną z wierzchołka o mniejszej liczbie jedynek do tego z większą. Pojemności przyjmowane przez krawędzie są losowane jednostajnie z przedziału $\{1,...,2^l\}$, gdzie $l$ równe jest największej z czterech wartości: ilość zer lub ilość jedynek z dowolnego spośród dwóch zamieszanych wierzchołków.
 \subsection*{Opis Algorytmu}
 Algorytm Edmondsa-Karpa służy do znajdowania maksymalnego przepływu w sieci przepływowej. Implementuje on metodę Forda-Fulkersona, w której wybór ścieżki powiększającej jest dokonywany za pomocą metody Breadth-First-Search. 
-Po znalezieniu najkrótszej ścieżki puszczamy przepływ tą ściężką i szukamy kolejnej ścieżki w następnej iteracji, aż zapełnią się wszystkie drogi od źródła.
+Po znalezieniu najkrótszej ścieżki puszczamy przepływ tą ściężką i szukamy kolejnej ścieżki w następnej iteracji, aż zapełnią się wszystkie drogi od źródła. Wtedy przepływ puszczony w sieci jest maksymalną ilością przepływu od źródła do ujścia.
 \begin{algorithm}[H]
   \caption{Edmonds-Karp}
   \label{alg:edmonds-karp}
@@ -42,4 +42,6 @@ Po znalezieniu najkrótszej ścieżki puszczamy przepływ tą ściężką i szuk
   \STATE \textbf{return} $f$ \quad (wielkość maksymalnego przepływu to $\sum_{v\in V} f(s,v)$)
   \end{algorithmic}
   \end{algorithm}
+\subsection*{Metodologia Eksperymentu}
+Testy zostały przeprowadzone na hiperkostkach $H_k$, gdzie $k\in\{1,...,16\}$. Dla każdego rozmiaru kostki eksperyment był uruchamiany 10krotnie. Wykres prezentuje średni maksymalny przepływ i średni czas działania programu. 
 \end{document}

@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1736853538 "/home/INA/sem5/aod/lista4/tex/spraw.tex" "spraw.pdf" "spraw" 1736853538
+["pdflatex"] 1736862193 "/home/INA/sem5/aod/lista4/tex/spraw.tex" "spraw.pdf" "spraw" 1736862193
   "/etc/texmf/web2c/texmf.cnf" 1732816694 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/INA/sem5/aod/lista4/tex/spraw.tex" 1736853538 2481 dd606c23ff257a9a34a3c3f4a1fd7201 ""
+  "/home/INA/sem5/aod/lista4/tex/spraw.tex" 1736862192 2850 cde61d63b7bbe171c6459a2384b7a50c ""
   "/root/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk" 1736853355 25396 2a477f4f5ab905839f0b72ffed07619b ""
   "/root/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1736852846 31928 5f550dfa82ce26d7978c6b7c4addb726 ""
   "/root/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1736852846 40112 3e0694e9ef2fbbd73ddb7ee85dc9b22b ""
@@ -86,8 +86,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1736853439 168881 a0da1701c887c431dfeb2ed478b48727 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1736853443 1448006 2787e793a5cc1371a3f2f2c3b8ed85f4 ""
-  "spraw.aux" 1736853538 285 4944b49c6d14a09c294845b9588cf01e "pdflatex"
-  "spraw.tex" 1736853538 2481 dd606c23ff257a9a34a3c3f4a1fd7201 ""
+  "spraw.aux" 1736862193 285 4944b49c6d14a09c294845b9588cf01e "pdflatex"
+  "spraw.tex" 1736862192 2850 cde61d63b7bbe171c6459a2384b7a50c ""
   (generated)
   "spraw.aux"
   "spraw.log"
