@@ -1,2 +1,3 @@
-Graf jest acykliczny.
-Czas wykonania programu: 31.5µs
+version https://git-lfs.github.com/spec/v1
+oid sha256:3ff8f0e867e028f6008b0c222b2fd8dbd1dee2c4f8076c5991771ca82f264cc8
+size 55

@@ -1,14 +1,3 @@
-Algorytm DFS dla pliku 6.txt
-Kolejność odwiedzania wierzchołków:
-1 2 5 3 6 7 4 8 9
-Drzewo przeszukiwania (wierzchołek: rodzic):
-1: nil
-2: 1
-3: 1
-4: 2
-5: 1
-6: 5
-7: 5
-8: 7
-9: 6
-Czas wykonania DFS: 1.3µs
+version https://git-lfs.github.com/spec/v1
+oid sha256:148cceb52f6de534b6cdec9736f64695f44475a457cf8560960f495a0e045707
+size 207

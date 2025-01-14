@@ -1,2 +1,3 @@
-Graf nie jest dwudzielny.
-Czas wykonania algorytmu sprawdzania dwudzielności: 94.869698ms
+version https://git-lfs.github.com/spec/v1
+oid sha256:44fd08a5a3cd4b195ee52592ec72c0329564906eaff474ee4970400ed89a54b3
+size 91

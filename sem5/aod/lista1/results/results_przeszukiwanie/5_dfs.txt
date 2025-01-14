@@ -1,14 +1,3 @@
-Algorytm DFS dla pliku 5.txt
-Kolejność odwiedzania wierzchołków:
-1 2 5 6 7 4 8 9 3
-Drzewo przeszukiwania (wierzchołek: rodzic):
-1: nil
-2: 1
-3: 1
-4: 2
-5: 1
-6: 5
-7: 6
-8: 7
-9: 6
-Czas wykonania DFS: 1.6µs
+version https://git-lfs.github.com/spec/v1
+oid sha256:ca366679147acbc9a345bd8d2b900551ef1df4054f3bd733fb06931abd013c00
+size 207

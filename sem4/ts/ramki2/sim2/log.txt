@@ -1,1 +1,3 @@
-signal: interrupt
+version https://git-lfs.github.com/spec/v1
+oid sha256:b50f17a1b8afa072d6ec1cddd4a4fcb9b24cdb70a94e45da4664dfc7581ae4f9
+size 18

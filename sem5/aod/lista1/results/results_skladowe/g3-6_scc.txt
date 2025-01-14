@@ -1,7 +1,3 @@
-Liczba silnie spójnych składowych: 5
-Składowa 1: 10 wierzchołków
-Składowa 2: 400000 wierzchołków
-Składowa 3: 360000 wierzchołków
-Składowa 4: 240000 wierzchołków
-Składowa 5: 1 wierzchołków
-Czas wykonania algorytmu SCC: 328.687602ms
+version https://git-lfs.github.com/spec/v1
+oid sha256:6e60ef8e4717a7046a8f102a584ca047b5e3eeb539b764fc5a043a2eebf3f689
+size 248

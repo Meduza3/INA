@@ -1,2 +1,3 @@
-Graf zawiera cykl skierowany.
-Czas wykonania programu: 23.2µs
+version https://git-lfs.github.com/spec/v1
+oid sha256:77910a7c30d968f5a4927276d78fc99a21583b535f8f14dfeb07453de1374f2c
+size 63

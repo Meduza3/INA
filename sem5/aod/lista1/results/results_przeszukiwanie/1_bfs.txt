@@ -1,11 +1,3 @@
-Algorytm BFS dla pliku 1.txt
-Kolejność odwiedzania wierzchołków:
-1 3 2 6 5 4
-Drzewo przeszukiwania (wierzchołek: rodzic):
-1: nil
-2: 1
-3: 1
-4: 2
-5: 3
-6: 3
-Czas wykonania BFS: 1.2µs
+version https://git-lfs.github.com/spec/v1
+oid sha256:105903bd3942ca337c847b1fd6ecab9202ac084907ea2494a0f18795f6a820bb
+size 186
