@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\let\lll\undefined % Usunięcie istniejącej definicji
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[polish]{babel}
+
+\title{aod-lab-lista4}
+\author{Marcin Zubrzycki}
+\date{January 2025}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Algorytm Edmondsa-Karpa}
+\subsection*{Opis struktury grafu}
+Rozważany graf jest hiperkostką $H_k, k\in \{1,...,16\}$, czyli grafem którego zbiorem wierzchołków jest zbiór liczb $\{0,...,2^{k}-1\}$. Wierzchołki połączone są ze sobą tylko jeśli zapis binarny ich indeksów rózni się na dokładnie jednej pozycji krawędzią skierowaną z wierzchołka o mniejszej liczbie jedynek do tego z większą. Pojemności przyjmowane przez krawędzie są losowane jednostajnie z przedziału $\{1,...,2^l\}$, gdzie $l$ równe jest największej z czterech wartości: ilość zer lub ilość jedynek z dowolnego spośród dwóch zamieszanych wierzchołków.
+\subsection*{Opis Algorytmu}
+Algorytm Edmondsa-Karpa służy do znajdowania maksymalnego przepływu w sieci przepływowej. Implementuje on metodę Forda-Fulkersona, w której wybór ścieżki powiększającej jest dokonywany za pomocą metody Breadth-First-Search. 
+Po znalezieniu najkrótszej ścieżki puszczamy przepływ tą ściężką i szukamy kolejnej ścieżki w następnej iteracji, aż zapełnią się wszystkie drogi od źródła.
+\begin{algorithm}[H]
+  \caption{Edmonds-Karp}
+  \label{alg:edmonds-karp}
+  \begin{algorithmic}[1]
+  \REQUIRE Graf przepływowy $G=(V,E)$, przepustowości $c(u,v)$, źródło $s$, ujście $t$
+  \ENSURE Maksymalny przepływ od $s$ do $t$
+  \STATE Inicjalizuj przepływ $f(u,v) \leftarrow 0$ dla każdej krawędzi $(u,v) \in E$.
+  \WHILE{istnieje w grafie rezydualnym ścieżka $P$ z $s$ do $t$ znaleziona za pomocą BFS}
+    \STATE Wyznacz minimalną rezydualną przepustowość $\text{cf}_{\min}$ na ścieżce $P$, 
+           tj. $\text{cf}_{\min} = \min_{(u,v) \in P} \bigl(c(u,v) - f(u,v)\bigr)$.
+    \FORALL{krawędzi $(u,v)$ należących do ścieżki $P$}
+      \STATE $f(u,v) \leftarrow f(u,v) + \text{cf}_{\min}$ 
+      \STATE $f(v,u) \leftarrow f(v,u) - \text{cf}_{\min}$ \quad (aktualizacja przepływu rewersyjnego)
+    \ENDFOR
+  \ENDWHILE
+  \STATE \textbf{return} $f$ \quad (wielkość maksymalnego przepływu to $\sum_{v\in V} f(s,v)$)
+  \end{algorithmic}
+  \end{algorithm}
+\end{document}
