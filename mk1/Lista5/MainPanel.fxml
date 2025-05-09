@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: LIGHTGRAY;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <bottom>
+      <AnchorPane onMouseEntered="#clipContents" onMouseExited="#clipContents" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="circleButton" layoutX="15.0" layoutY="41.0" mnemonicParsing="false" onAction="#selectCircle" text="Circle" />
+            <Button fx:id="rectangleButton" layoutX="89.0" layoutY="41.0" mnemonicParsing="false" onAction="#selectRectangle" text="Rectangle" />
+            <Button fx:id="polygonButton" layoutX="194.0" layoutY="41.0" mnemonicParsing="false" onAction="#selectPolygon" text="Polygon" />
+            <Button fx:id="infoButton" layoutX="1097.0" layoutY="28.0" mnemonicParsing="false" onAction="#showInfo" text="Info" />
+            <Button fx:id="loadButton" layoutX="999.0" layoutY="28.0" mnemonicParsing="false" onAction="#load" text="Load" />
+            <Button fx:id="saveButton" layoutX="908.0" layoutY="28.0" mnemonicParsing="false" onAction="#save" text="Save" />
+            <Text layoutX="302.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current tool: " />
+            <Text fx:id="tooltip" layoutX="436.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text layoutX="302.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mouse coordinates:" />
+            <Text fx:id="coords" layoutX="436.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <ColorPicker fx:id="strokeColorPicker" layoutX="583.0" layoutY="7.0" />
+            <ColorPicker fx:id="fillColorPicker" layoutX="583.0" layoutY="41.0" />
+            <Button fx:id="switchColorButton" layoutX="780.0" layoutY="7.0" mnemonicParsing="false" onAction="#switchColor" prefHeight="25.0" prefWidth="6.0" text="X" />
+            <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#selectPaint" prefHeight="25.0" prefWidth="57.0" text="Paint" />
+            <Button layoutX="105.0" layoutY="8.0" mnemonicParsing="false" onAction="#selectMove" text="Move" />
+            <Button layoutX="198.0" layoutY="7.0" mnemonicParsing="false" onAction="#selectRotate" text="Rotate" />
+            <Button layoutX="776.0" layoutY="41.0" mnemonicParsing="false" onAction="#selectEyedropper" text="Get Color" />
+         </children></AnchorPane>
+   </bottom>
+   <center>
+      <Pane fx:id="pane" onMouseMoved="#updateCoords" onMousePressed="#draw" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

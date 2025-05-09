@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Portfolio - Marcin Zubrzycki</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header>
+      <img
+        src="profile.png"
+        alt="Marcin Zubrzycki"
+        style="height: 100px; width: auto"
+      />
+      <h1>Marcin Zubrzycki</h1>
+      <nav>
+        <a href="index.html">O mnie</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="zainteresowania.html">Zainteresowania</a>
+      </nav>
+    </header>
+
+    <main>
+      <section>
+        <h1>Wizualizator Zależności</h1>
+        <p>
+          Aplikacja składa się z backendu obsługującego zapytania API oraz
+          frontendowej części prezentującej dane użytkownikowi.
+        </p>
+        <h3>Główne funkcje aplikacji:</h3>
+        <ol>
+          <li>
+            <strong>Wyszukiwanie informacji o projekcie:</strong>
+            <ul>
+              <li>Najpierw przeszukuje lokalną bazę danych SQLite.</li>
+              <li>
+                Jeśli brak danych lokalnych, pobiera informacje z zewnętrznego
+                API.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Prezentacja metryk projektu:</strong>
+            <ul>
+              <li>Liczba otwartych zgłoszeń (open issues).</li>
+              <li>Liczba gwiazdek (stars).</li>
+              <li>Liczba forków.</li>
+              <li>Rodzaj licencji.</li>
+              <li>Opis projektu.</li>
+              <li>Adres strony domowej projektu.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Wizualizacja zależności:</strong>
+            <ul>
+              <li>Wykres słupkowy liczby zależności według ocen (score).</li>
+              <li>Interaktywna eksploracja hierarchii zależności.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Nawigacja:</strong>
+            <ul>
+              <li>
+                Przycisk “Back” umożliwiający łatwe poruszanie się po
+                projektach.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Wydajność:</strong>
+            <ul>
+              <li>
+                Asynchroniczne gorutyny w Go zapewniające szybkie ładowanie i
+                płynność działania.
+              </li>
+            </ul>
+          </li>
+        </ol>
+        <img
+          src="codeno_small.jpeg"
+          srcset="
+            codeno_small.jpeg   480w,
+            codeno_medium.jpeg  800w,
+            codeno_large.jpeg  1200w
+          "
+          sizes="(max-width: 600px) 480px,
+                        (max-width: 1024px) 800px,
+                        1200px"
+          alt="Screenshot wizualizatora"
+        />
+
+        <article class="code">
+          <span class="comment">// Najnowsza wersja semantyczna</span>
+          <span class="keyword">func</span> latestSemVer(versions []<span
+            class="type"
+            >models.Version</span
+          >) (<span class="type">string</span>, <span class="type">error</span>)
+          { <span class="keyword">var</span> max
+          <span class="type">string</span>
+          <span class="keyword">var</span> max1, max2, max3
+          <span class="type">int</span>
+
+          <span class="keyword">for</span> _, v <span class="keyword">:=</span>
+          <span class="keyword">range</span> versions { stripped
+          <span class="keyword">:=</span>
+          filterNumbersAndDots(v.VersionKey.Name) parts
+          <span class="keyword">:=</span> strings.Split(stripped,
+          <span class="string">"."</span>)
+
+          <span class="keyword">if</span> len(parts)
+          <span class="keyword">!=</span> 3 {
+          <span class="keyword">continue</span>
+          } major, err1 <span class="keyword">:=</span> strconv.Atoi(parts[0])
+          minor, err2 <span class="keyword">:=</span> strconv.Atoi(parts[1])
+          patch, err3 <span class="keyword">:=</span> strconv.Atoi(parts[2])
+
+          <span class="keyword">if</span> err1 <span class="keyword">!=</span>
+          <span class="keyword">nil</span> || err2
+          <span class="keyword">!=</span> <span class="keyword">nil</span> ||
+          err3 <span class="keyword">!=</span>
+          <span class="keyword">nil</span> {
+          <span class="keyword">continue</span>
+          }
+
+          <span class="keyword">if</span> major > max1 || (major == max1 &&
+          minor > max2) || (major == max1 && minor == max2 && patch > max3) {
+          max <span class="keyword">=</span> v.VersionKey.Name max1, max2, max3
+          <span class="keyword">=</span> major, minor, patch } }
+
+          <span class="keyword">if</span> max <span class="keyword">==</span>
+          <span class="string">""</span> { <span class="keyword">return</span>
+          <span class="keyword">nil</span>, fmt.Errorf(<span class="string"
+            >"no valid semantic versions found"</span
+          >) }
+
+          <span class="keyword">return</span> max,
+          <span class="keyword">nil</span>
+          }
+        </article>
+      </section>
+
+      <section>
+        <h2>Kompilator IMP</h2>
+        <p>
+          Prosty język imperatywny obsługujący wyrażenia arytmetyczne, logiczne
+          oraz konstrukcje sterujące. Obsługiwane elementy to stałe liczbowe,
+          zmienne, operacje matematyczne oraz logiczne. Kompilator generuje kod
+          maszynowy dla specjalnej maszyny wirtualnej bez instrukcji mnożenia i
+          dzielenia, zastępując je iteracyjnymi metodami obliczeń.
+        </p>
+        <article class="code">
+          <span class="comment">// Generowanie wyrazenia WHILE</span>
+          <span class="keyword">func</span> (g *<span class="type"
+            >Generator</span
+          >) Generate(node <span class="type">ast.Node</span>)
+          <span class="type">error</span> {
+          <span class="keyword">switch</span> node
+          <span class="keyword">:=</span> node.(<span class="type">type</span>)
+          {
+          <span class="comment">// [...]</span>
+          <span class="keyword">case</span> *<span class="type"
+            >ast.WhileCommand</span
+          >: labelStart <span class="keyword">:=</span> g.newLabel()
+          <span class="comment">// e.g. "L1"</span> labelBody
+          <span class="keyword">:=</span> g.newLabel()
+          <span class="comment">// e.g. "L2"</span> labelEnd
+          <span class="keyword">:=</span> g.newLabel()
+          <span class="comment">// e.g. "L3"</span>
+
+          <span class="comment"
+            >// 2. Emit labelStart at the top of the loop</span
+          >
+          g.emit(<span class="type">Instruction</span>{Labels: []<span
+            class="type"
+            >string</span
+          >{labelStart}}) err
+          <span class="keyword">:=</span> g.generateCondition(node.Condition,
+          labelBody, labelEnd) <span class="keyword">if</span> err
+          <span class="keyword">!=</span> <span class="keyword">nil</span> {
+          <span class="keyword">return</span> err } g.emit(<span class="type"
+            >Instruction</span
+          >{Labels: []<span class="type">string</span>{labelBody}})
+
+          <span class="keyword">for</span> _, cmd
+          <span class="keyword">:=</span>
+          <span class="keyword">range</span> node.Commands {
+          <span class="keyword">if</span> err
+          <span class="keyword">:=</span> g.Generate(cmd); err
+          <span class="keyword">!=</span> <span class="keyword">nil</span> {
+          g.Errors = append(g.Errors, err.Error()) } } g.emit(<span class="type"
+            >Instruction</span
+          >{ Op: OpGoto, JumpTo: labelStart, }) g.emit(<span class="type"
+            >Instruction</span
+          >{Labels: []<span class="type">string</span>{labelEnd}})
+          <span class="comment">// [...]</span>
+          } }
+        </article>
+      </section>
+
+      <section>
+        <h2>Gra w Sejm Online</h2>
+        <p>
+          Wieloosobowa gra symulująca pracę polskiego parlamentu, umożliwiająca
+          interaktywne tworzenie ustaw i negocjacje polityczne.
+        </p>
+        <h3>Funkcjonalności:</h3>
+        <ul>
+          <li>Propozycje ustaw poddawane głosowaniom.</li>
+          <li>System głosowania (za, przeciw, wstrzymanie).</li>
+          <li>Możliwość negocjacji i interakcji między graczami.</li>
+          <li>Realistyczna symulacja mechanizmów legislacyjnych.</li>
+        </ul>
+        <article class="code">
+          <span class="comment"
+            >// Skuteczne negocjacje z poslami niezrzeszonymi</span
+          >
+          <span class="keyword">func</span> handleNegocjacje(room *<span
+            class="type"
+            >Room</span
+          >, playerID <span class="type">int</span>) { player, exists
+          <span class="keyword">:=</span> room.Players[playerID]
+          <span class="keyword">if</span> !exists { fmt.Println(<span
+            class="string"
+            >"Player does not exist in this room:)"</span
+          >) } <span class="keyword">else</span> { player.Count
+          <span class="keyword">=</span> player.Count
+          <span class="keyword">+</span> room.Niezrzeszeni room.Niezrzeszeni
+          <span class="keyword">=</span>
+          <span class="number">0</span> room.Players[playerID]
+          <span class="keyword">=</span> player } playersSlice
+          <span class="keyword">:=</span> make([]<span class="type">Player</span
+          >, <span class="number">0</span>, len(room.Players))
+          <span class="keyword">for</span> _, player
+          <span class="keyword">:=</span>
+          <span class="keyword">range</span> room.Players { playersSlice
+          <span class="keyword">=</span> append(playersSlice, player)} message
+          <span class="keyword">:=</span>
+          <span class="type">PlayersMessage</span>{Players: playersSlice}
+          broadcastToRoom(room, message) }
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Marcin Zubrzycki</p>
+      <a href="index.html">O mnie</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="zainteresowania.html">Zainteresowania</a>
+    </footer>
+  </body>
+</html>

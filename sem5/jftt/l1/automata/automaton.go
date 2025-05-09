@@ -31,6 +31,10 @@ func NewAutomaton() Automaton {
 	}
 }
 
+func (a *automaton) SayHello() {
+	fmt.Println("Hello!")
+}
+
 func (a *automaton) AddState(state State) {
 	a.states[state] = struct{}{}
 }

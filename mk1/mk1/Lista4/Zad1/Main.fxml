@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="479.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ile wierszy Trójkąta Pascala chcesz zobaczyć?" />
+      <TextField fx:id="input" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="76.0" />
+      <Button fx:id="policzButton" layoutX="14.0" layoutY="75.0" mnemonicParsing="false" onAction="#PoliczTrojkat" text="Policz" />
+      <Label fx:id="trojkatLabel" layoutX="146.0" layoutY="46.0" prefHeight="404.0" prefWidth="562.0" textAlignment="RIGHT" />
+   </children>
+</AnchorPane>

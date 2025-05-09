@@ -1,0 +1,37 @@
+jelly@DESKTOP-RFB3CM3:~/INA/sem6/wsp/l1go/PW/ada/tasks$ ./travelers2 > outADA2
+jelly@DESKTOP-RFB3CM3:~/INA/sem6/wsp/l1go/PW/ada/tasks$ shasum outADA2
+c23bd1ebbef14f0ec37460e9808471057af52675  outADA2
+jelly@DESKTOP-RFB3CM3:~/INA/sem6/wsp/l1go/PW/ada/tasks$ ./travelers3 > outADA3
+jelly@DESKTOP-RFB3CM3:~/INA/sem6/wsp/l1go/PW/ada/tasks$ shasum outADA3
+af403e1a5bb73be3bc433fc57c1a6667d24bfc02  outADA3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

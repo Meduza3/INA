@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gra Wisielec</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --bg-start: #e0f7fa;
+        --bg-end: #ffe0b2;
+        --letter-bg: #fafafa;
+        --letter-border: #607d8b;
+        --selected-bg: #0288d1;
+        --hover-bg: #54a0ff;
+        --text-color: #333;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+        color: var(--text-color);
+      }
+      #hangman {
+        border: 2px solid var(--letter-border);
+        border-radius: 8px;
+        margin: 0 auto 20px;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      #word {
+        font-size: 2.5rem;
+        letter-spacing: 0.5rem;
+        margin: 20px 0;
+      }
+      #letters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 600px;
+        margin: 0 auto 20px;
+      }
+      .letter {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        line-height: 40px;
+        border: 2px solid var(--letter-border);
+        border-radius: 50%;
+        background: var(--letter-bg);
+        cursor: pointer;
+        user-select: none;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+        font-weight: bold;
+      }
+      .letter:hover:not(.disabled) {
+        transform: scale(1.1);
+        background: var(--hover-bg);
+        color: #fff;
+      }
+      .letter.disabled {
+        background: #ddd;
+        cursor: default;
+        color: #888;
+        border-color: #aaa;
+      }
+      .letter.selected {
+        background: var(--selected-bg);
+        color: #fff;
+      }
+      #message {
+        font-size: 1.5rem;
+        margin: 20px 0;
+      }
+      #controls button {
+        margin: 0 10px;
+        padding: 10px 25px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        background: var(--selected-bg);
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      #controls button:hover {
+        background: var(--hover-bg);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Gra Wisielec</h1>
+    <canvas id="hangman" width="220" height="220"></canvas>
+    <div id="word"></div>
+    <div id="letters"></div>
+    <div id="message"></div>
+    <div id="controls">
+      <button id="restart">Restart</button>
+      <button id="cancel">Anuluj</button>
+    </div>
+    <script>
+      // Klucz w localStorage
+      const STORAGE_KEY = "wisielecState";
+
+      // Zasób słów
+      const words = [
+        "automat",
+        "rekurencja",
+        "decyzowalnosc",
+        "nierozstrzygalnosc",
+        "alfabet",
+        "jezyk",
+        "redukcja",
+        "semantyka",
+        "syntaktyka",
+        "gramatyka",
+        "maszynaturinga",
+        "heurystyka",
+      ];
+
+      let selectedWord, guessed, wrong, gameActive;
+      const maxWrong = 6;
+      const canvas = document.getElementById("hangman");
+      const ctx = canvas.getContext("2d");
+
+      // Zapisz stan gry
+      function saveState() {
+        const state = { selectedWord, guessed, wrong, gameActive };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      // Wczytaj stan gry
+      function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        try {
+          return JSON.parse(raw);
+        } catch {
+          return null;
+        }
+      }
+
+      // Usuń stan
+      function clearState() {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      // Przywróć stan z obiektu
+      function restoreState(state) {
+        selectedWord = state.selectedWord;
+        guessed = state.guessed;
+        wrong = state.wrong;
+        gameActive = state.gameActive;
+        document.getElementById("message").textContent = "";
+        document.getElementById("letters").innerHTML = "";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGallows();
+        createLetterButtons();
+        updateWordDisplay();
+        // Odtwórz przyciski
+        document.querySelectorAll(".letter").forEach((btn) => {
+          const l = btn.textContent.toLowerCase();
+          if (
+            guessed.includes(l) ||
+            (!selectedWord.includes(l) && state.guessed.includes(l))
+          ) {
+            btn.classList.add("disabled", "selected");
+          }
+        });
+        // Odtwórz rysunek wisielca
+        for (let i = 1; i <= wrong; i++) drawHangman();
+      }
+
+      // Inicjalizacja nowej gry
+      function initGame() {
+        clearState();
+        selectedWord = words[Math.floor(Math.random() * words.length)];
+        guessed = [];
+        wrong = 0;
+        gameActive = true;
+        document.getElementById("message").textContent = "";
+        document.getElementById("letters").innerHTML = "";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGallows();
+        createLetterButtons();
+        updateWordDisplay();
+        saveState();
+      }
+
+      // Rysuj szubienicę
+      function drawGallows() {
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#333";
+        ctx.beginPath();
+        ctx.moveTo(20, 200);
+        ctx.lineTo(200, 200);
+        ctx.moveTo(60, 200);
+        ctx.lineTo(60, 20);
+        ctx.moveTo(60, 20);
+        ctx.lineTo(150, 20);
+        ctx.moveTo(150, 20);
+        ctx.lineTo(150, 50);
+        ctx.stroke();
+      }
+
+      // Rysuj kolejne części wisielca
+      function drawHangman() {
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 3;
+        switch (wrong) {
+          case 1:
+            ctx.beginPath();
+            ctx.arc(150, 70, 20, 0, Math.PI * 2);
+            ctx.stroke();
+            break;
+          case 2:
+            ctx.beginPath();
+            ctx.moveTo(150, 90);
+            ctx.lineTo(150, 150);
+            ctx.stroke();
+            break;
+          case 3:
+            ctx.beginPath();
+            ctx.moveTo(150, 100);
+            ctx.lineTo(120, 130);
+            ctx.stroke();
+            break;
+          case 4:
+            ctx.beginPath();
+            ctx.moveTo(150, 100);
+            ctx.lineTo(180, 130);
+            ctx.stroke();
+            break;
+          case 5:
+            ctx.beginPath();
+            ctx.moveTo(150, 150);
+            ctx.lineTo(130, 190);
+            ctx.stroke();
+            break;
+          case 6:
+            ctx.beginPath();
+            ctx.moveTo(150, 150);
+            ctx.lineTo(170, 190);
+            ctx.stroke();
+            break;
+        }
+      }
+
+      // Utwórz przyciski liter
+      function createLetterButtons() {
+        const lettersDiv = document.getElementById("letters");
+        const alphabet = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUWYZŹŻ";
+        alphabet.split("").forEach((letter) => {
+          const btn = document.createElement("div");
+          btn.textContent = letter;
+          btn.className = "letter";
+          btn.addEventListener("click", () => handleGuess(letter, btn));
+          lettersDiv.appendChild(btn);
+        });
+      }
+
+      // Obsługa zgadywania
+      function handleGuess(letter, btn) {
+        if (!gameActive || btn.classList.contains("disabled")) return;
+        btn.classList.add("disabled", "selected");
+        const lwr = letter.toLowerCase();
+        if (selectedWord.includes(lwr)) {
+          guessed.push(lwr);
+          updateWordDisplay();
+          if (selectedWord.split("").every((l) => guessed.includes(l)))
+            endGame(true);
+        } else {
+          wrong++;
+          drawHangman();
+          if (wrong >= maxWrong) endGame(false);
+        }
+        saveState();
+      }
+
+      // Aktualizuj wyświetlane słowo
+      function updateWordDisplay() {
+        document.getElementById("word").textContent = selectedWord
+          .split("")
+          .map((l) => (guessed.includes(l) ? l.toUpperCase() : "_"))
+          .join(" ");
+      }
+
+      // Zakończenie gry
+      function endGame(win) {
+        gameActive = false;
+        document.getElementById("message").textContent = win
+          ? "Wygrałeś! 🎉"
+          : `Przegrałeś. Hasło to: ${selectedWord.toUpperCase()}`;
+        saveState();
+      }
+
+      // Anuluj grę
+      function cancelGame() {
+        if (!gameActive) return;
+        gameActive = false;
+        document.getElementById("message").textContent = "Gra anulowana.";
+        document
+          .querySelectorAll(".letter")
+          .forEach((b) => b.classList.add("disabled"));
+        saveState();
+      }
+
+      // Przyciski sterujące
+      document.getElementById("restart").addEventListener("click", initGame);
+      document.getElementById("cancel").addEventListener("click", cancelGame);
+
+      // Przy ładowaniu strony: przywróć lub uruchom nową grę
+      window.addEventListener("load", () => {
+        const state = loadState();
+        if (state) restoreState(state);
+        else initGame();
+      });
+    </script>
+  </body>
+</html>

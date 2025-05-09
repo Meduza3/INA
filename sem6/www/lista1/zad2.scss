@@ -1,0 +1,198 @@
+// ls -lh style.*
+
+// Zmienne
+$primary-color: rgb(255, 0, 170);
+$secondary-color: #6c757d;
+$background-color: #f8f9fa;
+$max-width-mobile: 800px;
+$max-width-desktop: 1200px;
+$font-stack: "Poppins", Arial, sans-serif;
+
+// Miksin
+@mixin flex-center($direction: row, $gap: 0) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+  gap: $gap;
+}
+
+// Funkcja
+@function rem($px) {
+  @return $px / 16 * 1rem;
+}
+
+// Dziedziczenie (extends)
+%card-style {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: rem(20);
+}
+
+// Styl główny
+body {
+  font-family: $font-stack;
+  margin: 0;
+  padding: 0;
+  @include flex-center(column);
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  background-color: $background-color;
+  color: #333;
+}
+
+header,
+main,
+footer {
+  width: 100%;
+  max-width: $max-width-mobile;
+  padding: rem(20);
+  box-sizing: border-box;
+}
+
+nav {
+  @include flex-center(row, rem(20));
+  margin-bottom: rem(20);
+
+  a {
+    @media (min-width: 1024px) {
+      font-size: 1.2em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        border-bottom: 2px solid #555;
+        color: #0056b3;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+section {
+  @extend %card-style;
+  text-align: left;
+  animation: fadeIn 0.6s ease-out;
+
+  @media (min-width: 600px) {
+    width: 80%;
+
+    &:nth-child(odd) {
+      align-self: flex-start;
+    }
+
+    &:nth-child(even) {
+      align-self: flex-end;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    width: 70%;
+  }
+
+  @media (max-width: 768px) {
+    padding: rem(15);
+    margin: rem(10) 0;
+  }
+}
+
+footer {
+  text-align: center;
+  margin-top: rem(20);
+  font-size: 0.9em;
+  color: #555;
+
+  @media (min-width: 1024px) {
+    font-size: 1em;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+ul {
+  @media (min-width: 1024px) {
+    list-style-image: url("bullet.png");
+  }
+}
+
+h1,
+h2,
+h3 {
+  color: $primary-color;
+}
+
+// Kod
+.code {
+  background-color: #282c34;
+  color: #abb2bf;
+  font-family: Consolas, Monaco, monospace;
+  font-size: rem(14);
+  padding: rem(15);
+  margin: rem(20) auto;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+
+  .type {
+    color: #e5c07b;
+  }
+  .variable {
+    color: #e06c75;
+  }
+  .number {
+    color: #d19a66;
+  }
+  .comment {
+    color: #5c6370;
+    font-style: italic;
+  }
+  .string {
+    color: #98c379;
+  }
+  .keyword {
+    color: #c678dd;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Dodatki
+@media (min-width: 1024px) {
+  body {
+    background-image: url("background-pattern.png");
+    background-size: cover;
+  }
+
+  header,
+  main,
+  footer {
+    max-width: $max-width-desktop;
+  }
+
+  nav {
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InfoController">
+   <children>
+      <TextArea layoutX="20.0" layoutY="14.0" prefHeight="213.0" prefWidth="583.0" text="Circle - First click decides the center, second click decides the radius. &#10;Rectangle - First click decides the first corner, second click decides the second corner.&#10;Polygon - All left clicks decide the vertices, right click creates the polygon.&#10;&#10;Paint - Click on a shape to modify its colors.&#10;Move - Move on a shape to recenter it to the current mouse position.&#10;Rotate - Right or left click to rotate the shape by 15 degrees.&#10;&#10;X - Switch fill and stroke colours.&#10;Get Color - Click on a shape to get its fill and stroke colours.&#10;&#10;Save - Save current drawing to a file.&#10;Load - Load a drawing from a file." />
+      <Button layoutX="240.0" layoutY="304.0" mnemonicParsing="false" text="Back to drawing" />
+   </children>
+</AnchorPane>

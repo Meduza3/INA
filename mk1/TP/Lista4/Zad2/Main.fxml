@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <Text layoutX="14.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generator Trójkąta Pascala z CPP" />
+      <TextField fx:id="input" layoutX="241.0" layoutY="357.0" promptText="Ile wierszów?" />
+      <Button fx:id="policzButton" layoutX="452.0" layoutY="357.0" mnemonicParsing="false" onAction="#policzTrojkat" text="Policz" />
+      <Label fx:id="trojkatLabel" layoutX="14.0" layoutY="14.0" prefHeight="349.0" prefWidth="503.0" textAlignment="CENTER" />
+   </children>
+</AnchorPane>

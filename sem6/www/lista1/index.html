@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Portfolio - Marcin Zubrzycki</title>
+    <link rel="stylesheet" href="styles.css" />
+    <noscript>
+      <style>
+        /* - zawsze pokażemy nav, ukryjemy hamburger */
+        header nav {
+          display: flex !important;
+          flex-direction: row;
+        }
+        .hamburger {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header>
+      <img
+        src="profile.png"
+        alt="Marcin Zubrzycki"
+        style="height: 150px; width: auto"
+      />
+      <h1>Marcin Zubrzycki</h1>
+      <nav>
+        <a href="index.html">O mnie</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="zainteresowania.html">Zainteresowania</a>
+      </nav>
+    </header>
+
+    <main>
+      <section>
+        <h2>O mnie</h2>
+        <p>Student Informatyki Algorytmicznej @ Politechnika Wroclawska</p>
+        <p>Programista @ StrongDM</p>
+      </section>
+
+      <section>
+        <h2>Zainteresowania</h2>
+        <ul>
+          <li>Kolekcjoner figurek Warhammer</li>
+          <li>Gry komputerowe</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Portfolio</h2>
+        <p>Wizualizator zaleznosci</p>
+        <p>Kompilator IMP</p>
+        <p>Gra w Sejm</p>
+      </section>
+
+      <section>
+        <h2>Kontakt</h2>
+        <p>@: marcin@meduza.software</p>
+        <p>#: 884 510 329</p>
+      </section>
+
+      <section>
+        <h2>Galeria</h2>
+        <div id="gallery"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Marcin Zubrzycki</p>
+      <a href="index.html">O mnie</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="zainteresowania.html">Zainteresowania</a>
+    </footer>
+    <script src="menu.js"></script>
+    <script src="gallery.js"></script>
+  </body>
+</html>
